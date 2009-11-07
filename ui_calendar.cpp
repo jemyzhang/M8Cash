@@ -486,7 +486,6 @@ void Ui_CalendarWnd::updateGrid(){
 	wsprintf(datestr,LOADSTRING(IDS_STR_YYYYMM).C_Str(),_year,_month);
 	m_YearMonth.SetText(datestr);
 	m_YearMonth.Invalidate();
-	m_YearMonth.Update();
 	int week = (DateTime::getWeekDay(_year,_month,1)+1)%7;	//获取1号的星期
 	int days = DateTime::getDays(_year,_month);
 	int rows = (week+days)/7 + ((week+days)%7 ? 1 : 0);

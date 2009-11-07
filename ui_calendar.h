@@ -42,7 +42,6 @@ public:
 public:
 	virtual void Update(){
 		_reqUpdate = true;
-		UiWin::Update();
 	}
 	virtual void SetPos(int x, int y, int w, int h, UINT flags=0);
 private:

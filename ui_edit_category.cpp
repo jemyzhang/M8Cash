@@ -134,7 +134,6 @@ void Ui_EditCateGoryWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_CATEGORY_ADD).C_Str());
 						m_EdtCategoryName.SetText(L"\0");
 						m_EdtCategoryName.Invalidate();
-						m_EdtCategoryName.Update();
 					}else{
 						cash_db.appendCategory(&newCat);
 						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_INFO_CATEGORY_ADDS).C_Str());
@@ -172,7 +171,6 @@ void Ui_EditCateGoryWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_CATEGORY_UPDATE).C_Str());
 							m_EdtCategoryName.SetText(L"\0");
 							m_EdtCategoryName.Invalidate();
-							m_EdtCategoryName.Update();
 							return;
 						}
 					}

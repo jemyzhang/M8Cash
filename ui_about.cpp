@@ -43,16 +43,6 @@ BOOL UI_AboutWnd::OnInitDialog() {
 	m_TextVersion.SetText(version);
     AddUiWin(&m_TextVersion);
 
-	y = GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - MZM_HEIGHT_CAPTION * 2;
-	m_TextDonation.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION*2);
-	m_TextDonation.SetTextColor(RGB(128,128,128));
-	m_TextDonation.SetDrawTextFormat(DT_RIGHT);
-	m_TextDonation.SetTextSize(20);
-	wchar_t additional[128];
-	wsprintf(additional,LOADSTRING( IDS_STR_ADDTIONAL).C_Str(),L"jemyzhang@163.com");
-	m_TextDonation.SetText(additional);
-    AddUiWin(&m_TextDonation);
-
 	m_Toolbar.SetPos(0, GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR, GetWidth(), MZM_HEIGHT_TEXT_TOOLBAR);
     m_Toolbar.SetButton(0, true, true, LOADSTRING( IDS_STR_RETURN).C_Str());
     m_Toolbar.EnableLeftArrow(true);

@@ -24,7 +24,6 @@ public:
     virtual int OnLButtonUp(UINT fwKeys, int xPos, int yPos){
         SetState(MZCS_BUTTON_PRESSED);
         Invalidate();
-        Update();
         return UiButton::OnLButtonUp(fwKeys,xPos,yPos);
     }
 };
@@ -32,7 +31,7 @@ public:
 class PersonList : public UiList {
 public:
     // override the DrawItem member function to do your own drawing of the list
-	PersonList() { idlist = 0; }
+	PersonList() { idlist = 0; SetItemHeight(60); SetTextSize(GetTextSize() - 10);}
 	void DrawItem(HDC hdcDst, int nIndex, RECT* prcItem, RECT *prcWin, RECT *prcUpdate);
 	void setupList(int* i) { idlist = i; }
 protected:

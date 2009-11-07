@@ -244,22 +244,16 @@ void Ui_DailyReportWnd::updateDetail(){
 		}
 	}
 	m_CaptionList.Invalidate();
-	m_CaptionList.Update();
 	m_CaptionDetail.Invalidate();
-	m_CaptionDetail.Update();
 	m_CaptionDate.Invalidate();
-	m_CaptionDate.Update();
 	m_TextStatics.Invalidate();
-	m_TextStatics.Update();
 	m_ListDetail.Invalidate();
-	m_ListDetail.Update();
 }
 
 void Ui_DailyReportWnd::updateDetailText(){
 	if(idarray == 0) {
 		m_TextDetail.SetText(L"");
 		m_TextDetail.Invalidate();
-		m_TextDetail.Update();
 		return;
 	}
 	int idx = m_ListDetail.GetSelectedIndex();
@@ -267,7 +261,6 @@ void Ui_DailyReportWnd::updateDetailText(){
 		m_TextDetail.SetTextSize(30);
 		m_TextDetail.SetText(LOADSTRING(IDS_STR_DAILY_TIP).C_Str());
 		m_TextDetail.Invalidate();
-		m_TextDetail.Update();
 		return;
 	}
 	CASH_RECORD_t rec;
@@ -275,7 +268,6 @@ void Ui_DailyReportWnd::updateDetailText(){
 		m_TextDetail.SetTextSize(30);
 		m_TextDetail.SetText(L"错误，不存在此记录");
 		m_TextDetail.Invalidate();
-		m_TextDetail.Update();
 		return;
 	}
 	CASH_CATEGORY_ptr c = cash_db.categoryById(rec.categoryid);
@@ -283,7 +275,6 @@ void Ui_DailyReportWnd::updateDetailText(){
 		m_TextDetail.SetTextSize(30);
 		m_TextDetail.SetText(L"错误，不存在此记录的分类");
 		m_TextDetail.Invalidate();
-		m_TextDetail.Update();
 		return;
 	}
 	wchar_t s[256];
@@ -353,7 +344,6 @@ void Ui_DailyReportWnd::updateDetailText(){
 	//此账户今日共流入，流出，差额，余额
 	m_TextDetail.SetText(cmzs.C_Str());
 	m_TextDetail.Invalidate();
-	m_TextDetail.Update();
 }
 
 void Ui_DailyReportWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
@@ -400,7 +390,6 @@ LRESULT Ui_DailyReportWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPar
                     int nIndex = m_ListDetail.CalcIndexOfPos(x, y);
                     m_ListDetail.SetSelectedIndex(nIndex);
                     m_ListDetail.Invalidate();
-                    m_ListDetail.Update();
 					updateDetailText();
                 }
                 return 0;
@@ -408,7 +397,6 @@ LRESULT Ui_DailyReportWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPar
             if (nID == MZ_IDC_LIST && nNotify == MZ_MN_MOUSEMOVE) {
                 m_ListDetail.SetSelectedIndex(-1);
                 m_ListDetail.Invalidate();
-                m_ListDetail.Update();
 				updateDetailText();
                 return 0;
             }

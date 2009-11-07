@@ -235,6 +235,7 @@ BOOL Ui_MainWnd::OnInitDialog() {
     y += MZM_HEIGHT_CAPTION;
     m_EdtNote.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_CAPTION - MZM_HEIGHT_TEXT_TOOLBAR);
     m_EdtNote.EnableScrollBarV(true);
+	m_EdtNote.SetMaxChars(50);
     m_EdtNote.SetSipMode(IM_SIP_MODE_GEL_PY);
     m_EdtNote.SetID(MZ_IDC_EDIT_NOTE);
     m_ScrollWin.AddChild(&m_EdtNote);
@@ -367,19 +368,12 @@ void Ui_MainWnd::initEditText(){
 			0, 0, SP_NOSIZE);
 	}	
 	m_BtnReminder.Invalidate();
-	m_BtnReminder.Update();
 	m_BtnToAccounts.Invalidate();
-	m_BtnToAccounts.Update();
 	m_BtnCategory.Invalidate();
-	m_BtnCategory.Update();
 	m_BtnAccounts.Invalidate();
-	m_BtnAccounts.Update();
 	m_BtnPerson.Invalidate();
-	m_BtnPerson.Update();
 	m_lblNote.Invalidate();
-	m_lblNote.Update();
 	m_EdtNote.Invalidate();
-	m_EdtNote.Update();
 }
 
 void Ui_MainWnd::updateText(){
@@ -450,17 +444,11 @@ void Ui_MainWnd::updateText(){
 			0, 0, SP_NOSIZE);
 	}	
 	m_BtnReminder.Invalidate();
-	m_BtnReminder.Update();
 	m_BtnToAccounts.Invalidate();
-	m_BtnToAccounts.Update();
 	m_BtnCategory.Invalidate();
-	m_BtnCategory.Update();
 	m_BtnAccounts.Invalidate();
-	m_BtnAccounts.Update();
 	m_lblNote.Invalidate();
-	m_lblNote.Update();
 	m_EdtNote.Invalidate();
-	m_EdtNote.Update();
 }
 
 LRESULT Ui_MainWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam) {
@@ -724,7 +712,6 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					cash_reminder.saveReminderList();
 					reminderinfo.reset();
 					m_BtnReminder.Invalidate();
-					m_BtnReminder.Update();
 				}else{	//查找是否是取消动作
 					ReminderInfo_ptr r = cash_reminder.getReminderByRecordId(c.transid);
 					if(r){
@@ -737,9 +724,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				m_EdtAmountYuan.SetEnable(false);
 				m_EdtNote.Clear();
 				m_EdtAmountYuan.Invalidate();
-				m_EdtAmountYuan.Update();
 				m_EdtNote.Invalidate();
-				m_EdtNote.Update();
 				ShowBrowseDlg(); 
 				return;
 			}else{ //保存
@@ -810,7 +795,6 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					cash_reminder.saveReminderList();
 					reminderinfo.reset();
 					m_BtnReminder.Invalidate();
-					m_BtnReminder.Update();
 				}
 				//保存完毕后清理
 				MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_TRANS_ADD).C_Str(),1000);
@@ -818,9 +802,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				m_EdtAmountYuan.SetEnable(false);
 				m_EdtNote.Clear();
 				m_EdtAmountYuan.Invalidate();
-				m_EdtAmountYuan.Update();
 				m_EdtNote.Invalidate();
-				m_EdtNote.Update();
 				return;
             }
 			break;
@@ -841,9 +823,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				m_EdtAmountYuan.SetText(L"\0");
 				m_EdtNote.Clear();
 				m_EdtAmountYuan.Invalidate();
-				m_EdtAmountYuan.Update();
 				m_EdtNote.Invalidate();
-				m_EdtNote.Update();
 				ShowBrowseDlg();
 				return;
 			}

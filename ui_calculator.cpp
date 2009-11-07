@@ -133,7 +133,6 @@ LRESULT Ui_CalculatorWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPara
 				m_Display.addChar1('-');
 			}
 			m_Display.Invalidate();
-			m_Display.Update();
 			break;
 		}
 		case MZ_MW_BTN_OPERATOR:
@@ -167,7 +166,6 @@ LRESULT Ui_CalculatorWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPara
 				m_Display.setText1(calc.GetResult());
 			}
 			m_Display.Invalidate();
-			m_Display.Update();
 			m_Display.setNonInput();
 			break;
 		}
@@ -189,7 +187,6 @@ LRESULT Ui_CalculatorWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPara
 					m_Display.setText2(L"\0");
 					m_Display.clearNum();
 					m_Display.Invalidate();
-					m_Display.Update();
 					calc.InitStack();
 					break;
 				case MZ_IDC_BTN_BACK:
@@ -198,7 +195,6 @@ LRESULT Ui_CalculatorWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPara
 					}
 					m_Display.addChar1(0x08);
 					m_Display.Invalidate();
-					m_Display.Update();
 					break;
 			}
 		}

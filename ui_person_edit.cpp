@@ -87,7 +87,6 @@ void Ui_PersonEditWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 			//弹出人员类别选择下拉列表
 			m_BtnPersonType.SetFocus(true);
 			m_BtnPersonType.Invalidate();
-			m_BtnPersonType.Update();
 			MzCloseSip();
 			if(m_TypeList.IsVisible()){
 				m_TypeList.SetVisible(false);
@@ -95,7 +94,6 @@ void Ui_PersonEditWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				m_TypeList.SetVisible(true);
 			}
 			m_TypeList.Invalidate();
-			m_TypeList.Update();
             break;
         case MZ_IDC_TOOLBAR_PERSONEDIT:
         {
@@ -123,7 +121,6 @@ void Ui_PersonEditWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_PERSON_ADD).C_Str());
 						m_EdtPersonName.SetText(L"\0");
 						m_EdtPersonName.Invalidate();
-						m_EdtPersonName.Update();
 					}else{
 						cash_db.appendPerson(&newPerson);
 						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_INFO_PERSON_ADDS).C_Str());
@@ -154,7 +151,6 @@ void Ui_PersonEditWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_PERSON_UPDATE).C_Str());
 							m_EdtPersonName.SetText(L"\0");
 							m_EdtPersonName.Invalidate();
-							m_EdtPersonName.Update();
 							return;
 						}
 					}
@@ -209,10 +205,8 @@ LRESULT Ui_PersonEditWndEx::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPa
 							LOADSTRING(
 							cash_db.getPersonTypeNameStrID((CASH_PERSON_TYPE_t)_selectedTid)).C_Str());
 						m_BtnPersonType.Invalidate();
-						m_BtnPersonType.Update();
 						m_TypeList.SetVisible(false);
 						m_TypeList.Invalidate();
-						m_TypeList.Update();
 					}
                 }
                 return 0;
@@ -220,7 +214,6 @@ LRESULT Ui_PersonEditWndEx::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPa
             if (nID == MZ_IDC_EDIT_PERSONTYPELIST && nNotify == MZ_MN_MOUSEMOVE) {
                 m_TypeList.SetSelectedIndex(-1);
                 m_TypeList.Invalidate();
-                m_TypeList.Update();
                 return 0;
             }
         }

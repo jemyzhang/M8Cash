@@ -173,7 +173,6 @@ void Ui_CategoriesWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						m_BtnSelect.SetVisible(true);
 						m_List.SetSelectedIndex(i);
 						m_List.Invalidate();
-						m_List.Update();
 						return;
 					}
 				}
@@ -181,7 +180,6 @@ void Ui_CategoriesWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				m_BtnSelect.SetVisible(false);
 				m_List.SetSelectedIndex(-1);
 				m_List.Invalidate();
-				m_List.Update();
 				return;
             }
 
@@ -210,7 +208,6 @@ void Ui_CategoriesWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						m_BtnSelect.SetVisible(true);
 						m_List.SetSelectedIndex(i);
 						m_List.Invalidate();
-						m_List.Update();
 
 						CASH_CATEGORY_ptr pcat = cash_db.categoryById(selid);
 						if(pcat->level == 0 || (pcat->type == CT_TRANSFER) || _mode){
@@ -219,7 +216,6 @@ void Ui_CategoriesWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 							m_Toolbar.SetButton(2,true,true,LOADSTRING(IDS_STR_EDIT).C_Str());
 						}
 						m_Toolbar.Invalidate();
-						m_Toolbar.Update();
 						return;
 					}
 				}
@@ -227,11 +223,9 @@ void Ui_CategoriesWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				m_BtnSelect.SetVisible(false);
 				m_List.SetSelectedIndex(-1);
 				m_List.Invalidate();
-				m_List.Update();
 
 				m_Toolbar.SetButton(2,false,false,LOADSTRING(IDS_STR_EDIT).C_Str());
 				m_Toolbar.Invalidate();
-				m_Toolbar.Update();
                 return;
             }
         }
@@ -325,7 +319,6 @@ LRESULT Ui_CategoriesWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPara
 					_sel_idx = nIndex;
 					m_List.SetSelectedIndex(nIndex);
                     m_List.Invalidate();
-                    m_List.Update();
 
 					CASH_CATEGORY_ptr pcat = cash_db.categoryById(nid_disp[nIndex].id);
 					if(pcat->level == 0 || (pcat->type == CT_TRANSFER) || _mode){
@@ -334,7 +327,6 @@ LRESULT Ui_CategoriesWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPara
 						m_Toolbar.SetButton(2,true,true,LOADSTRING(IDS_STR_EDIT).C_Str());
 					}
 					m_Toolbar.Invalidate();
-					m_Toolbar.Update();
                 }
                 return 0;
             }
@@ -342,13 +334,10 @@ LRESULT Ui_CategoriesWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPara
 				_sel_idx = -1;
                 m_List.SetSelectedIndex(-1);
                 m_List.Invalidate();
-                m_List.Update();
 				m_BtnSelect.SetVisible(false);
 				m_BtnSelect.Invalidate();
-				m_BtnSelect.Update();
 				m_Toolbar.SetButton(2,false,false,LOADSTRING(IDS_STR_EDIT).C_Str());
 				m_Toolbar.Invalidate();
-				m_Toolbar.Update();
                 return 0;
             }
 		}

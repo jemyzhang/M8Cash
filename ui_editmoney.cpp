@@ -212,7 +212,6 @@ void UiEditMoney::ToggleCalc(){
 		wsprintf(res,L"%.2f",retval);
 		SetText(res);
 		Invalidate();
-		Update();
 	}
 	pcalcdlg = 0;
 }

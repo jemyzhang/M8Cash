@@ -4,7 +4,7 @@
 #include "resource.h"
 #include "appconfigini.h"
 
-#define VER_STRING L"2.33"COMPILEL
+#define VER_STRING L"2.40"COMPILEL
 #ifdef _DEBUG
 #define COMPILEM	L"D"
 #else
@@ -17,7 +17,7 @@
 #define COMPILEL	L"d"
 #endif
 
-#define BUILD_STRING	L"20091009" COMPILEM
+#define BUILD_STRING	L"20091107" COMPILEM
 
 // Application class derived from CMzApp
 extern CashConfig appconfig;

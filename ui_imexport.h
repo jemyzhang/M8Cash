@@ -89,11 +89,9 @@ public:
 	void updateUi(){
 		m_s1.SetStatus(_selIndex);
 		m_s1.Invalidate();
-		m_s1.Update();
 		
 		m_s2.SetStatus(!_selIndex);
 		m_s2.Invalidate();
-		m_s2.Update();
 		if(_sdate.Value == 0){
 			m_EdtFromDate.SetText(L"起始日期");
 		}else{
@@ -103,7 +101,6 @@ public:
 			m_EdtFromDate.SetText(strDate);
 		}
 		m_EdtFromDate.Invalidate();
-		m_EdtFromDate.Update();
 
 		if(_edate.Value == 0){
 			m_EdtToDate.SetText(L"结束日期");
@@ -114,7 +111,6 @@ public:
 			m_EdtToDate.SetText(strDate);
 		}
 		m_EdtToDate.Invalidate();
-		m_EdtToDate.Update();
 	}
 private:
 	bool _selIndex;

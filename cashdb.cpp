@@ -842,36 +842,35 @@ bool clsCASHDB::getRecordsByDate_v2(
 									UINT orderby){
 	RECORDATE_t d1, d2;
 	formatDate(date,datend,d1,d2);
-	if(orderby == 0){
-		wsprintf(sqlcmdw,
-			L"select * from %s \
-			 where DATE between \
-			 \"%04d-%02d-%02d 00:00:00\" and \
-			 \"%04d-%02d-%02d 23:59:59\"",
-				TABLE_RECORD,d1.Year,d1.Month,d1.Day,d2.Year,d2.Month,d2.Day);
-	}else{
-		CMzString s = L"order by ";
-		bool isE = false;
-		if(orderby & 0x2){
-			s = s + L"ACCOUNTID";
-			isE = true;
-		}
-		if(orderby & 0x4){
-			if(isE) s = s + L",";
-			s = s + L"CATGORYID";
-			isE = true;
-		}
-		if(orderby & 0x1){
-			if(isE) s = s + L",";
-			s = s + L"DATE DESC";
-		}
-		wsprintf(sqlcmdw,
-			L"select * from %s \
-			 where DATE between \
-			 \"%04d-%02d-%02d 00:00:00\" and \
-			 \"%04d-%02d-%02d 23:59:59\" %s",
-				TABLE_RECORD,d1.Year,d1.Month,d1.Day,d2.Year,d2.Month,d2.Day,
-				s.C_Str());
+	switch(orderby){
+		case 1:
+			wsprintf(sqlcmdw,
+				L"select * from %s \
+				 where DATE between \
+				 \"%04d-%02d-%02d 00:00:00\" and \
+				 \"%04d-%02d-%02d 23:59:59\" order by ACCOUNTID,DATE DESC",
+				 TABLE_RECORD,d1.Year,d1.Month,d1.Day,d2.Year,d2.Month,d2.Day
+				 );
+			break;
+		case 2:
+			wsprintf(sqlcmdw,
+				L"select * from %s \
+				 where DATE between \
+				 \"%04d-%02d-%02d 00:00:00\" and \
+				 \"%04d-%02d-%02d 23:59:59\" order by CATGORYID,DATE DESC",
+				 TABLE_RECORD,d1.Year,d1.Month,d1.Day,d2.Year,d2.Month,d2.Day
+				 );
+			break;
+		case 0:
+		default:
+			wsprintf(sqlcmdw,
+				L"select * from %s \
+				 where DATE between \
+				 \"%04d-%02d-%02d 00:00:00\" and \
+				 \"%04d-%02d-%02d 23:59:59\" order by DATE DESC",
+				 TABLE_RECORD,d1.Year,d1.Month,d1.Day,d2.Year,d2.Month,d2.Day
+				 );
+			break;
 	}
 	return searchRecords();
 }

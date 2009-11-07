@@ -13,16 +13,10 @@ public:
     void DrawItem(HDC hdcDst, int nIndex, RECT* prcItem, RECT *prcWin, RECT *prcUpdate);
 	void setupList(int* i);
 	void clearList();
-	void setupDrawMode(Ui_BrowsecfgWnd::BROWSEMODE_t bt,Ui_BrowsecfgWnd::BROWSEORDERMODE_t ot) {
-		_browseMode = bt;
-		_orderMode = ot;
-	}
 protected:
 private:
 	int* idlist;
 	CASH_RECORD_ptr *plist_record;	//»º´æ
-	Ui_BrowsecfgWnd::BROWSEMODE_t _browseMode;
-	Ui_BrowsecfgWnd::BROWSEORDERMODE_t _orderMode;
 };
 
 // Popup window derived from CMzWndEx
@@ -56,11 +50,16 @@ protected:
 
     virtual void OnMzCommand(WPARAM wParam, LPARAM lParam);
 	LRESULT MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam);
+	void OnTimer(UINT_PTR nIDEvent){
+		switch(nIDEvent){
+			case 0x8001:
+				::KillTimer(m_hWnd,0x8001);
+				updateUi();
+				break;
+		}
+	}
 private:
 	int* idarray;
-
-	Ui_BrowsecfgWnd::BROWSEMODE_t _browseMode;
-	Ui_BrowsecfgWnd::BROWSEORDERMODE_t _orderMode;
 
 	int sel_recordID;
 

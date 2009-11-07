@@ -60,6 +60,9 @@ void RecordList::DrawItem(HDC hdcDst, int nIndex, RECT* prcItem, RECT *prcWin, R
     HFONT hf;
 	RECT rcText = *prcItem;
 	RECT RectText;
+	DWORD _browseMode = appconfig.IniBrowseMode.Get();
+	DWORD _orderMode = appconfig.IniBrowseOrderMode.Get();
+
 	int lineHeight = rcText.bottom - rcText.top;
 	if(_browseMode == Ui_BrowsecfgWnd::BROWSE_DETAIL){
 		lineHeight /= 2;
@@ -205,8 +208,6 @@ void RecordList::DrawItem(HDC hdcDst, int nIndex, RECT* prcItem, RECT *prcWin, R
 
 Ui_BrowseWnd::Ui_BrowseWnd(){
 	idarray = 0;
-	_browseMode = (Ui_BrowsecfgWnd::BROWSEMODE_t)appconfig.IniBrowseMode.Get();
-	_orderMode = (Ui_BrowsecfgWnd::BROWSEORDERMODE_t)appconfig.IniBrowseOrderMode.Get();
 	sel_recordID = -1;
 }
 
@@ -256,8 +257,8 @@ BOOL Ui_BrowseWnd::OnInitDialog() {
         m_Toolbar.EnableLeftArrow(true);
         m_Toolbar.SetID(MZ_IDC_TOOLBAR_BROWSE);
         AddUiWin(&m_Toolbar);
-
-		updateUi();
+		::SetTimer(m_hWnd,0x8001,100,NULL);	//先显示界面，再显示列表
+		
         return TRUE;
 }
 
@@ -288,14 +289,12 @@ LRESULT Ui_BrowseWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam) {
 					sel_recordID = nIndex;
                     m_RecordList.SetSelectedIndex(nIndex);
 					m_RecordList.Invalidate();
-					m_RecordList.Update();
 					if(nIndex == -1){
 						m_Toolbar.SetButton(2,false,false,LOADSTRING(IDS_STR_EDIT).C_Str());
 					}else{
 						m_Toolbar.SetButton(2, true, true, LOADSTRING(IDS_STR_EDIT).C_Str());
 					}
 					m_Toolbar.Invalidate();
-					m_Toolbar.Update();
                 }
                 return 0;
             }
@@ -303,10 +302,8 @@ LRESULT Ui_BrowseWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam) {
 				sel_recordID = -1;
                 m_RecordList.SetSelectedIndex(-1);
 				m_RecordList.Invalidate();
-				m_RecordList.Update();
 				m_Toolbar.SetButton(2, false, false, LOADSTRING(IDS_STR_EDIT).C_Str());
 				m_Toolbar.Invalidate();
-				m_Toolbar.Update();
                 return 0;
             }
        }
@@ -328,7 +325,7 @@ void Ui_BrowseWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				dlg.SetAnimateType_Hide(MZ_ANIMTYPE_SCROLL_LEFT_TO_RIGHT_1);
 				int nRet = dlg.DoModal();
 				if (nRet == ID_OK) {
-					updateUi();
+					::SetTimer(m_hWnd,0x8001,100,NULL);	//延时刷新界面
 				}
 				break;
 			}
@@ -385,8 +382,6 @@ void Ui_BrowseWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
                 if (nIndex == 1) {
 					Ui_BrowsecfgWnd dlg;
 					RECT rcWork = MzGetWorkArea();
-					dlg.setBrowseMode(_browseMode);
-					dlg.setOrderMode(_orderMode);
 					dlg.Create(rcWork.left, rcWork.top, RECT_WIDTH(rcWork), RECT_HEIGHT(rcWork),
 							m_hWnd, 0, WS_POPUP);
 					// set the animation of the window
@@ -395,10 +390,6 @@ void Ui_BrowseWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					int nRet = dlg.DoModal();
 					if (nRet == ID_OK) {
 						//...
-						_browseMode = dlg.getBrowseMode();
-						_orderMode = dlg.getOrderMode();
-						appconfig.IniBrowseMode.Set(_browseMode);
-						appconfig.IniBrowseOrderMode.Set(_orderMode);
 						updateUi();
 					}
                 }
@@ -411,8 +402,6 @@ void Ui_BrowseWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 }
 
 void Ui_BrowseWnd::updateUi(){
-
-	//MzBeginWaitDlg(m_hWnd);
 	//clear list
 	m_RecordList.clearList();
 	m_RecordList.RemoveAll();
@@ -428,6 +417,7 @@ void Ui_BrowseWnd::updateUi(){
 	if(date_s.Value == 0 && date_e.Value == 0){
 		strBar = LOADSTRING(IDS_STR_ALLDATE).C_Str();
 	}else{
+		if(date_s.Value > date_e.Value) date_e.Value = date_s.Value;	//date_s大于maxRecordDate的情况
 		wchar_t sdate[16];
 		wsprintf(sdate,LOADSTRING(IDS_STR_YYYYMMDD).C_Str(),
 			date_s.Date.Year,date_s.Date.Month,date_s.Date.Day);
@@ -466,6 +456,8 @@ void Ui_BrowseWnd::updateUi(){
 	}
 	m_StaticBar.SetText(strBar.C_Str());
 
+	m_FilterBar.Invalidate();
+	m_FilterBar.Update();
 	if(date_s.Value == 0 && date_e.Value == 0){	//无数据
 		//由于以上已经计算过数据日期范围，当全部为0时表示无数据
 		m_summary.SetVisible(false);
@@ -474,13 +466,14 @@ void Ui_BrowseWnd::updateUi(){
 	}
 	//以上为界面设置
 
+	DWORD _browseMode = appconfig.IniBrowseMode.Get();
+	DWORD _orderMode = appconfig.IniBrowseOrderMode.Get();
+
 	if(_browseMode == Ui_BrowsecfgWnd::BROWSE_DETAIL){	//详情
 		m_RecordList.SetItemHeight(60);
 	}else{
 		m_RecordList.SetItemHeight(40);
 	}
-
-	m_RecordList.setupDrawMode(_browseMode,_orderMode);
 
 	//以上为list设置
 
@@ -504,6 +497,7 @@ void Ui_BrowseWnd::updateUi(){
 		refreshUi();
 		return;
 	}
+	::MzBeginWaitDlg(m_hWnd);
 
 	idarray = new int[tz];
 	int *p = idarray;
@@ -580,13 +574,13 @@ void Ui_BrowseWnd::updateUi(){
 	m_RecordList.SetSelectedIndex(0);
 	m_summary.SetVisible(true);
 	m_summary.SetText(str);
-	refreshUi();
+	::MzEndWaitDlg();
+	m_summary.Invalidate();
+	m_RecordList.Invalidate();
 }
 
 void Ui_BrowseWnd::refreshUi(){
 	//refresh ui
-	m_FilterBar.Invalidate();
-	m_FilterBar.Update();
 	m_summary.Invalidate();
-	m_summary.Update();
+	m_RecordList.Invalidate();
 }

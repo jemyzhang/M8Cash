@@ -71,7 +71,7 @@
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\MzCommon\libs"
 				DelayLoadDLLs="$(NOINHERIT)"
-				GenerateDebugInformation="false"
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/M8Cash.pdb"
 				SubSystem="0"
 				StackReserveSize="65536"
@@ -693,6 +693,14 @@
 			</File>
 			<File
 				RelativePath="..\MzCommon\UiSingleOption.h"
+				>
+			</File>
+			<File
+				RelativePath="..\MzCommon\UiSwitchOption.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\MzCommon\UiSwitchOption.h"
 				>
 			</File>
 			<File

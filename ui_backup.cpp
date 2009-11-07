@@ -143,20 +143,16 @@ LRESULT Ui_BackupWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam) {
                     int nIndex = m_List.CalcIndexOfPos(x, y);
                     m_List.SetSelectedIndex(nIndex);
                     m_List.Invalidate();
-                    m_List.Update();
 			 		m_Toolbar.SetButton(1, true, true, LOADSTRING(IDS_STR_OPERATE).C_Str());
 					m_Toolbar.Invalidate();
-					m_Toolbar.Update();
                 }
                 return 0;
             }
             if (nID == MZ_IDC_BACKUP_LIST && nNotify == MZ_MN_MOUSEMOVE) {
                 m_List.SetSelectedIndex(-1);
                 m_List.Invalidate();
-                m_List.Update();
 			 	m_Toolbar.SetButton(1, true, false, LOADSTRING(IDS_STR_OPERATE).C_Str());
 				m_Toolbar.Invalidate();
-				m_Toolbar.Update();
                return 0;
             }
        }
@@ -215,7 +211,6 @@ void Ui_BackupWnd::updateList(){
 		m_List.AddItem(li);
 	}
 	m_List.Invalidate();
-	m_List.Update();
 }
 
 //恢复前必须断开数据库连接

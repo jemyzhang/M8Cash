@@ -16,7 +16,7 @@ protected:
 public:
 	virtual void SetPos(int x, int y, int w, int h, UINT flags=0);
 	void appendItem(wchar_t* name, int val);
-	virtual void Update() { _reqUpdate = true; UiWin::Update(); }
+	virtual void Update() { _reqUpdate = true; }
 	void resetData();	//clear all the data
 	void setLegendVisable(bool v) { _showLegend = v; }
 	COLORREF *GetColorTable(int &size) { size = 20; return upcolor; }

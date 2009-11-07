@@ -204,7 +204,6 @@ void Ui_MonthReportWnd::updateUi(){
 	}
 	m_CaptionTitle.SetText(date);
 	m_CaptionTitle.Invalidate();
-	m_CaptionTitle.Update();
 	m_piegraph.Invalidate();
 	m_piegraph.Update();
 	CMzString tblCol2Name;	//第二列名称，加入人员名称
@@ -221,7 +220,6 @@ void Ui_MonthReportWnd::updateUi(){
 	}
 	m_table.setColumnTitle2(tblCol2Name.C_Str());
 	m_ScrollWin.Invalidate();
-	m_ScrollWin.Update();
 }
 
 void UiReportTable::PaintWin(HDC hdcDst, RECT* prcWin, RECT* prcUpdate){
@@ -437,7 +435,6 @@ void Ui_YearlyReportWnd::updateUi(){
 	wsprintf(date,LOADSTRING(IDS_STR_YEARLY_TITLE).C_Str(),_year);
 	m_CaptionTitle.SetText(date);
 	m_CaptionTitle.Invalidate();
-	m_CaptionTitle.Update();
 	m_bargraph.Invalidate();
 	m_bargraph.Update();
 	MzEndWaitDlg();
@@ -526,7 +523,6 @@ void Ui_AccountReportWnd::updateUi(){
 	wsprintf(caption,LOADSTRING(IDS_STR_30DAY).C_Str(),account->name);
 	m_CaptionTitle.SetText(caption);
 	m_CaptionTitle.Invalidate();
-	m_CaptionTitle.Update();
 
 	SYSTEMTIME dt;
 	GetLocalTime(&dt);

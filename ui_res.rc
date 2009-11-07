@@ -267,7 +267,7 @@ BEGIN
     IDS_STR_CONFIG_AUTOLOCK "自动锁定"
     IDS_STR_AUTOLOCK_IMM    "立即"
     IDS_STR_SECONDS         "秒"
-    IDS_STR_AUTOLOCK_TIP    "自动锁延迟时间选择："
+    IDS_STR_AUTOLOCK_TIP    "自动锁延迟时间设定"
     IDS_STR_FILTER          "过滤"
 END
 

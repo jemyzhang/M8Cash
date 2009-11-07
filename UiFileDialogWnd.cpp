@@ -78,7 +78,6 @@ void UiFileDialogWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						{
 							m_FolderPath.SetText2(pFile->GetSaveFileDirectory());
 							m_FolderPath.Invalidate();
-							m_FolderPath.Update();
 						}
 						pSave->Release();
 					}     

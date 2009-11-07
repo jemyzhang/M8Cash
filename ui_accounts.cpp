@@ -169,7 +169,6 @@ LRESULT Ui_AccountsWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam)
 						_sel_idx = nIndex;
 						m_List.SetSelectedIndex(nIndex);
 						m_List.Invalidate();
-						m_List.Update();
 						//œ‘ æ’€œﬂÕº
 						Ui_AccountReportWnd dlg;
 						MzBeginWaitDlg(m_hWnd);
@@ -196,7 +195,6 @@ LRESULT Ui_AccountsWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam)
 						_sel_idx = nIndex;
 						m_List.SetSelectedIndex(nIndex);
 						m_List.Invalidate();
-						m_List.Update();
 					}
                 }
                 return 0;
@@ -205,7 +203,6 @@ LRESULT Ui_AccountsWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam)
 				_sel_idx = -1;
                 m_List.SetSelectedIndex(-1);
                 m_List.Invalidate();
-                m_List.Update();
                 return 0;
             }
        }

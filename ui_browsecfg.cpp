@@ -5,6 +5,7 @@
 #include "ui_report.h"
 #include "..\MzCommon\MzCommon.h"
 using namespace MzCommon;
+#include "..\MzCommon\UiSingleOption.h"
 
 #define MZ_IDC_TOOLBAR_MAIN 101
 #define MZ_IDC_SCROLLWIN 102
@@ -32,9 +33,7 @@ UINT ORDERSTRID[] = {
 };
 
 Ui_BrowsecfgWnd::Ui_BrowsecfgWnd(){
-	_viewMode = 0;
-	_browseMode = BROWSE_SIMPLE;
-	_orderMode = ORDERBYDATE;
+	optionChanged = FALSE;
 }
 
 BOOL Ui_BrowsecfgWnd::OnInitDialog() {
@@ -118,21 +117,6 @@ BOOL Ui_BrowsecfgWnd::OnInitDialog() {
     m_BtnOrderMode.SetShowImage2(true);
     AddUiWin(&m_BtnOrderMode);
 
-	y+=MZM_HEIGHT_BUTTONEX;
-    m_ScrollWin.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR);
-    m_ScrollWin.SetID(MZ_IDC_SCROLLWIN);
-    m_ScrollWin.EnableScrollBarV(true);
-    AddUiWin(&m_ScrollWin);
-
-	m_DetailList.SetPos(0, 0, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR);
-    m_DetailList.SetID(MZ_IDC_LIST_CONFIG);
-	m_DetailList.SetItemHeight(50);
-	m_DetailList.SetTextSize(m_DetailList.GetTextSize() - 4);
-	m_DetailList.SetDrawTextFormat(DT_LEFT|DT_SINGLELINE|DT_VCENTER);
-	m_DetailList.EnableScrollBarV(true);
-	m_DetailList.EnableNotifyMessage(true);
-	m_ScrollWin.AddChild(&m_DetailList);
-
 	m_Toolbar.SetPos(0, GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR, GetWidth(), MZM_HEIGHT_TEXT_TOOLBAR);
 	m_Toolbar.SetButton(0, true, true, LOADSTRING(IDS_STR_RETURN).C_Str());
 	m_Toolbar.EnableLeftArrow(true);
@@ -145,91 +129,21 @@ BOOL Ui_BrowsecfgWnd::OnInitDialog() {
 }
 
 void Ui_BrowsecfgWnd::updateUi(){
-	m_BtnBrowseMode.SetText2(LOADSTRING(MODESTRID[_browseMode]).C_Str());
-	m_BtnOrderMode.SetText2(LOADSTRING(ORDERSTRID[_orderMode/2]).C_Str());
-	if(_viewMode == 0){
-		m_ScrollWin.SetVisible(false);
-	    m_BtnOrderMode.SetPos(0, MZM_HEIGHT_BUTTONEX*N_BTN_BEFORE + MZM_HEIGHT_CAPTION, GetWidth(), MZM_HEIGHT_BUTTONEX);
-	}
-	if(_viewMode == 1){
-	    ListItem li;
-		CMzString str(128);
-		m_DetailList.RemoveAll();
-		for(int i = 0; i < 2; i++){
-			str = LOADSTRING(MODESTRID[i]);
-			li.Text = str;
-			m_DetailList.AddItem(li);
-		}
-		m_BtnOrderMode.SetPos(0,MZM_HEIGHT_BUTTONEX*N_BTN_BEFORE + MZM_HEIGHT_CAPTION + m_DetailList.CalcItemHeight(-1)*2, GetWidth(), MZM_HEIGHT_BUTTONEX);
-		m_ScrollWin.SetPos(0, MZM_HEIGHT_BUTTONEX*N_BTN_BEFORE + MZM_HEIGHT_CAPTION, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR);
-        m_DetailList.SetSelectedIndex(_browseMode);
-		m_ScrollWin.SetVisible(true);
-	}
-	if(_viewMode == 2){
-	    ListItem li;
-		CMzString str(128);
-		m_DetailList.RemoveAll();
-		for(int i = 0; i < 3; i++){
-			str = LOADSTRING(ORDERSTRID[i]);
-			li.Text = str;
-			m_DetailList.AddItem(li);
-		}
-	    m_BtnOrderMode.SetPos(0,MZM_HEIGHT_BUTTONEX*N_BTN_BEFORE + MZM_HEIGHT_CAPTION, GetWidth(), MZM_HEIGHT_BUTTONEX);
-		m_ScrollWin.SetPos(0, MZM_HEIGHT_BUTTONEX*(N_BTN_BEFORE + 1) + MZM_HEIGHT_CAPTION, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR);
-        m_DetailList.SetSelectedIndex(_orderMode/2);
-		m_ScrollWin.SetVisible(true);
-	}
+	m_BtnBrowseMode.SetText2(LOADSTRING(MODESTRID[appconfig.IniBrowseMode.Get()]).C_Str());
+	m_BtnOrderMode.SetText2(LOADSTRING(ORDERSTRID[appconfig.IniBrowseOrderMode.Get()]).C_Str());
 	Invalidate();
 	UpdateWindow();
-}
-//const BROWSEORDERMODE_t order_mode[] = {ORDERBYDATE,ORDERBYACCOUNT,ORDERBYCATEGORY};
-LRESULT Ui_BrowsecfgWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam) {
-    switch (message) {
-        case MZ_WM_MOUSE_NOTIFY:
-        {
-            int nID = LOWORD(wParam);
-            int nNotify = HIWORD(wParam);
-            int x = LOWORD(lParam);
-            int y = HIWORD(lParam);
-            if (nID == MZ_IDC_LIST_CONFIG && nNotify == MZ_MN_LBUTTONDOWN) {
-                if (!m_DetailList.IsMouseDownAtScrolling() && !m_DetailList.IsMouseMoved()) {
-                    int nIndex = m_DetailList.CalcIndexOfPos(x, y);
-					if(nIndex != -1){
-						if(_viewMode == 1){
-							if(nIndex < 2){
-								_browseMode = (BROWSEMODE_t)nIndex;
-							}
-						}else if(_viewMode == 2){
-							if(nIndex < 3){
-								_orderMode = (BROWSEORDERMODE_t)(1<<nIndex);
-							}
-						}
-					}
-					_viewMode = 0;
-					updateUi();
-                }
-                return 0;
-            }
-            if (nID == MZ_IDC_LIST_CONFIG && nNotify == MZ_MN_MOUSEMOVE) {
-                m_DetailList.SetSelectedIndex(-1);
-                m_DetailList.Invalidate();
-                m_DetailList.Update();
-                return 0;
-            }
-        }
-    }
-    return CMzWndEx::MzDefWndProc(message, wParam, lParam);
 }
 
 void Ui_BrowsecfgWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
     UINT_PTR id = LOWORD(wParam);
     switch (id) {
 		case MZ_IDC_BUTTON_MODE:
-			_viewMode = (_viewMode == 1) ? 0 : 1;
+			ShowBrowseModeOptionDlg();
 			updateUi();
 			break;
 		case MZ_IDC_BUTTON_ORDER:
-			_viewMode = (_viewMode == 2) ? 0 : 2;
+			ShowOrderModeOptionDlg();
 			updateUi();
 			break;
 		case MZ_IDC_BUTTON_REPORT_OUT:
@@ -274,12 +188,60 @@ void Ui_BrowsecfgWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
         {
             int nIndex = lParam;
             if (nIndex == 0) {
-                // exit the modal dialog
-                EndModal(ID_OK);
+				if(optionChanged){
+					// exit the modal dialog
+					EndModal(ID_OK);
+				}else{
+					EndModal(ID_CANCEL);
+				}
                 return;
             }
 
 		}
             break;
+    }
+}
+
+void Ui_BrowsecfgWnd::ShowBrowseModeOptionDlg(){
+    Ui_SingleOptionWnd dlg;
+    for(int i = 0; i < sizeof(MODESTRID)/sizeof(MODESTRID[0]); i++){
+		dlg.AppendOptionItem(const_cast<LPTSTR>(LOADSTRING(MODESTRID[i]).C_Str()));
+    }
+    dlg.SetSelectedIndex(appconfig.IniBrowseMode.Get());
+    dlg.SetTitleText(L"设定浏览模式");
+    RECT rcWork = MzGetWorkArea();
+    dlg.Create(rcWork.left + 40, rcWork.top + 160, RECT_WIDTH(rcWork) - 80, 210 + 70*2,
+        m_hWnd, 0, WS_POPUP);
+    // set the animation of the window
+    dlg.SetAnimateType_Show(MZ_ANIMTYPE_NONE);
+    dlg.SetAnimateType_Hide(MZ_ANIMTYPE_FADE);
+    int nRet = dlg.DoModal();
+    if(nRet == ID_OK){
+		if(appconfig.IniBrowseMode.Set(dlg.GetSelectedIndex())){
+			optionChanged = TRUE;
+		}
+        updateUi();
+    }
+}
+
+void Ui_BrowsecfgWnd::ShowOrderModeOptionDlg(){
+    Ui_SingleOptionWnd dlg;
+    for(int i = 0; i < sizeof(ORDERSTRID)/sizeof(ORDERSTRID[0]); i++){
+		dlg.AppendOptionItem(const_cast<LPTSTR>(LOADSTRING(ORDERSTRID[i]).C_Str()));
+    }
+    dlg.SetSelectedIndex(appconfig.IniBrowseOrderMode.Get());
+    dlg.SetTitleText(L"设定排序方式");
+    RECT rcWork = MzGetWorkArea();
+    dlg.Create(rcWork.left + 40, rcWork.top + 120, RECT_WIDTH(rcWork) - 80, 210 + 70*3,
+        m_hWnd, 0, WS_POPUP);
+    // set the animation of the window
+    dlg.SetAnimateType_Show(MZ_ANIMTYPE_NONE);
+    dlg.SetAnimateType_Hide(MZ_ANIMTYPE_FADE);
+    int nRet = dlg.DoModal();
+    if(nRet == ID_OK){
+		if(appconfig.IniBrowseOrderMode.Set(dlg.GetSelectedIndex())){
+			optionChanged = TRUE;
+		}
+        updateUi();
     }
 }

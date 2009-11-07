@@ -135,13 +135,9 @@ void Ui_PersonsWnd::setButtonStatus(CASH_PERSON_TYPE_t t){
 			break;
 	}
 	m_BtnAll.Invalidate();
-	m_BtnAll.Update();
 	m_BtnFamily.Invalidate();
-	m_BtnFamily.Update();
 	m_BtnContact.Invalidate();
-	m_BtnContact.Update();
 	m_BtnInstitution.Invalidate();
-	m_BtnInstitution.Update();
 }
 
 void Ui_PersonsWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
@@ -247,7 +243,6 @@ LRESULT Ui_PersonsWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam) 
 					_sel_idx = nIndex;
 					m_List.SetSelectedIndex(nIndex);
 					m_List.Invalidate();
-					m_List.Update();
 					if(!_mode){
 						if(nIndex != -1){
 							m_Toolbar.SetButton(2, true, true, LOADSTRING(IDS_STR_EDIT).C_Str());
@@ -255,7 +250,6 @@ LRESULT Ui_PersonsWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam) 
 							m_Toolbar.SetButton(2, false, true, LOADSTRING(IDS_STR_EDIT).C_Str());
 						}
 						m_Toolbar.Invalidate();
-						m_Toolbar.Update();
 					}
 				}
 				return 0;
@@ -264,11 +258,9 @@ LRESULT Ui_PersonsWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam) 
 				_sel_idx = -1;
                 m_List.SetSelectedIndex(-1);
                 m_List.Invalidate();
-                m_List.Update();
 				if(!_mode){
 					m_Toolbar.SetButton(2, false, true, LOADSTRING(IDS_STR_EDIT).C_Str());
 					m_Toolbar.Invalidate();
-					m_Toolbar.Update();
 				}
                return 0;
             }
@@ -304,6 +296,5 @@ void Ui_PersonsWnd::updateList(){
     }
 	m_List.setupList(idarray);
 	m_List.Invalidate();
-	m_List.Update();
 	setButtonStatus(_listpersonType);
 }

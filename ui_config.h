@@ -3,6 +3,7 @@
 
 // include the MZFC library header file
 #include <mzfc_inc.h>
+#include "..\MzCommon\UiSwitchOption.h"
 
 // Popup window derived from CMzWndEx
 
@@ -23,8 +24,7 @@ protected:
 	UiButtonEx m_BtnResetAll;
 	UiButtonEx m_BtnOptimize;
 	//Autolock
-	UiButtonEx m_BtnAutoLock;
-	UiButtonEx m_BtnAutoLockSW;
+	UiSwitchOption m_BtnAutoLock;
 
     // Initialization of the window (dialog)
     virtual BOOL OnInitDialog();

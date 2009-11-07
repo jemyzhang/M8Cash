@@ -15,14 +15,12 @@ public:
 			if(pMaskLabel){
 				pMaskLabel->SetVisible(false);
 				pMaskLabel->Invalidate();
-				pMaskLabel->Update();
 			}
 			SetFocus(true);
 		}else{
 			if(pMaskLabel){
 				pMaskLabel->SetVisible(true);
 				pMaskLabel->Invalidate();
-				pMaskLabel->Update();
 			}
 			SetFocus(false);
 		}
@@ -33,7 +31,6 @@ public:
 		if(pMaskLabel){
 			pMaskLabel->SetPos(x+32,y,w-32,h,flags);
 			pMaskLabel->Invalidate();
-			pMaskLabel->Update();
 		}
 	}
 	void SetMaskWin(UiEditKeySwitcher *pMask){

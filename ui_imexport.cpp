@@ -264,7 +264,6 @@ void Ui_ImExportWnd::updateButtonRange(){
 	appconfig.IniExportEndDate.Set(_EndExportDate.Value);
 
 	m_BtnExRange.Invalidate();
-	m_BtnExRange.Update();
 }
 
 void Ui_ImExportWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {

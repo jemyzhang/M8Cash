@@ -16,7 +16,7 @@ protected:
 public:
 	virtual void SetPos(int x, int y, int w, int h, UINT flags=0);
 	void appendItem(wchar_t* name, int val, int val2);
-	virtual void Update() { _reqUpdate = true; UiWin::Update(); }
+	virtual void Update() { _reqUpdate = true;  }
 	void resetData();	//clear all the data
 private:
 	list<int>	m_datarray[2];

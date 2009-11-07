@@ -150,7 +150,6 @@ void Ui_EditAccountWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_ACCOUNT_ADDDUP).C_Str());
 						m_EdtAccName.SetText(L"\0");
 						m_EdtAccName.Invalidate();
-						m_EdtAccName.Update();
 					}else{
 						//insert account record
 						cash_db.appendAccount(&newAcc);
@@ -189,7 +188,6 @@ void Ui_EditAccountWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_ACCOUNT_UPDATEDUP).C_Str());
 							m_EdtAccName.SetText(L"\0");
 							m_EdtAccName.Invalidate();
-							m_EdtAccName.Update();
 							return;
 						}
 					}

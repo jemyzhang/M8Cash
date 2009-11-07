@@ -14,8 +14,6 @@ protected:
 	UiStatic m_TextName;
 	UiStatic m_TextAuthor;
 	UiStatic m_TextVersion;
-	UiStatic m_TextDonation;
-//	UiStatic m_TextAbout;
 
     // Initialization of the window (dialog)
     virtual BOOL OnInitDialog();

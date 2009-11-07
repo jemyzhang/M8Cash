@@ -302,19 +302,12 @@ void Ui_CashReminderWnd::updateUi(){
 		m_StaticDate.SetVisible(false);
 	}
 	m_BtnReminder.Invalidate();
-	m_BtnReminder.Update();
 	m_EdtHour.Invalidate();
-	m_EdtHour.Update();
 	m_EdtMin.Invalidate();
-	m_EdtMin.Update();
 	m_BtnRepeat.Invalidate();
-	m_BtnRepeat.Update();
 	m_BtnRepeatSW.Invalidate();
-	m_BtnRepeatSW.Update();
 	m_ListRepeatType.Invalidate();
-	m_ListRepeatType.Update();
 	m_StaticDate.Invalidate();
-	m_StaticDate.Update();
 }
 
 bool Ui_CashReminderWnd::checkDateText(){
@@ -336,9 +329,7 @@ bool Ui_CashReminderWnd::checkDateText(){
 	}
 
 	m_EdtHour.Invalidate();
-	m_EdtHour.Update();
 	m_EdtMin.Invalidate();
-	m_EdtMin.Update();
 	return ret;
 }
 
@@ -505,7 +496,6 @@ LRESULT Ui_CashReminderWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lPa
 					if(nIndex != -1){
 						m_ListRepeatType.SetSelectedIndex(nIndex);
 						m_ListRepeatType.Invalidate();
-						m_ListRepeatType.Update();
 					}
 				}
                 return 0;
