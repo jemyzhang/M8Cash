@@ -1,0 +1,365 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RCDATA
+//
+
+IDB_PNG_CALC            RCDATA                  "image\\Calculator.png"
+IDB_PNG_LOGIN           RCDATA                  "image\\Login.png"
+IDB_PNG_L_LPRESS        RCDATA                  "image\\lLPressed.png"
+IDB_PNG_L_RPRESS        RCDATA                  "image\\rLPressed.png"
+IDB_PNG_L_LRELEASE      RCDATA                  "image\\lLReleased.png"
+IDB_PNG_L_RRELEASE      RCDATA                  "image\\rLReleased.png"
+IDB_PNG_DATE            RCDATA                  "image\\Date.png"
+IDB_PNG_ALERT           RCDATA                  "image\\Alert.png"
+IDB_PNG_CATEGORY        RCDATA                  "image\\Category.png"
+IDB_PNG_ACCOUNT         RCDATA                  "image\\Account.png"
+IDB_PNG_TOACCOUNT       RCDATA                  "image\\ToAccount.png"
+IDB_PNG_ADD             RCDATA                  "image\\Add.png"
+IDB_PNG_MODIFY          RCDATA                  "image\\Modify.png"
+IDB_PNG_IMPORT          RCDATA                  "image\\Import.png"
+IDB_PNG_EXPORT          RCDATA                  "image\\Export.png"
+IDB_PNG_LINECHART       RCDATA                  "image\\LineChart.png"
+IDB_PNG_PIECHART        RCDATA                  "image\\PieChart.png"
+IDB_PNG_ENCRYPT         RCDATA                  "image\\Encrypted.png"
+IDB_PNG_BACKUP          RCDATA                  "image\\Backup.png"
+IDB_PNG_RELOADALERT     RCDATA                  "image\\ReloadAlert.png"
+IDB_PNG_S_EDIT          RCDATA                  "image\\s_edit.png"
+IDB_PNG_S_DEL           RCDATA                  "image\\s_delete.png"
+IDB_PNG_L_UPRESS        RCDATA                  "image\\uLPressed.png"
+IDB_PNG_L_DPRESS        RCDATA                  "image\\dLPressed.png"
+IDB_PNG_L_URELEASE      RCDATA                  "image\\uLReleased.png"
+IDB_PNG_L_DRELEASE      RCDATA                  "image\\dLReleased.png"
+IDB_PNG_EXPANED         RCDATA                  "image\\Expaned.png"
+IDB_PNG_COLLAPSED       RCDATA                  "image\\Collapsed.png"
+IDB_PNG_COINS           RCDATA                  "image\\coins.png"
+IDB_PNG_OPTIMIZE        RCDATA                  "image\\optimize.png"
+IDB_PNG_IN_BAR          RCDATA                  "image\\in_bar.png"
+IDB_PNG_OUT_BAR         RCDATA                  "image\\out_bar.png"
+IDB_PNG_BAL_BAR         RCDATA                  "image\\bal_bar.png"
+IDB_PNG_IN_HEAD         RCDATA                  "image\\in_head.png"
+IDB_PNG_OUT_HEAD        RCDATA                  "image\\out_head.png"
+IDB_PNG_BAL_HEAD_IN     RCDATA                  "image\\bal_head_in.png"
+IDB_PNG_BAL_HEAD_OUT    RCDATA                  "image\\bal_head_out.png"
+IDB_PNG_PERSON          RCDATA                  "image\\person.png"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_CONFIG_FILTER   "过滤设置"
+    IDS_STR_START_DATE      "起始日期"
+    IDS_STR_APPNAME         "记账本"
+    IDS_STR_ABOUT           "关于"
+    IDS_STR_APPAUTHOR       "作者: %s"
+    IDS_STR_APPVERSION      "版本:  %s Build.%s"
+    IDS_STR_ADDTIONAL       " 如果您愿意，可以向以下支付宝账号捐赠：\n%s  "
+    IDS_STR_RETURN          "返回"
+    IDS_STR_OK              "确定"
+    IDS_STR_CANCEL          "取消"
+    IDS_STR_IMPORT          "导入"
+    IDS_STR_EXPORT          "导出"
+    IDS_STR_BACKUP_DB       "备份数据库"
+    IDS_STR_SETUP_PWD       "设置密码"
+    IDS_STR_RECOVER_ALARM   "恢复提醒设置"
+    IDS_STR_OPTDB           "优化数据库"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_ACCOUNT         "账户"
+    IDS_STR_CATEGORY        "分类"
+    IDS_STR_RECORDS         "明细"
+    IDS_STR_IMPORT_CC       "从逗号分隔的CVS导入"
+    IDS_STR_IMPORT_TC       "从TAB分隔的CVS导入"
+    IDS_STR_DATE_RANGE      "明细范围"
+    IDS_STR_ALLDATE         "所有日期"
+    IDS_STR_DATE            "日期"
+    IDS_STR_ALARM           "财务提醒"
+    IDS_STR_DISABLED        "禁用"
+    IDS_STR_ENABLED         "启用"
+    IDS_STR_CYCLE           "循环提醒"
+    IDS_STR_YYYYMMDD        "%04d年%02d月%02d日"
+    IDS_STR_EVERY_DAY       "每天"
+    IDS_STR_EVERY_MONTH     "每月"
+    IDS_STR_EVERY_YEAR      "每年"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_ALL_CATEGORY    "所有分类"
+    IDS_STR_ALL_ACCOUNT     "所有账户"
+    IDS_STR_MORE            "更多"
+    IDS_STR_MONTHLY_EXREPORT "支出饼状图"
+    IDS_STR_MONTHLY_INREPORT "收入饼状图"
+    IDS_STR_YEARLY_REPORT   "年度收支对比图"
+    IDS_STR_BROWSE_MODE     "浏览模式"
+    IDS_STR_ORDER_MODE      "排序方式"
+    IDS_STR_DETAIL          "详细"
+    IDS_STR_SIMPLE          "简洁"
+    IDS_STR_BYTIME          "按时间"
+    IDS_STR_BYACCOUNT       "按账户"
+    IDS_STR_BYCATEGORY      "按类别"
+    IDS_STR_ERRAMOUNT       "错误，请输入金额"
+    IDS_STR_DELETE          "删除"
+    IDS_STR_BACKUP          "备份"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_CONFIRM         "确认"
+    IDS_STR_EXPORT_CC       "导出到逗号分隔的CVS"
+    IDS_STR_EXPORT_TC       "导出到TAB分隔的CVS"
+    IDS_STR_EXPORT_CHOOSE_ALL "选择所有日期"
+    IDS_STR_SUCCEED         "成功"
+    IDS_STR_FAILED          "失败"
+    IDS_STR_EXPORT_QIF      "导出到QIF"
+    IDS_STR_PASSWORD        "密码"
+    IDS_STR_NEW_PWD         "新密码"
+    IDS_STR_PWD_TIP         "留空则清空密码"
+    IDS_STR_PWD_CLEAR_S     "密码清除成功"
+    IDS_STR_PWD_SET_S       "密码设置成功，下次登录请使用新密码"
+    IDS_STR_PWD_INCORRECT   "密码错误或数据库已损坏"
+    IDS_STR_YYYYMM          "%04d年%02d月"
+    IDS_STR_NO_DATA         "无可用数据"
+    IDS_STR_MM              "%02d月"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_EDIT            "编辑"
+    IDS_STR_NEW             "新建"
+    IDS_STR_SELECT          "选择"
+    IDS_STR_ACCOUNT_LIST    "账户列表"
+    IDS_STR_CATEGORY_LIST   "分类列表"
+    IDS_STR_TRANS_LIST      "明细列表"
+    IDS_STR_BALANCE1        "余额: %.2f元"
+    IDS_STR_TRANS_DETAIL    "明细详情"
+    IDS_STR_NOTE            "备注"
+    IDS_STR_EXIT            "退出"
+    IDS_STR_CONFIG          "设置"
+    IDS_STR_BROWSE          "浏览"
+    IDS_STR_TO_ACCOUNT      "转至账户"
+    IDS_STR_WEEKDAY_NAME0   "星期天"
+    IDS_STR_WEEKDAY_NAME1   "星期一"
+    IDS_STR_WEEKDAY_NAME2   "星期二"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_WEEKDAY_NAME3   "星期三"
+    IDS_STR_WEEKDAY_NAME4   "星期四"
+    IDS_STR_WEEKDAY_NAME5   "星期五"
+    IDS_STR_WEEKDAY_NAME6   "星期六"
+    IDS_STR_NO_TRANSACTION  "无明细记录"
+    IDS_STR_EDIT_ACCOUNT    "编辑账户"
+    IDS_STR_INIT_AMOUNT     "初始资金"
+    IDS_STR_UPDATE          "更新"
+    IDS_STR_NEW_ACCOUNT     "新建账户"
+    IDS_STR_NAME            "名称"
+    IDS_STR_AMOUNT_UNIT     "元"
+    IDS_STR_SAVE            "保存"
+    IDS_STR_WARN_ACCOUNT_NAME "请设置账户名称"
+    IDS_STR_ERR_ACCOUNT_ADDDUP "账户添加失败：存在同名账户"
+    IDS_STR_ERR_ACCOUNT_UPDATEDUP "账户更新失败：存在同名账户"
+    IDS_STR_INFO_ACCOUNT_ADDS "账户添加成功"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_INFO_ACCOUNT_UPDATES "账户更新成功"
+    IDS_STR_ERR_ACCOUNT_INUSE "账户正在被使用，无法删除"
+    IDS_STR_WARN_ACCOUNT_DELETE "确实要删除此账户？"
+    IDS_STR_ERR_TRANS_AMOUNT "错误，请输入金额"
+    IDS_STR_ERR_TRANS_MINUS "错误，金额不能为负数"
+    IDS_STR_CONFIRM_EXIT    "确实要退出？"
+    IDS_STR_TRANS_ADD       "明细添加成功"
+    IDS_STR_TRANS_UPDATE    "明细更新成功"
+    IDS_STR_HOUR            "点"
+    IDS_STR_MIN             "分"
+    IDS_STR_EVERY_WEEK      "每周"
+    IDS_STR_AMOUNT          "金额"
+    IDS_STR_INPUT_TIP       "请使用""#""输入""."""
+    IDS_STR_INPUT_TIP_MINUS "请使用""*""输入""-""，""#""输入""."""
+    IDS_STR_DETAIL_INFO     "详情"
+    IDS_STR_EX_ACCOUNT_FILENAME "账户.%s.%s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_EX_CATEGORY_FILENAME "分类.%s.%s"
+    IDS_STR_EX_TRANS_ALL_FILENAME "明细记录.全部.%s.%s"
+    IDS_STR_EX_TRANS_D1_FILENAME "明细记录.%04d%02d%02d.%s"
+    IDS_STR_EX_TRANS_D2_FILENAME "明细记录.%04d%02d%02d-%04d%02d%02d.%s"
+    IDS_STR_EX_UNK_FILENAME "未知.%s.%s"
+    IDS_STR_Q_BACKUP_IMPORT "导入前是否备份您的数据？"
+    IDS_STR_ERR_IMPORT_FORMAT "将要导入的%s文件有误，请确认文件格式是否正确。"
+    IDS_STR_ERR_IMPORT_UNK_FORMAT "文件格式不支持，无法继续。"
+    IDS_STR_IMPORT_WAIT     "导入中，请稍后..."
+    IDS_STR_IMPORT_ANALYSIS "文件分析"
+    IDS_STR_IMPORT_RECORD   "解析记录...%d/%d"
+    IDS_STR_IMPORT_RESULT   "导入完成，成功导入%d%s。"
+    IDS_STR_TRANSFER        "转账"
+    IDS_STR_INCOME          "收入"
+    IDS_STR_EXPORT_RESULT   "导出成功，共导出%d条%s"
+    IDS_STR_EXPORT_WAIT     "导出中，请稍后..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_EXPENSE         "支出"
+    IDS_STR_CASH            "现金"
+    IDS_STR_CREDIT          "信用卡"
+    IDS_STR_SAVING          "储蓄卡"
+    IDS_STR_CONFIG_CATEGORY_EXPAND "分类初始展开级别"
+    IDS_STR_ERR_TRANSFER_ACCOUNT "转账双方不能为同一账户"
+    IDS_STR_CONFIG_AUTOLOCK "自动锁定"
+    IDS_STR_AUTOLOCK_IMM    "立即"
+    IDS_STR_SECONDS         "秒"
+    IDS_STR_AUTOLOCK_TIP    "自动锁延迟时间选择："
+    IDS_STR_FILTER          "过滤"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_ACCOUNT_TITLE_FORMAT_S "账户名称\t期初余额\t余额\t备注\t是否固定项"
+    IDS_STR_CATEGORY_TITLE_FORMAT_S "级别1\t级别2\t级别3"
+    IDS_STR_RECORD_TITLE_FORMAT_S "日期\t金额\t账户\t转至账户\t分类\t人员\t备注"
+    IDS_STR_ACCOUNT_TITLE_FORMAT_C """账户名称"",""期初余额"",""余额"",""备注"",""是否固定项"""
+    IDS_STR_CATEGORY_TITLE_FORMAT_C """级别1"",""级别2"",""级别3"""
+    IDS_STR_RECORD_TITLE_FORMAT_C 
+                            """日期"",""金额"",""账户"",""转至账户"",""分类"",""人员"",""备注"""
+    IDS_STR_ACCOUNT_TITLE_FORMAT_EXCEL_C "账户名称,期初余额,余额,备注,是否固定项"
+    IDS_STR_CATEGORY_TITLE_FORMAT_EXCEL_C "级别1,级别2,级别3"
+    IDS_STR_RECORD_TITLE_FORMAT_EXCEL_C "日期,金额,账户,转至账户,分类,备注"
+    IDS_STR_OPERATE         "操作"
+    IDS_STR_BACKUP_S        "备份完成"
+    IDS_STR_DELETE_S        "删除成功"
+    IDS_STR_WARN_RESET      "恢复成功，现在程序将退出，请重新打开程序以便数据库生效"
+    IDS_STR_WARN_RESTORE    "恢复数据库将会导致您现有的数据库内容丢失，是否继续？"
+    IDS_STR_RESTORE         "恢复"
+    IDS_STR_BACKUP_RESTORE  "备份与恢复"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_CONFIRM_DELETE  "确实要删除？"
+    IDS_STR_DB_OPT_S        "数据库优化成功"
+    IDS_STR_ALARM_RESTORE_S "提醒恢复成功"
+    IDS_STR_WARN_ALARM_RESTORE "将恢复设置文件中的提醒，过期提醒不保留，是否继续？"
+    IDS_STR_SUM_INEX        "收入:%.2f 支出:%.2f 盈余:%.2f"
+    IDS_STR_SUM_INOUT       "流入%.2f，流出%.2f，差额:%.2f"
+    IDS_STR_SWITCH          "切换"
+    IDS_STR_30DAY           "<%s>最近30天资金流"
+    IDS_STR_IN              "流入"
+    IDS_STR_OUT             "流出"
+    IDS_STR_BALANCE         "平衡"
+    IDS_STR_YEARLY_TITLE    "%04d年收支对比图"
+    IDS_STR_MONTHLY_TITLE   "%s饼图[%s]"
+    IDS_STR_PREV_YEAR       "上一年"
+    IDS_STR_NEXT_YEAR       "下一年"
+    IDS_STR_THIS_YEAR       "今年"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_DAILY_TIP       "请选择明细项目查看详情"
+    IDS_STR_NEW_CATEGORY    "新建分类"
+    IDS_STR_EDIT_CATEGORY   "编辑分类"
+    IDS_STR_PARENT_CATEGORY "父类"
+    IDS_STR_WARN_CATEGORY_SETNAME "请设置分类名称"
+    IDS_STR_ERR_CATEGORY_UPDATE "分类更新失败：存在同名分类"
+    IDS_STR_INFO_CATEGORY_UPDATES "分类更新成功"
+    IDS_STR_WARN_CATEGORY_DELETE "确实要删除此分类？"
+    IDS_STR_ERR_CATEGORY_INUSE "分类正在被使用，无法删除。"
+    IDS_STR_ERR_CATEGORY_ADD "分类添加失败：存在同名分类"
+    IDS_STR_INFO_CATEGORY_ADDS "分类添加成功"
+    IDS_STR_END_DATE        "结束日期"
+    IDS_STR_PERSON_DEFAULT  "默认"
+    IDS_STR_PERSON_TITLE    "人员与机构"
+    IDS_STR_PERSON_FAMILY   "家庭成员"
+    IDS_STR_PERSON_CONTACT  "往来人员"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STR_PERSON_INSTITUTION "机构组织"
+    IDS_STR_NEW_PERSON      "新建人员/机构"
+    IDS_STR_EDIT_PERSON     "编辑人员/机构"
+    IDS_STR_PERSON_TYPE     "类别"
+    IDS_STR_WARN_PERSON_DELETE "确实要删除选中人员/机构？"
+    IDS_STR_ERR_PERSON_INUSE "选中人员/机构正在被使用，无法删除。"
+    IDS_STR_WARN_PERSON_SETNAME "请输入名称。"
+    IDS_STR_ERR_PERSON_UPDATE "人员/机构更新失败：存在同名人员/机构"
+    IDS_STR_INFO_PERSON_UPDATES "人员/机构更新成功"
+    IDS_STR_ERR_PERSON_ADD  "人员/机构新增失败：存在同名人员/机构"
+    IDS_STR_INFO_PERSON_ADDS "人员/机构新增成功"
+    IDS_STR_PERSON_ALL      "全部"
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
