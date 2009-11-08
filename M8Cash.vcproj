@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|M8SDK (ARMV4I)"
-			OutputDirectory="..\..\projects\M8Cash\$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="..\..\projects\M8Cash\$(PlatformName)\$(ConfigurationName)\obj"
+			OutputDirectory="$(SolutionDir)\$(SolutionName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)\$(SolutionName)\$(ConfigurationName)\obj"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -108,8 +108,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|M8SDK (ARMV4I)"
-			OutputDirectory="..\..\projects\M8Cash\$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="..\..\projects\M8Cash\$(PlatformName)\$(ConfigurationName)\obj"
+			OutputDirectory="$(SolutionDir)\$(SolutionName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)\$(SolutionName)\$(ConfigurationName)\obj"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
