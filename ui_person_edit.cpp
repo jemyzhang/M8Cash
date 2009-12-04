@@ -1,6 +1,6 @@
 #include "ui_person_edit.h"
 #include "m8cash.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 #define MZ_IDC_TOOLBAR_PERSONEDIT 101

@@ -36,8 +36,7 @@ protected:
 	UiButton m_btnFilter;
 #ifdef USE_903SDK
     UiMultiLineEdit m_StaticBar;
-#endif
-#ifdef USE_926SDK
+#else
     UiEdit m_StaticBar;
 #endif
 

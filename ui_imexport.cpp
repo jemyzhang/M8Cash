@@ -1,7 +1,7 @@
 #include "ui_imexport.h"
 #include "ui_processimexport.h"
 #include "m8cash.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 #include "ui_calendar.h"

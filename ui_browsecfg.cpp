@@ -3,9 +3,9 @@
 #include "m8cash.h"
 
 #include "ui_report.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
-#include "..\MzCommon\UiSingleOption.h"
+#include <UiSingleOption.h>
 
 #define MZ_IDC_TOOLBAR_MAIN 101
 #define MZ_IDC_SCROLLWIN 102

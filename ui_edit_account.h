@@ -34,14 +34,11 @@ public:
 	UiCaption m_CaptionAccNote;
 #ifdef USE_903SDK
     UiMultiLineEdit m_EdtAccNote;
-#endif
-#ifdef USE_926SDK
-    UiEdit m_EdtAccNote;
+#else
+	UiEdit m_EdtAccNote;
 #endif
     UiToolbar_Text m_Toolbar;
-#ifdef EN_IMAGE_BTN
 	UiButton_Image m_BtnCalc;
-#endif
 protected:
     // Initialization of the window (dialog)
     virtual BOOL OnInitDialog();

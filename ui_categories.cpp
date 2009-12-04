@@ -1,7 +1,7 @@
 #include "ui_categories.h"
 #include "ui_edit_category.h"
 #include "m8cash.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 #define MZ_IDC_TOOLBAR_CATEGORIES 101

@@ -42,7 +42,8 @@
 				Name="VCCLCompilerTool"
 				ExecutionBucket="7"
 				Optimization="0"
-				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;DEBUG;_WINDOWS;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_HAS_CODEC;EN_IMAGE_BTN;EN_IMAGE_ICON;USE_903SDK"
+				AdditionalIncludeDirectories="..\MzCommon\include"
+				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;DEBUG;_WINDOWS;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE"
 				MinimalRebuild="true"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
@@ -66,7 +67,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /subsystem:windowsce,6.00"
-				AdditionalDependencies="mzfc.lib PlatformApi.lib CallInterface.lib libsqlitece_s.lib"
+				AdditionalDependencies="mzfc.lib PlatformApi.lib MzCommond.lib"
 				OutputFile="$(OutDir)/M8Cash.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\MzCommon\libs"
@@ -133,7 +134,8 @@
 				ExecutionBucket="7"
 				Optimization="3"
 				FavorSizeOrSpeed="0"
-				PreprocessorDefinitions="NDEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;_WINDOWS;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE;SQLITE_ENABLE_COLUMN_METADATA;SQLITE_HAS_CODEC;EN_IMAGE_BTN;EN_IMAGE_ICON;USE_903SDK"
+				AdditionalIncludeDirectories="..\MzCommon\include"
+				PreprocessorDefinitions="NDEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;_WINDOWS;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE"
 				StringPooling="false"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
@@ -156,7 +158,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /subsystem:windowsce,6.00"
-				AdditionalDependencies="mzfc.lib PlatformApi.lib"
+				AdditionalDependencies="mzfc.lib PlatformApi.lib MzCommons.lib"
 				OutputFile="$(OutDir)/M8Cash.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\MzCommon\libs"
@@ -588,6 +590,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\MzCommon\MzCommonRes.rc"
+				>
+			</File>
+			<File
 				RelativePath=".\image\Optimize.png"
 				>
 			</File>
@@ -641,74 +647,6 @@
 			</File>
 			<File
 				RelativePath=".\image\uLReleased.png"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="MzCommon"
-			>
-			<File
-				RelativePath="..\MzCommon\MzCommon.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\MzCommon.h"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\MzCommonRes.rc"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\MzCommonResource.h"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\MzConfig.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\MzConfig.h"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiImage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiImage.h"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiInstructionDlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiInstructionDlg.h"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiSingleOption.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiSingleOption.h"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiSwitchOption.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiSwitchOption.h"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiWaitMessageDlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\MzCommon\UiWaitMessageDlg.h"
 				>
 			</File>
 		</Filter>

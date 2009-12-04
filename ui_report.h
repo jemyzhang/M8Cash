@@ -5,7 +5,7 @@
 #include "ui_piegraph.h"
 #include "ui_bargraph.h"
 #include "cashdb.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 class UiReportTable : public UiWin {

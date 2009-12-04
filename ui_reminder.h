@@ -4,6 +4,8 @@
 #include <mzfc_inc.h>
 #include <list>
 
+using std::list;
+
 typedef enum RepeatType{
 	REPEAT_NONE		=	0,
 	REPEAT_YEARLY	=	4,

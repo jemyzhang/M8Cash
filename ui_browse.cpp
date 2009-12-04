@@ -6,7 +6,7 @@
 #include "ui_reminder.h"
 #include "ui_filter.h"
 
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 MZ_IMPLEMENT_DYNAMIC(Ui_BrowseWnd)

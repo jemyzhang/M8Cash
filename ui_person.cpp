@@ -1,7 +1,7 @@
 #include "ui_person.h"
 #include "ui_person_edit.h"
 #include "resource.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 #define MZ_IDC_TOOLBAR_ACCOUNTS 101

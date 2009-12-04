@@ -30,24 +30,20 @@ public:
 	UiScrollWin m_ScrollWinStatics;	// 统计滚动窗
 #ifdef USE_903SDK
     UiMultiLineEdit m_TextStatics;		//统计	未知行
-#endif
-#ifdef USE_926SDK
-    UiEdit m_TextStatics;		//统计	未知行
+#else
+	UiEdit m_TextStatics;		//统计	未知行
 #endif
 
 	DailyRecordList m_ListDetail;		//明细列表
 
 #ifdef USE_903SDK
     UiMultiLineEdit m_TextDetail;		//详情	2行
-#endif
-#ifdef USE_926SDK
-    UiEdit m_TextDetail;		//详情	2行
+#else
+	UiEdit m_TextDetail;		//详情	2行
 #endif
 
-#ifdef EN_IMAGE_BTN
 	UiButton_Image m_BtnLeft;
 	UiButton_Image m_BtnRight;
-#endif
 	Ui_DailyReportWnd(void);
 	~Ui_DailyReportWnd(void);
 protected:

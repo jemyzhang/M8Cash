@@ -2,7 +2,7 @@
 #include "m8cash.h"
 #include "ui_calendar.h"
 
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 #define MZ_IDC_TOOLBAR_ABOUT 101
@@ -121,7 +121,6 @@ BOOL Ui_DailyReportWnd::OnInitDialog() {
 	m_CaptionDate.EnableNotifyMessage(true);
 	AddUiWin(&m_CaptionDate);
 
-#ifdef EN_IMAGE_BTN
 	int bw = pimg[IDB_PNG_L_RRELEASE - IDB_PNG_CALC]->GetImageWidth();
 	int bh = pimg[IDB_PNG_L_RRELEASE - IDB_PNG_CALC]->GetImageHeight();
 	m_BtnLeft.SetPos(5, (m_CaptionDate.GetHeight() - bh)/2, bw, bh);
@@ -135,7 +134,6 @@ BOOL Ui_DailyReportWnd::OnInitDialog() {
 	m_BtnRight.SetImage_Pressed(pimg[IDB_PNG_L_RPRESS - IDB_PNG_CALC]);
 	m_BtnRight.SetID(MZ_IDC_BUTTON_NEXT_DATE);
 	m_CaptionDate.AddChild(&m_BtnRight);
-#endif
 
 	y += MZM_HEIGHT_CAPTION + 20;
 	//ÄÚÈÝ

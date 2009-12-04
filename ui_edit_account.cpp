@@ -1,7 +1,7 @@
 #include "ui_edit_account.h"
 #include "ui_accounts.h"
 #include "m8cash.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 #define MZ_IDC_TOOLBAR_ACOUNTEDIT 101
@@ -55,14 +55,12 @@ BOOL Ui_EditAccountWndEx::OnInitDialog() {
 	m_BtnKeyBoard.SetSlotWin(&m_EdtAccInitAmount);
 	m_BtnKeyBoard.SetButtonImage(pimg[IDB_PNG_COINS - IDB_PNG_BEGIN]);
 
-#ifdef EN_IMAGE_BTN
 	m_BtnCalc.SetPos(GetWidth() - 70, y, 60, MZM_HEIGHT_SINGLELINE_EDIT);
 	m_BtnCalc.SetButtonType(MZC_BUTTON_DOWNLOAD);
 	m_BtnCalc.SetImage_Normal(pimg[IDB_PNG_CALC - IDB_PNG_CALC]);
 	m_BtnCalc.SetImage_Pressed(pimg[IDB_PNG_CALC - IDB_PNG_CALC]);
 	m_BtnCalc.SetID(MZ_IDC_BUTTON_CALCULATOR);
 	m_ScrollWin.AddChild(&m_BtnCalc);
-#endif
 
 	m_EdtAmountMask.SetSlotWin(&m_EdtAccInitAmount);
 	AddUiWin(&m_EdtAmountMask);

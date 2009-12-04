@@ -3,7 +3,7 @@
 #include "ui_password.h"
 #include <MotorVibrate.h>
 
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 // The global variable of the application.
 M8CashApp theApp;

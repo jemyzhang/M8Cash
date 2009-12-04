@@ -26,15 +26,11 @@ public:
     UiToolbar_Text m_Toolbar;
 //    UiButton m_BtnAdd;
 	UiCaption m_lblTitle;
-#ifdef EN_IMAGE_BTN
+
 	UiButton_Image m_BtnAdd;
 	UiButton_Image m_BtnCalc;
 	UiEditKeySwitchButton m_BtnKeyBoard;
-#else
-	UiButtonEx m_BtnAdd;
-	UiButtonEx m_BtnCalc;
-	UiButtonEx m_BtnKeyBoard;
-#endif
+
 	UiStatic m_lblAmount;
     UiButtonEx m_BtnDate;
     UiButtonEx m_BtnAccounts;
@@ -47,8 +43,7 @@ public:
     UiCaption m_lblNote;
 #ifdef USE_903SDK
     UiMultiLineEdit m_EdtNote;
-#endif
-#ifdef USE_926SDK
+#else
     UiEdit m_EdtNote;
 #endif
     UiButtonEx m_BtnReminder;

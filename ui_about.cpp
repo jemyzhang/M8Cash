@@ -4,7 +4,7 @@
 #include "ui_accounts.h"
 #include "ui_categories.h"
 #include "m8cash.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 MZ_IMPLEMENT_DYNAMIC(UI_AboutWnd)

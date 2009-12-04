@@ -1,6 +1,6 @@
 #include "ui_editmoney.h"
 #include "m8cash.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 UiEditMoney::UiEditMoney(void)

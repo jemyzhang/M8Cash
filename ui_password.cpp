@@ -1,6 +1,6 @@
 #include "ui_password.h"
 #include "m8cash.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 MZ_IMPLEMENT_DYNAMIC(Ui_PasswordWnd)

@@ -7,7 +7,7 @@
 #include "m8cash.h"
 #include "ui_person.h"
 
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 #include <ShellNotifyMsg.h>
 
@@ -64,22 +64,12 @@ BOOL Ui_MainWnd::OnInitDialog() {
 	m_BtnKeyBoard.SetSlotWin(&m_EdtAmountYuan);
 	m_BtnKeyBoard.SetButtonImage(pimg[IDB_PNG_COINS - IDB_PNG_BEGIN]);
 
-#ifdef EN_IMAGE_BTN
 	m_BtnCalc.SetPos((GetWidth() - 140), y, 60, MZM_HEIGHT_SINGLELINE_EDIT);
 	m_BtnCalc.SetButtonType(MZC_BUTTON_DOWNLOAD);
 	m_BtnCalc.SetID(MZ_IDC_BUTTON_CALCULATOR);
 	m_BtnCalc.SetImage_Normal(pimg[IDB_PNG_CALC - IDB_PNG_BEGIN]);
 	m_BtnCalc.SetImage_Pressed(pimg[IDB_PNG_CALC - IDB_PNG_BEGIN]);
 	AddUiWin(&m_BtnCalc);
-#else
-	m_BtnCalc.SetPos((GetWidth() - 140), y, 60, MZM_HEIGHT_SINGLELINE_EDIT);
-	m_BtnCalc.SetButtonType(MZC_BUTTON_DOWNLOAD);
-	m_BtnCalc.SetID(MZ_IDC_BUTTON_CALCULATOR);
-	m_BtnCalc.SetImage1(pimg[IDB_PNG_CALC - IDB_PNG_CALC]);
-	m_BtnCalc.SetImageWidth1(pimg[IDB_PNG_CALC - IDB_PNG_CALC]->GetImageWidth());
-	AddUiWin(&m_BtnCalc);
-	m_BtnCalc.SetShowImage1(true);
-#endif
 	m_EdtAmountMask.SetSlotWin(&m_EdtAmountYuan);
 
 	m_EdtAmountYuan.SetMaskWin(&m_EdtAmountMask);
@@ -94,25 +84,11 @@ BOOL Ui_MainWnd::OnInitDialog() {
 	AddUiWin(&m_EdtAmountMask);
 	AddUiWin(&m_BtnKeyBoard);
 
-#ifdef EN_IMAGE_BTN
 	m_BtnAdd.SetPos((GetWidth() - 70), y, 60, MZM_HEIGHT_SINGLELINE_EDIT);
 	m_BtnAdd.SetButtonType(MZC_BUTTON_DOWNLOAD);
 	m_BtnAdd.SetID(MZ_IDC_BUTTON_ADD);
 	AddUiWin(&m_BtnAdd);
-#else
-	m_BtnAdd.SetPos((GetWidth() - 70), y, 60, MZM_HEIGHT_SINGLELINE_EDIT);
-	m_BtnAdd.SetButtonType(MZC_BUTTON_DOWNLOAD);
-	m_BtnAdd.SetID(MZ_IDC_BUTTON_ADD);
-	if(_isEditMode){
-		m_BtnAdd.SetImage1(pimg[IDB_PNG_MODIFY - IDB_PNG_CALC]);
-		m_BtnAdd.SetImageWidth1(pimg[IDB_PNG_MODIFY - IDB_PNG_CALC]->GetImageWidth());
-	}else{
-		m_BtnAdd.SetImage1(pimg[IDB_PNG_ADD - IDB_PNG_CALC]);
-		m_BtnAdd.SetImageWidth1(pimg[IDB_PNG_ADD - IDB_PNG_CALC]->GetImageWidth());
-	}
-	m_BtnAdd.SetShowImage1(true);
-	AddUiWin(&m_BtnAdd);
-#endif
+
 	y+=MZM_HEIGHT_SINGLELINE_EDIT;
     m_ScrollWin.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR);
     m_ScrollWin.SetID(MZ_IDC_SCROLLWIN);
@@ -137,11 +113,9 @@ BOOL Ui_MainWnd::OnInitDialog() {
 	m_BtnDate.SetTextMaxLen(0);
     m_ScrollWin.AddChild(&m_BtnDate);
 
-#ifdef EN_IMAGE_ICON
 	m_BtnDate.SetImage1(pimg[IDB_PNG_DATE - IDB_PNG_CALC]);
 	m_BtnDate.SetShowImage1(true);
 	m_BtnDate.SetImageWidth1(pimg[IDB_PNG_DATE - IDB_PNG_CALC]->GetImageWidth());
-#endif
 
     y += MZM_HEIGHT_BUTTONEX;
     m_BtnReminder.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONEX);
@@ -154,11 +128,10 @@ BOOL Ui_MainWnd::OnInitDialog() {
     m_BtnReminder.SetShowImage2(true);
     m_BtnReminder.SetID(MZ_IDC_BUTTON_REMINDER);
 	m_BtnReminder.SetTextMaxLen(0);
-#ifdef EN_IMAGE_ICON
+
 	m_BtnReminder.SetImage1(pimg[IDB_PNG_ALERT - IDB_PNG_BEGIN]);
 	m_BtnReminder.SetShowImage1(true);
 	m_BtnReminder.SetImageWidth1(pimg[IDB_PNG_ALERT - IDB_PNG_BEGIN]->GetImageWidth());
-#endif
 
     y += MZM_HEIGHT_BUTTONEX;
     m_BtnAccounts.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONEX);
@@ -171,11 +144,10 @@ BOOL Ui_MainWnd::OnInitDialog() {
     m_BtnAccounts.SetShowImage2(true);
     m_BtnAccounts.SetID(MZ_IDC_BUTTON_ACCOUNT);
 	m_BtnAccounts.SetTextMaxLen(0);
-#ifdef EN_IMAGE_ICON
+
 	m_BtnAccounts.SetImage1(pimg[IDB_PNG_ACCOUNT - IDB_PNG_CALC]);
 	m_BtnAccounts.SetShowImage1(true);
 	m_BtnAccounts.SetImageWidth1(pimg[IDB_PNG_ACCOUNT - IDB_PNG_CALC]->GetImageWidth());
-#endif
 
     y += MZM_HEIGHT_BUTTONEX;
     m_BtnToAccounts.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONEX);
@@ -188,11 +160,10 @@ BOOL Ui_MainWnd::OnInitDialog() {
     m_BtnToAccounts.SetShowImage2(true);
     m_BtnToAccounts.SetID(MZ_IDC_BUTTON_TOACCOUNT);
 	m_BtnToAccounts.SetTextMaxLen(0);
-#ifdef EN_IMAGE_ICON
+
 	m_BtnToAccounts.SetImage1(pimg[IDB_PNG_TOACCOUNT - IDB_PNG_CALC]);
 	m_BtnToAccounts.SetShowImage1(true);
 	m_BtnToAccounts.SetImageWidth1(pimg[IDB_PNG_ACCOUNT - IDB_PNG_CALC]->GetImageWidth());
-#endif
 
 	y += MZM_HEIGHT_BUTTONEX;
     m_BtnCategory.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONEX);
@@ -205,11 +176,10 @@ BOOL Ui_MainWnd::OnInitDialog() {
     m_BtnCategory.SetShowImage2(true);
     m_BtnCategory.SetID(MZ_IDC_BUTTON_CATEGORY);
 	m_BtnCategory.SetTextMaxLen(0);
-#ifdef EN_IMAGE_ICON
+
 	m_BtnCategory.SetImage1(pimg[IDB_PNG_CATEGORY - IDB_PNG_CALC]);
 	m_BtnCategory.SetShowImage1(true);
 	m_BtnCategory.SetImageWidth1(pimg[IDB_PNG_ACCOUNT - IDB_PNG_CALC]->GetImageWidth());
-#endif
 
     y += MZM_HEIGHT_BUTTONEX;
     m_BtnPerson.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONEX);
@@ -221,11 +191,10 @@ BOOL Ui_MainWnd::OnInitDialog() {
     m_BtnPerson.SetShowImage2(true);
     m_BtnPerson.SetID(MZ_IDC_BUTTON_PERSON);
 	m_BtnPerson.SetTextMaxLen(0);
-#ifdef EN_IMAGE_ICON
+
 	m_BtnPerson.SetImage1(pimg[IDB_PNG_PERSON - IDB_PNG_BEGIN]);
 	m_BtnPerson.SetShowImage1(true);
 	m_BtnPerson.SetImageWidth1(pimg[IDB_PNG_PERSON - IDB_PNG_BEGIN]->GetImageWidth());
-#endif
 
     y += MZM_HEIGHT_BUTTONEX;
     m_lblNote.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
@@ -235,7 +204,11 @@ BOOL Ui_MainWnd::OnInitDialog() {
     y += MZM_HEIGHT_CAPTION;
     m_EdtNote.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_CAPTION - MZM_HEIGHT_TEXT_TOOLBAR);
     m_EdtNote.EnableScrollBarV(true);
+#ifdef USE_903SDK
 	m_EdtNote.SetMaxChars(50);
+#else
+	m_EdtNote.SetMaxChar(50);
+#endif
     m_EdtNote.SetSipMode(IM_SIP_MODE_GEL_PY);
     m_EdtNote.SetID(MZ_IDC_EDIT_NOTE);
     m_ScrollWin.AddChild(&m_EdtNote);

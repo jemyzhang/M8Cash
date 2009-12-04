@@ -6,9 +6,9 @@
 #include "ui_password.h"
 #include "ui_backup.h"
 #include "m8cash.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
-#include "..\MzCommon\UiSingleOption.h"
+#include <UiSingleOption.h>
 
 MZ_IMPLEMENT_DYNAMIC(Ui_ConfigWnd)
 

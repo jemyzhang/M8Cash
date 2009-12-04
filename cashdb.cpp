@@ -1,6 +1,6 @@
 #include "cashdb.h"
 #include "pinyin_sort.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 #include "m8cash.h"

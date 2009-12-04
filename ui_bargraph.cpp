@@ -1,5 +1,5 @@
 #include "ui_bargraph.h"
-#include "..\MzCommon\MzCommon.h"
+#include <MzCommon.h>
 using namespace MzCommon;
 
 #include "m8cash.h"
