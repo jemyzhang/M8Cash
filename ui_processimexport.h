@@ -3,7 +3,6 @@
 // include the MZFC library header file
 #include <mzfc_inc.h>
 #include <Mzfc/MzProgressDialog.h> 
-
 //#ifdef IM_USETAB
 //#pragma message("导入导出: 使用tab分隔符")
 
@@ -70,6 +69,7 @@ private:
 	void processOption(int t);
 	//处理导入时字符串中的双引号
 	wchar_t* processToken(wchar_t* &token);
+    LPWSTR qif_date(LPCTSTR recdt);
 private:
 	bool _isImport;
 	int _filetype;

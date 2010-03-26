@@ -6,9 +6,8 @@
 #include "ui_password.h"
 #include "ui_backup.h"
 #include "m8cash.h"
-#include <MzCommon.h>
-using namespace MzCommon;
-#include <UiSingleOption.h>
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 MZ_IMPLEMENT_DYNAMIC(Ui_ConfigWnd)
 
@@ -322,9 +321,13 @@ void Ui_ConfigWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 			}
 		case MZ_IDC_BTN_AUTOLOCK:
 		{
-			Ui_SingleOptionWnd dlg;
 			UINT AutoLockTimeOut[] = {1,15,30,60,300};
-			wchar_t sTimeout[16];
+            wchar_t sTimeout[32];
+            //创建新弹出菜单对象
+            MzPopupMenu PopupMenu;
+            //设置弹出菜单的标题
+            PopupMenu.SetMenuTitle(LOADSTRING(IDS_STR_AUTOLOCK_TIP).C_Str());
+
 			for(int i = 0; i < sizeof(AutoLockTimeOut)/sizeof(AutoLockTimeOut[0]); i++){
 				if(AutoLockTimeOut[i] <= 1){
 					wsprintf(sTimeout,L"%s",LOADSTRING(IDS_STR_AUTOLOCK_IMM).C_Str());
@@ -335,34 +338,14 @@ void Ui_ConfigWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						wsprintf(sTimeout,L"%d %s",AutoLockTimeOut[i]/60,LOADSTRING(IDS_STR_MIN).C_Str());
 					}
 				}
-				dlg.AppendOptionItem(sTimeout);
-			}
-			DWORD lock = appconfig.IniAutolock.Get();
-			WORD locktype = LOWORD(lock);
-			WORD locktimeout = HIWORD(lock);
-			int selidx = 0;
-			if(locktype != 0){
-				for(int i = 0; i < sizeof(AutoLockTimeOut)/sizeof(AutoLockTimeOut[0]); i++){
-					if(locktimeout == AutoLockTimeOut[i]){
-						selidx = i;
-						break;
-					}
-				}
+				PopupMenu.AppendMenuItem(MZV2_MID_MIN + i + 1,sTimeout);
 			}
 
-			dlg.SetSelectedIndex(selidx);
-			dlg.SetTitleText(LOADSTRING(IDS_STR_AUTOLOCK_TIP).C_Str());
-			RECT rcWork = MzGetWorkArea();
-			dlg.Create(rcWork.left + 40, rcWork.top + 120, RECT_WIDTH(rcWork) - 80, 210 + 70*3,
-				m_hWnd, 0, WS_POPUP);
-			// set the animation of the window
-			dlg.SetAnimateType_Show(MZ_ANIMTYPE_NONE);
-			dlg.SetAnimateType_Hide(MZ_ANIMTYPE_FADE);
-			int nRet = dlg.DoModal();
-			if(nRet == ID_OK){
-				appconfig.IniAutolock.Set(MAKELONG(1,AutoLockTimeOut[dlg.GetSelectedIndex()]));
+            int result = PopupMenu.MzTrackPopupMenu(m_hWnd, TRUE);
+            if(result > MZV2_MID_MIN){
+				appconfig.IniAutolock.Set(MAKELONG(1,AutoLockTimeOut[result - MZV2_MID_MIN - 1]));
 				updateAutolock();
-			}
+            }
 			break;
 		}
     }

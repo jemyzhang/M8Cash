@@ -1,7 +1,7 @@
 #include "ui_password.h"
 #include "m8cash.h"
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 MZ_IMPLEMENT_DYNAMIC(Ui_PasswordWnd)
 
@@ -122,16 +122,13 @@ void Ui_PasswordWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_PWD_SET_S).C_Str(),2000);
 					}
 				}else{
-					cash_db.connect(db_path);
+                    bool ret = false;
 					if(s.IsEmpty()){
-						cash_db.decrypt(NULL,0);
+                        ret = cash_db.checkpwd(NULL,0);
 					}else{
-						cash_db.decrypt(s.C_Str(),s.Length());
+						ret = cash_db.checkpwd(s.C_Str(),s.Length());
 					}
-					//检查记录版本
-					cash_db.versionUpdate(m_hWnd);
-					cash_db.recover();
-					if(!cash_db.load()){
+					if(!ret){
 						//popup error message
 						//L"密码错误，或者数据库已损坏"
 						cash_db.disconnect();

@@ -3,8 +3,8 @@
 #include "ui_password.h"
 #include <MotorVibrate.h>
 
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 // The global variable of the application.
 M8CashApp theApp;
 wchar_t db_path[256];
@@ -30,25 +30,16 @@ void M8CashApp::loadImageRes(){
 }
 
 bool M8CashApp::checkpwd(){
-	wchar_t currpath[128];
-	bool ret = true;
-	if(File::GetCurrentPath(currpath)){
-		wsprintf(db_path,L"%s\\cash.db",currpath);
-	}else{
-		wsprintf(db_path,DEFAULT_DB);
-	}
-	if(cash_db.connect(db_path)){
+	bool ret = false;
+	if(cash_db.connect()){
 		//popup password dialog
 		//try if there is a password
-		g_bencypt = false;
-		cash_db.decrypt(NULL,0);
-		//检查记录版本
-		cash_db.versionUpdate(m_pMainWnd->m_hWnd);
-		cash_db.recover();
-		if(!cash_db.load()){
-			g_bencypt = true;
-			cash_db.disconnect();
-			//cash_db.connect(db_path);
+		
+        if(cash_db.checkpwd(NULL,0)){
+            g_bencypt = false;
+            ret = true;
+        }else{
+            g_bencypt = true;
 			Ui_PasswordWnd dlg;
 			RECT rcWork = MzGetWorkArea();
 			dlg.setMode(0);
@@ -58,10 +49,14 @@ bool M8CashApp::checkpwd(){
 			int nRet = dlg.DoModal();
 			if (nRet == ID_OK) {
 				ret = true;
-			}else{
-				ret = false;
 			}
-		}
+        }
+        if(ret){
+		    //检查记录版本
+		    cash_db.versionUpdate(m_pMainWnd->m_hWnd);
+		    cash_db.recover();
+            cash_db.load();
+        }
 	}else{
 		//检查记录版本
 		cash_db.versionUpdate(m_pMainWnd->m_hWnd);

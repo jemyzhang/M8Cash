@@ -10,9 +10,9 @@
 #include <IMzUnknown_IID.h>
 #include <IFileBrowser.h>
 #include <IFileBrowser_GUID.h>
-
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <fstream>
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 MZ_IMPLEMENT_DYNAMIC(Ui_ProcessImExport)
 
@@ -153,6 +153,83 @@ wchar_t* Ui_ProcessImExport::processToken(wchar_t* &token){
 	return token;
 }
 
+wchar_t* chr2wch(const char* buffer, wchar_t** wbuf)
+{
+      size_t len = strlen(buffer); 
+      size_t wlen = MultiByteToWideChar(CP_ACP, 0, (const char*)buffer, int(len), NULL, 0); 
+      wchar_t *wBuf = new wchar_t[wlen + 1]; 
+      MultiByteToWideChar(CP_ACP, 0, (const char*)buffer, int(len), wBuf, int(wlen));
+	  wBuf[wlen] = '\0';
+	  *wbuf = wBuf;
+	  return wBuf;
+} 
+
+list<CMzString> loadText(TCHAR* filename, TEXTENCODE_t enc){
+	list<CMzString> lines;
+    if(!File::FileExists(filename)){
+		return lines;
+	}
+
+	CMzString m_Text;
+	if(enc == ttcAnsi){
+        ifstream file;
+        file.open(filename,  ios::in | ios::binary);
+        if (file.is_open())
+        {
+                file.seekg(0, ios::end);
+                int nLen = file.tellg();
+                char *ss = new char[nLen+1];
+                file.seekg(0, ios::beg);
+                file.read(ss, nLen);
+                ss[nLen] = '\0';
+				wchar_t *wss;
+                chr2wch(ss,&wss);
+                m_Text = wss;
+				delete[] ss;
+				delete[] wss;
+        }
+        file.close();
+	}else if(enc == ttcUnicode ||
+		enc == ttcUnicodeBigEndian){
+		wifstream ofile;
+        ofile.open(filename, ios::in | ios ::binary);
+        if (ofile.is_open())
+        {
+			ofile.seekg(0, ios::end);
+            int nLen = ofile.tellg();
+            ofile.seekg(2, ios::beg);
+            wchar_t *tmpstr = new wchar_t[nLen + 1];
+            ofile.read(tmpstr, nLen);                        
+            tmpstr[nLen] = '\0';
+            m_Text = tmpstr;
+			delete[] tmpstr;
+		}
+        ofile.close();
+	}
+
+	//处理成多行
+	wchar_t *pstr = m_Text.C_Str();
+	wchar_t wch = 0;
+	int scnt = 0;
+	int npos = 0;
+	int ncnt = 0;
+	do{
+		wch = pstr[scnt++];
+		if(wch == '\n' || wch == '\r'){
+			if(ncnt != 0){
+				lines.push_back(m_Text.SubStr(npos,ncnt));
+				npos += (ncnt+1);
+				ncnt = 0;
+			}else{
+				npos++;	//忽略换行符
+			}
+			continue;
+		}
+		ncnt++;
+	}while(wch != '\0');
+	return lines;
+}
+
 bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omited, int &failed){
 	if(_isImport){
 		if(MzMessageBoxEx(m_hWnd,
@@ -175,7 +252,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 	m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_IMPORT_WAIT).C_Str());
 	m_Progressdlg.SetInfo(LOADSTRING(IDS_STR_IMPORT_ANALYSIS).C_Str());
 	m_Progressdlg.BeginProgress(m_hWnd);
-	list<CMzString> lines = File::loadText(file,enc);
+	list<CMzString> lines = loadText(file,enc);
 	wchar_t* seps;
 	if(_filetype == PROCESS_FILE_CSV_S){
 		seps = L"\t";
@@ -422,7 +499,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 				m_Progressdlg.SetCurValue(cnt*100/size);
 				m_Progressdlg.UpdateProgress();
 				linestr = *i;
-				CASH_RECORD_t record;
+				CASH_TRANSACT_t record;
 				wchar_t* token;
 				token = C::_wcstok(linestr.C_Str(),seps);
 				if(token == NULL){	//日期
@@ -603,7 +680,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 					}
 				}
 
-				if(cash_db.checkDupRecord(&record) == -1){
+				if(cash_db.checkDupTransaction(&record) == -1){
 					cash_db.appendTransaction(&record);
 					nSuccess++;
 				}else{
@@ -750,7 +827,7 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 			m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
 			m_Progressdlg.BeginProgress(m_hWnd);
 			if(_dateAll){
-				cash_db.loadRecords();
+				cash_db.loadTransactions();
 			}else{
 				ExportDate_t d1, d2;
 				d1.Value = _sdate;
@@ -758,9 +835,9 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 				RECORDATE_t rd1,rd2;
 				rd1.Year = d1.Date.Year; rd1.Month = d1.Date.Month; rd1.Day = d1.Date.Day;
 				rd2.Year = d2.Date.Year; rd2.Month = d2.Date.Month; rd2.Day = d2.Date.Day;
-				cash_db.getRecordsByDate(&rd1,&rd2);
+				cash_db.getTransactionsByDate(&rd1,&rd2);
 			}
-			list<CASH_RECORD_ptr>::iterator i = cash_db.list_search_record.begin();
+			list<CASH_TRANSACT_ptr>::iterator i = cash_db.list_search_record.begin();
 			int size = cash_db.list_search_record.size();
 			wchar_t *exformat;
 			if(_filetype == PROCESS_FILE_CSV_S){
@@ -769,7 +846,7 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 				exformat = DEF_RECORD_FORMAT_C;
 			}
 			for(; i != cash_db.list_search_record.end();i++){
-				CASH_RECORD_ptr c = *i;
+				CASH_TRANSACT_ptr c = *i;
 				CMzString dateonly = c->date;
 				fwprintf(fp,exformat,
 					dateonly.SubStr(0,10).C_Str(),
@@ -800,6 +877,23 @@ bool Ui_ProcessImExport::process_qif_import(wchar_t* file,int &succed, int &omit
 	wsprintf(_lastErrMsg,L"功能尚未完成。");
 	return false;
 }
+
+LPWSTR Ui_ProcessImExport::qif_date(LPCTSTR recdt){
+	LPWSTR retval = NULL;
+	if(recdt == NULL) return retval;
+
+	DWORD y,m,d;
+	swscanf(recdt,L"%04d-%02d-%02d",&y,&m,&d);
+	y %= 100;	//取后两位
+	wchar_t qifdt[9];
+	swprintf(qifdt,L"%02d/%02d/%02d",m,d,y);
+	retval = qifdt;
+	if(qifdt[0] == '0') retval ++;
+	if(qifdt[3] == '0') qifdt[3] = ' ';
+	if(qifdt[6] == '0') qifdt[6] = ' ';
+	return retval;
+}
+
 bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 	FILE* fp;
 	fp = _wfopen(file,L"wt");
@@ -824,7 +918,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 				fwprintf(fp,L"N%s\n",c->name);	//名称
 				if(lstrlen(c->note)){
 					wchar_t snote[1024];
-					fwprintf(fp,L"D%s\n",C::removeWrap(snote,c->note));		//描述
+					fwprintf(fp,L"M%s\n",C::removeWrap(snote,c->note));		//描述
 				}
 				//类型
 				if(lstrcmp(c->name,LOADSTRING(IDS_STR_CASH).C_Str()) == 0){
@@ -921,9 +1015,9 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 				bool baccount = false;
 				bool ret;
 				if(_dateAll){
-					ret = cash_db.getRecordsByToAccount(account->id);
+					ret = cash_db.getTransactionsByToAccount(account->id);
 				}else{
-					ret = cash_db.getRecordsByToAccount(account->id,&rd1,&rd2);
+					ret = cash_db.getTransactionsByToAccount(account->id,&rd1,&rd2);
 				}
 				if(ret){	//转入
 					if(!baccount){
@@ -936,23 +1030,23 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 							fwprintf(fp,L"TBank\n^\n!Type:Bank\n");
 						}
 						if(account->initval != 0){
-							fwprintf(fp,L"D2009-01-01\n");
+							fwprintf(fp,L"D1/ 1/ 9\n");
 							fwprintf(fp,L"T%.2f\n",(double)account->initval/100);
-							fwprintf(fp,L"U%.2f\n",(double)account->initval/100);
-							fwprintf(fp,L"CX\nP账户初始金额\n");
+                			fwprintf(fp,L"CX\n");
+							fwprintf(fp,L"M账户初始金额\n");
 							fwprintf(fp,L"L[%s]\n^\n",account->name);
 						}
 					}
-					list<CASH_RECORD_ptr>::iterator j = cash_db.list_search_record.begin();
+					list<CASH_TRANSACT_ptr>::iterator j = cash_db.list_search_record.begin();
 					for(; j != cash_db.list_search_record.end(); j++){
-						CASH_RECORD_ptr record = *j;
+						CASH_TRANSACT_ptr record = *j;
 						CMzString datestr = record->date;
-						fwprintf(fp,L"D%s\n",datestr.SubStr(0,10).C_Str());
+						fwprintf(fp,L"D%s\n",qif_date(datestr.SubStr(0,10).C_Str()));
 						fwprintf(fp,L"T%.2f\n",(double)record->amount/100);
 						fwprintf(fp,L"U%.2f\n",(double)record->amount/100);
 						if(lstrlen(record->note)){
 							wchar_t snote[1024];
-							fwprintf(fp,L"P%s\n",C::removeWrap(snote,record->note));		//描述
+							fwprintf(fp,L"M%s\n",C::removeWrap(snote,record->note));		//描述
 						}
 						CASH_CATEGORY_ptr category = cash_db.categoryById(record->categoryid);
 						fwprintf(fp,L"L[%s]\n^\n",cash_db.accountById(record->accountid)->name);
@@ -960,9 +1054,9 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 					}
 				}
 				if(_dateAll){
-					ret = cash_db.getRecordsByAccount(account->id);
+					ret = cash_db.getTransactionsByAccount(account->id);
 				}else{
-					ret = cash_db.getRecordsByAccount(account->id,&rd1,&rd2);
+					ret = cash_db.getTransactionsByAccount(account->id,&rd1,&rd2);
 				}
 				if(ret){	//找到帐号
 					//输出帐号信息
@@ -976,29 +1070,27 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 							fwprintf(fp,L"TBank\n^\n!Type:Bank\n");
 						}
 						if(account->initval != 0){
-							fwprintf(fp,L"D2009-01-01\n");
+							fwprintf(fp,L"D1/ 1/ 9\n");
 							fwprintf(fp,L"T%.2f\n",(double)account->initval/100);
-							fwprintf(fp,L"U%.2f\n",(double)account->initval/100);
-							fwprintf(fp,L"CX\nP账户初始金额\n");
+							fwprintf(fp,L"CX\n");
+							fwprintf(fp,L"M账户初始金额\n");
 							fwprintf(fp,L"L[%s]\n^\n",account->name);
 						}
 					}
-					list<CASH_RECORD_ptr>::iterator j = cash_db.list_search_record.begin();
+					list<CASH_TRANSACT_ptr>::iterator j = cash_db.list_search_record.begin();
 					for(; j != cash_db.list_search_record.end(); j++){
-						CASH_RECORD_ptr record = *j;
+						CASH_TRANSACT_ptr record = *j;
 						CMzString datestr = record->date;
-						fwprintf(fp,L"D%s\n",datestr.SubStr(0,10).C_Str());
+						fwprintf(fp,L"D%s\n",qif_date(datestr.SubStr(0,10).C_Str()));
 						CASH_CATEGORY_ptr category = cash_db.categoryById(record->categoryid);
 						if(category->type == CT_INCOME){	//收入
 							fwprintf(fp,L"T%.2f\n",(double)record->amount/100);
-							fwprintf(fp,L"U%.2f\n",(double)record->amount/100);
 						}else{	//支出
 							fwprintf(fp,L"T-%.2f\n",(double)record->amount/100);
-							fwprintf(fp,L"U-%.2f\n",(double)record->amount/100);
 						}
 						if(lstrlen(record->note)){
 							wchar_t snote[1024];
-							fwprintf(fp,L"P%s\n",C::removeWrap(snote,record->note));		//描述
+							fwprintf(fp,L"M%s\n",C::removeWrap(snote,record->note));		//描述
 						}
 						int level = category->level;
 						if(record->isTransfer){

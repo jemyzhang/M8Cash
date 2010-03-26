@@ -1,6 +1,6 @@
 #include "ui_calculator.h"
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 MZ_IMPLEMENT_DYNAMIC(Ui_CalculatorWnd)
 

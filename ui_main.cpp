@@ -7,8 +7,8 @@
 #include "m8cash.h"
 #include "ui_person.h"
 
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 #include <ShellNotifyMsg.h>
 
 
@@ -290,7 +290,7 @@ bool Ui_MainWnd::checkReminderOnOff(bool isUpdate, int recordId){
 }
 
 void Ui_MainWnd::initEditText(){
-	CASH_RECORD_t c;
+	CASH_TRANSACT_t c;
 	if(!cash_db.recordById(_editIndex,&c)){
 		return;	//ณ๖ดํมห
 	}
@@ -621,7 +621,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_AMOUNT).C_Str());
 					return;
 				}
-				CASH_RECORD_t c;
+				CASH_TRANSACT_t c;
 				if(!cash_db.recordById(_editIndex, &c)) return;
 
 				c.amount = m_EdtAmountYuan.getInputAmount();
@@ -705,7 +705,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_AMOUNT).C_Str());
 					return;
 				}
-				CASH_RECORD_t c;
+				CASH_TRANSACT_t c;
 				c.amount = m_EdtAmountYuan.getInputAmount();
 				if(c.amount < 0){
 					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_MINUS).C_Str());

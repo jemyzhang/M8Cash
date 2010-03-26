@@ -1,6 +1,6 @@
 #include "ui_linegraph.h"
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 #include "m8cash.h"
 
 UiLineGraph::UiLineGraph(void)

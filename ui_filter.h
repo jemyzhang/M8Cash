@@ -2,7 +2,7 @@
 
 // include the MZFC library header file
 #include <mzfc_inc.h>
-#include "..\MzCommon\UiSwitchOption.h"
+#include "UiSwitchOption.h"
 
 //过滤器设置界面
 class Ui_FilterWnd : public CMzWndEx 

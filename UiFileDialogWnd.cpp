@@ -6,8 +6,8 @@
 #include <IFileBrowser.h>
 //#include <IFileBrowser_GUID.h>
 
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 #define MZ_IDC_TOOLBAR_MAIN 101
 #define MZ_IDC_BUTTON_FOLDER 102

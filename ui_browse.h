@@ -4,7 +4,7 @@
 // include the MZFC library header file
 #include <mzfc_inc.h>
 #include "ui_browsecfg.h"
-#include "cashdb.h"
+#include "database.h"
 
 class RecordList : public UiList {
 public:
@@ -16,7 +16,7 @@ public:
 protected:
 private:
 	int* idlist;
-	CASH_RECORD_ptr *plist_record;	//»º´æ
+	CASH_TRANSACT_ptr *plist_record;	//»º´æ
 };
 
 // Popup window derived from CMzWndEx

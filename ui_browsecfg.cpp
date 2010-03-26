@@ -3,9 +3,8 @@
 #include "m8cash.h"
 
 #include "ui_report.h"
-#include <MzCommon.h>
-using namespace MzCommon;
-#include <UiSingleOption.h>
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 #define MZ_IDC_TOOLBAR_MAIN 101
 #define MZ_IDC_SCROLLWIN 102
@@ -201,47 +200,38 @@ void Ui_BrowsecfgWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
             break;
     }
 }
-
 void Ui_BrowsecfgWnd::ShowBrowseModeOptionDlg(){
-    Ui_SingleOptionWnd dlg;
+    //创建新弹出菜单对象
+    MzPopupMenu PopupMenu;
+    //设置弹出菜单的标题
+    PopupMenu.SetMenuTitle(L"设定浏览模式");
+
     for(int i = 0; i < sizeof(MODESTRID)/sizeof(MODESTRID[0]); i++){
-		dlg.AppendOptionItem(const_cast<LPTSTR>(LOADSTRING(MODESTRID[i]).C_Str()));
+        PopupMenu.AppendMenuItem(MZV2_MID_MIN + i + 1,LOADSTRING(MODESTRID[i]).C_Str());
     }
-    dlg.SetSelectedIndex(appconfig.IniBrowseMode.Get());
-    dlg.SetTitleText(L"设定浏览模式");
-    RECT rcWork = MzGetWorkArea();
-    dlg.Create(rcWork.left + 40, rcWork.top + 160, RECT_WIDTH(rcWork) - 80, 210 + 70*2,
-        m_hWnd, 0, WS_POPUP);
-    // set the animation of the window
-    dlg.SetAnimateType_Show(MZ_ANIMTYPE_NONE);
-    dlg.SetAnimateType_Hide(MZ_ANIMTYPE_FADE);
-    int nRet = dlg.DoModal();
-    if(nRet == ID_OK){
-		if(appconfig.IniBrowseMode.Set(dlg.GetSelectedIndex())){
-			optionChanged = TRUE;
-		}
+    int result = PopupMenu.MzTrackPopupMenu(m_hWnd, TRUE);
+    if(result > MZV2_MID_MIN){
+        if(appconfig.IniBrowseMode.Set(result - MZV2_MID_MIN - 1)){
+            optionChanged = TRUE;
+        }
         updateUi();
     }
 }
 
 void Ui_BrowsecfgWnd::ShowOrderModeOptionDlg(){
-    Ui_SingleOptionWnd dlg;
+    //创建新弹出菜单对象
+    MzPopupMenu PopupMenu;
+    //设置弹出菜单的标题
+    PopupMenu.SetMenuTitle(L"设定排序方式");
+
     for(int i = 0; i < sizeof(ORDERSTRID)/sizeof(ORDERSTRID[0]); i++){
-		dlg.AppendOptionItem(const_cast<LPTSTR>(LOADSTRING(ORDERSTRID[i]).C_Str()));
+        PopupMenu.AppendMenuItem(MZV2_MID_MIN + i + 1,LOADSTRING(ORDERSTRID[i]).C_Str());
     }
-    dlg.SetSelectedIndex(appconfig.IniBrowseOrderMode.Get());
-    dlg.SetTitleText(L"设定排序方式");
-    RECT rcWork = MzGetWorkArea();
-    dlg.Create(rcWork.left + 40, rcWork.top + 120, RECT_WIDTH(rcWork) - 80, 210 + 70*3,
-        m_hWnd, 0, WS_POPUP);
-    // set the animation of the window
-    dlg.SetAnimateType_Show(MZ_ANIMTYPE_NONE);
-    dlg.SetAnimateType_Hide(MZ_ANIMTYPE_FADE);
-    int nRet = dlg.DoModal();
-    if(nRet == ID_OK){
-		if(appconfig.IniBrowseOrderMode.Set(dlg.GetSelectedIndex())){
-			optionChanged = TRUE;
-		}
+    int result = PopupMenu.MzTrackPopupMenu(m_hWnd, TRUE);
+    if(result > MZV2_MID_MIN){
+        if(appconfig.IniBrowseOrderMode.Set(result - MZV2_MID_MIN - 1)){
+            optionChanged = TRUE;
+        }
         updateUi();
     }
 }

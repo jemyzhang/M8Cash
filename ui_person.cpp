@@ -1,15 +1,12 @@
 #include "ui_person.h"
 #include "ui_person_edit.h"
 #include "resource.h"
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 #define MZ_IDC_TOOLBAR_ACCOUNTS 101
 #define MZ_IDC_PERSON_LIST 102
-#define MZ_IDC_BTN_ALL	103
-#define MZ_IDC_BTN_FAM	104
-#define MZ_IDC_BTN_CON	105
-#define MZ_IDC_BTN_INS	106
+#define MZ_IDC_BUTTONBAR	103
 
 MZ_IMPLEMENT_DYNAMIC(Ui_PersonsWnd)
 
@@ -67,35 +64,18 @@ BOOL Ui_PersonsWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
 	int y = 0;
-	m_Caption1.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION*2);
-	AddUiWin(&m_Caption1);
-	//m_Caption上的子按钮
-	int x = 0;
-	m_BtnAll.SetPos(0,0,GetWidth()/4,MZM_HEIGHT_CAPTION*2);
-	m_BtnAll.SetText(LOADSTRING(IDS_STR_PERSON_ALL).C_Str());
-	m_BtnAll.SetID(MZ_IDC_BTN_ALL);
-	m_Caption1.AddChild(&m_BtnAll);
 
-	x += GetWidth()/4;
-	m_BtnFamily.SetPos(x,0,GetWidth()/4,MZM_HEIGHT_CAPTION*2);
-	m_BtnFamily.SetText(LOADSTRING(IDS_STR_PERSON_FAMILY).C_Str());
-	m_BtnFamily.SetID(MZ_IDC_BTN_FAM);
-	m_Caption1.AddChild(&m_BtnFamily);
+    m_Caption.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
+    m_Caption.SetBarText(L"人员列表");
+    AddUiWin(&m_Caption);
 
-	x += GetWidth()/4;
-	m_BtnContact.SetPos(x,0,GetWidth()/4,MZM_HEIGHT_CAPTION*2);
-	m_BtnContact.SetText(LOADSTRING(IDS_STR_PERSON_CONTACT).C_Str());
-	m_BtnContact.SetID(MZ_IDC_BTN_CON);
-	m_Caption1.AddChild(&m_BtnContact);
+    y+=MZM_HEIGHT_HEADINGBAR;
+    m_PersonTypeBar.SetID(MZ_IDC_BUTTONBAR);
+    m_PersonTypeBar.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONBAR);
+    AddUiWin(&m_PersonTypeBar);
 
-	x += GetWidth()/4;
-	m_BtnInstitution.SetPos(x,0,GetWidth()/4,MZM_HEIGHT_CAPTION*2);
-	m_BtnInstitution.SetText(LOADSTRING(IDS_STR_PERSON_INSTITUTION).C_Str());
-	m_BtnInstitution.SetID(MZ_IDC_BTN_INS);
-	m_Caption1.AddChild(&m_BtnInstitution);
-
-	y+=MZM_HEIGHT_CAPTION*2;
-    m_List.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - MZM_HEIGHT_CAPTION);
+	y+=MZM_HEIGHT_BUTTONBAR;
+    m_List.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - y);
     m_List.SetID(MZ_IDC_PERSON_LIST);
     m_List.EnableScrollBarV(true);
     m_List.EnableNotifyMessage(true);
@@ -111,70 +91,23 @@ BOOL Ui_PersonsWnd::OnInitDialog() {
     m_Toolbar.SetID(MZ_IDC_TOOLBAR_ACCOUNTS);
     AddUiWin(&m_Toolbar);
 
+    SetupPersonTypeBar();
 	updateList();
     return TRUE;
-}
-
-void Ui_PersonsWnd::setButtonStatus(CASH_PERSON_TYPE_t t){
-	m_BtnAll.SetState(MZCS_BUTTON_NORMAL);//MZCS_BUTTON_PRESSED);
-	m_BtnContact.SetState(MZCS_BUTTON_NORMAL);
-	m_BtnFamily.SetState(MZCS_BUTTON_NORMAL);
-	m_BtnInstitution.SetState(MZCS_BUTTON_NORMAL);
-	switch(t){
-		case PRSN_ALL:
-			m_BtnAll.SetState(MZCS_BUTTON_PRESSED);
-			break;
-		case PRSN_FAMILY:
-			m_BtnFamily.SetState(MZCS_BUTTON_PRESSED);
-			break;
-		case PRSN_CONTACT:
-			m_BtnContact.SetState(MZCS_BUTTON_PRESSED);
-			break;
-		case PRSN_INSTITUTION:
-			m_BtnInstitution.SetState(MZCS_BUTTON_PRESSED);
-			break;
-	}
-	m_BtnAll.Invalidate();
-	m_BtnFamily.Invalidate();
-	m_BtnContact.Invalidate();
-	m_BtnInstitution.Invalidate();
 }
 
 void Ui_PersonsWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
     UINT_PTR id = LOWORD(wParam);
     switch (id) {
-		case MZ_IDC_BTN_ALL:
-			{
-				if(_listpersonType != PRSN_ALL){
-					_listpersonType = PRSN_ALL;
-					updateList();
-				}
-				break;
-			}
-		case MZ_IDC_BTN_FAM:
-			{
-				if(_listpersonType != PRSN_FAMILY){
-					_listpersonType = PRSN_FAMILY;
-					updateList();
-				}
-				break;
-			}
-		case MZ_IDC_BTN_CON:
-			{
-				if(_listpersonType != PRSN_CONTACT){
-					_listpersonType = PRSN_CONTACT;
-					updateList();
-				}
-				break;
-			}
-		case MZ_IDC_BTN_INS:
-			{
-				if(_listpersonType != PRSN_INSTITUTION){
-					_listpersonType = PRSN_INSTITUTION;
-					updateList();
-				}
-				break;
-			}
+        case MZ_IDC_BUTTONBAR:
+        {
+            int index = lParam;
+            if(_listpersonType != (CASH_PERSON_TYPE_t)(index-1)){
+                _listpersonType = (CASH_PERSON_TYPE_t)(index-1);
+                updateList();
+            }
+            break;
+        }
         case MZ_IDC_TOOLBAR_ACCOUNTS:
         {
             int nIndex = lParam;
@@ -296,5 +229,17 @@ void Ui_PersonsWnd::updateList(){
     }
 	m_List.setupList(idarray);
 	m_List.Invalidate();
-	setButtonStatus(_listpersonType);
+}
+
+void Ui_PersonsWnd::SetupPersonTypeBar(){
+    int nameids[] = {
+        IDS_STR_PERSON_ALL,IDS_STR_PERSON_FAMILY,
+        IDS_STR_PERSON_CONTACT,IDS_STR_PERSON_INSTITUTION
+    };
+    int sz = sizeof(nameids)/sizeof(nameids[0]);
+
+    for(int i = 0; i < sz; i++){
+        m_PersonTypeBar.SetButton(i,true,true,LOADSTRING(nameids[i]).C_Str());
+    }
+    m_PersonTypeBar.Invalidate();
 }

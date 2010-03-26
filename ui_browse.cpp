@@ -6,8 +6,8 @@
 #include "ui_reminder.h"
 #include "ui_filter.h"
 
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 MZ_IMPLEMENT_DYNAMIC(Ui_BrowseWnd)
 #define MZ_IDC_TOOLBAR_BROWSE 101
@@ -25,9 +25,9 @@ MZ_IMPLEMENT_DYNAMIC(Ui_BrowseWnd)
 void RecordList::setupList(int* i) { 
 	idlist = i;
 	int nSize = GetItemCount();
-	plist_record = new CASH_RECORD_ptr[nSize];
+	plist_record = new CASH_TRANSACT_ptr[nSize];
 	for(int i = 0; i < nSize; i++){
-		CASH_RECORD_ptr p = new CASH_RECORD_t;
+		CASH_TRANSACT_ptr p = new CASH_TRANSACT_t;
 		cash_db.recordById(idlist[i],p);
 
 		plist_record[i] = p;
@@ -37,7 +37,7 @@ void RecordList::clearList(){
 	if(plist_record){
 		int nSize = GetItemCount();
 		for(int i = 0; i < nSize; i++){
-			CASH_RECORD_ptr p = plist_record[i];
+			CASH_TRANSACT_ptr p = plist_record[i];
 			delete p;
 		}
 		plist_record = 0;
@@ -68,7 +68,7 @@ void RecordList::DrawItem(HDC hdcDst, int nIndex, RECT* prcItem, RECT *prcWin, R
 		lineHeight /= 2;
 	}
 
-	CASH_RECORD_ptr prec = plist_record[nIndex];
+	CASH_TRANSACT_ptr prec = plist_record[nIndex];
 	//if(!cash_db.recordById(idlist[nIndex],&rec)) return;
 
 	CASH_CATEGORY_ptr cat = cash_db.categoryById(prec->categoryid);
@@ -411,8 +411,8 @@ void Ui_BrowseWnd::updateUi(){
 	uRecordDate_t date_e;
 	date_s.Value = appconfig.IniFilterStartDate.Get();
 	date_e.Value = appconfig.IniFilterEndDate.Get();
-	if(date_s.Value == 0) date_s.Value = cash_db.getMinRecordDate().Value;
-	if(date_e.Value == 0) date_e.Value = cash_db.getMaxRecordDate().Value;
+	if(date_s.Value == 0) date_s.Value = cash_db.getMinTransactionDate().Value;
+	if(date_e.Value == 0) date_e.Value = cash_db.getMaxTransactionDate().Value;
 
 	if(date_s.Value == 0 && date_e.Value == 0){
 		strBar = LOADSTRING(IDS_STR_ALLDATE).C_Str();
@@ -482,7 +482,7 @@ void Ui_BrowseWnd::updateUi(){
     ListItem li;
     wchar_t str[256];
 
-	cash_db.getRecordsByDate_v2(&date_s.Date,&date_e.Date,
+	cash_db.getTransactionsByDate_v2(&date_s.Date,&date_e.Date,
 		_orderMode | Ui_BrowsecfgWnd::ORDERBYDATE);
 
 	int tz = cash_db.list_search_record.size();
@@ -505,10 +505,10 @@ void Ui_BrowseWnd::updateUi(){
 	double total_income = 0;
 	double total_outgoing = 0;
 
-	list<CASH_RECORD_ptr>::iterator i = cash_db.list_search_record.begin();
+	list<CASH_TRANSACT_ptr>::iterator i = cash_db.list_search_record.begin();
 
 	for (;i != cash_db.list_search_record.end(); i++) {
-		CASH_RECORD_ptr rec = *i;
+		CASH_TRANSACT_ptr rec = *i;
 		CASH_CATEGORY_ptr cat = cash_db.categoryById(rec->categoryid);
 
 		if(filter_account && 

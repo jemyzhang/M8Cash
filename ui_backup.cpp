@@ -1,8 +1,8 @@
 #include "ui_backup.h"
 #include <list>
 #include "m8cash.h"
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 #define MZ_IDC_TOOLBAR_ACCOUNTS 101
 #define MZ_IDC_BACKUP_LIST 102

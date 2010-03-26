@@ -105,10 +105,10 @@ void Ui_MonthReportWnd::setupCategoryData(){
 		CASH_CATEGORY_ptr c = *i;
 		if(c->type != _mode) continue;
 
-		if(cash_db.getRecordsByCategory(c->id,&date_s.Date,&date_e.Date)){
-			list<CASH_RECORD_ptr>::iterator s = cash_db.list_search_record.begin();
+		if(cash_db.getTransactionsByCategory(c->id,&date_s.Date,&date_e.Date)){
+			list<CASH_TRANSACT_ptr>::iterator s = cash_db.list_search_record.begin();
 			for(;s != cash_db.list_search_record.end(); s++){
-				CASH_RECORD_ptr r = *s;
+				CASH_TRANSACT_ptr r = *s;
 				if(f_personId != -1 && r->personid != f_personId) continue;	//过滤人员
 				amount += r->amount;
 			}
@@ -146,10 +146,10 @@ void Ui_MonthReportWnd::setupAccountData(){
 	for(; i != cash_db.list_account.end(); i++){
 		int amount = 0;
 		CASH_ACCOUNT_ptr c = *i;
-		if(cash_db.getRecordsByAccount(c->id,&date_s.Date,&date_e.Date)){
-			list<CASH_RECORD_ptr>::iterator s = cash_db.list_search_record.begin();
+		if(cash_db.getTransactionsByAccount(c->id,&date_s.Date,&date_e.Date)){
+			list<CASH_TRANSACT_ptr>::iterator s = cash_db.list_search_record.begin();
 			for(;s != cash_db.list_search_record.end(); s++){
-				CASH_RECORD_ptr r = *s;
+				CASH_TRANSACT_ptr r = *s;
 				CASH_CATEGORY_ptr p = cash_db.categoryById(r->categoryid);
 				if(p->type == _mode){	//收入 支出
 					if(f_personId != -1 && r->personid != f_personId) continue;	//过滤人员
@@ -180,8 +180,8 @@ void Ui_MonthReportWnd::updateUi(){
 	uRecordDate_t date_e;
 	date_s.Value = appconfig.IniFilterStartDate.Get();
 	date_e.Value = appconfig.IniFilterEndDate.Get();
-	if(date_s.Value == 0) date_s.Value = cash_db.getMinRecordDate().Value;
-	if(date_e.Value == 0) date_e.Value = cash_db.getMaxRecordDate().Value;
+	if(date_s.Value == 0) date_s.Value = cash_db.getMinTransactionDate().Value;
+	if(date_e.Value == 0) date_e.Value = cash_db.getMaxTransactionDate().Value;
 
 	if(date_s.Value == 0 && date_e.Value == 0){
 		strBar = LOADSTRING(IDS_STR_ALLDATE).C_Str();

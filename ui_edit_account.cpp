@@ -1,8 +1,8 @@
 #include "ui_edit_account.h"
 #include "ui_accounts.h"
 #include "m8cash.h"
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 #define MZ_IDC_TOOLBAR_ACOUNTEDIT 101
 

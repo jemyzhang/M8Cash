@@ -4,9 +4,9 @@
 #include <mzfc_inc.h>
 #include "ui_piegraph.h"
 #include "ui_bargraph.h"
-#include "cashdb.h"
-#include <MzCommon.h>
-using namespace MzCommon;
+#include "database.h"
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 class UiReportTable : public UiWin {
 public:

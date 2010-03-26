@@ -2,8 +2,8 @@
 #include "m8cash.h"
 #include "ui_calendar.h"
 
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 #define MZ_IDC_TOOLBAR_ABOUT 101
 #define MZ_IDC_CAPTION_DATE 102
@@ -28,7 +28,7 @@ void DailyRecordList::DrawItem(HDC hdcDst, int nIndex, RECT* prcItem, RECT *prcW
 	int lineHeight = rcText.bottom - rcText.top;
 	lineHeight /= 2;
 
-	CASH_RECORD_t rec;
+	CASH_TRANSACT_t rec;
 	if(!cash_db.recordById(idlist[nIndex],&rec)) return;
 	CASH_CATEGORY_ptr cat = cash_db.categoryById(rec.categoryid);
 	CASH_ACCOUNT_ptr acnt = cash_db.accountById(rec.accountid);
@@ -102,7 +102,7 @@ Ui_DailyReportWnd::~Ui_DailyReportWnd(void)
 
 void Ui_DailyReportWnd::setDetailIndex(int i) { 
 	_seletedIndex = i; 
-	CASH_RECORD_t r;
+	CASH_TRANSACT_t r;
 	if(!cash_db.recordById(_seletedIndex,&r)) return;
 	t = DateTime::StrToDate(r.date);
 }
@@ -203,7 +203,7 @@ void Ui_DailyReportWnd::updateDetail(){
 	date.Year = t.wYear;
 	date.Month = t.wMonth;
 	date.Day = t.wDay;
-	if(cash_db.getRecordsByDate(&date,&date)){
+	if(cash_db.getTransactionsByDate(&date,&date)){
 		int sz = cash_db.list_search_record.size();
 		if(idarray){
 			delete idarray;
@@ -212,12 +212,12 @@ void Ui_DailyReportWnd::updateDetail(){
 
 		if(sz > 0){
 			idarray = new int[sz];
-			list<CASH_RECORD_ptr>::iterator i = cash_db.list_search_record.begin();
+			list<CASH_TRANSACT_ptr>::iterator i = cash_db.list_search_record.begin();
 			int cnt = 0;
 			double in = 0;
 			double out = 0;
 			for(; i != cash_db.list_search_record.end(); i++){
-				CASH_RECORD_ptr r = *i;
+				CASH_TRANSACT_ptr r = *i;
 				idarray[cnt++] = r->transid;
 				m_ListDetail.AddItem(ListItem());
 				CASH_CATEGORY_ptr c = cash_db.categoryById(r->categoryid);
@@ -261,7 +261,7 @@ void Ui_DailyReportWnd::updateDetailText(){
 		m_TextDetail.Invalidate();
 		return;
 	}
-	CASH_RECORD_t rec;
+	CASH_TRANSACT_t rec;
 	if(!cash_db.recordById(idarray[idx],&rec)){
 		m_TextDetail.SetTextSize(30);
 		m_TextDetail.SetText(L"错误，不存在此记录");
@@ -293,10 +293,10 @@ void Ui_DailyReportWnd::updateDetailText(){
 		date.Month = t.wMonth;
 		date.Day = t.wDay;
 
-		if(cash_db.getRecordsByDate(&date,&date)){
-			list<CASH_RECORD_ptr>::iterator i = cash_db.list_search_record.begin();
+		if(cash_db.getTransactionsByDate(&date,&date)){
+			list<CASH_TRANSACT_ptr>::iterator i = cash_db.list_search_record.begin();
 			for(; i != cash_db.list_search_record.end(); i++){
-				CASH_RECORD_ptr rs = *i;
+				CASH_TRANSACT_ptr rs = *i;
 				if(rs->categoryid == rec.categoryid || cash_db.isChildCategory(rs->categoryid,rec.categoryid)){
 					amount += rs->amount;
 				}
@@ -314,10 +314,10 @@ void Ui_DailyReportWnd::updateDetailText(){
 	date.Year = t.wYear;
 	date.Month = t.wMonth;
 	date.Day = t.wDay;
-	if(cash_db.getRecordsByAccount(rec.accountid,&date,&date)){
-		list<CASH_RECORD_ptr>::iterator i = cash_db.list_search_record.begin();
+	if(cash_db.getTransactionsByAccount(rec.accountid,&date,&date)){
+		list<CASH_TRANSACT_ptr>::iterator i = cash_db.list_search_record.begin();
 		for(; i != cash_db.list_search_record.end(); i++){
-			CASH_RECORD_ptr r = *i;
+			CASH_TRANSACT_ptr r = *i;
 			if(r->isTransfer){	//转出
 				out += r->amount;
 			}else{
@@ -330,10 +330,10 @@ void Ui_DailyReportWnd::updateDetailText(){
 			}
 		}
 	}
-	if(cash_db.getRecordsByToAccount(rec.accountid,&date,&date)){
-		list<CASH_RECORD_ptr>::iterator i = cash_db.list_search_record.begin();
+	if(cash_db.getTransactionsByToAccount(rec.accountid,&date,&date)){
+		list<CASH_TRANSACT_ptr>::iterator i = cash_db.list_search_record.begin();
 		for(; i != cash_db.list_search_record.end(); i++){
-			CASH_RECORD_ptr r = *i;
+			CASH_TRANSACT_ptr r = *i;
 			in += r->amount;
 		}
 	}

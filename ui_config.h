@@ -3,7 +3,7 @@
 
 // include the MZFC library header file
 #include <mzfc_inc.h>
-#include "..\MzCommon\UiSwitchOption.h"
+#include "UiSwitchOption.h"
 
 // Popup window derived from CMzWndEx
 

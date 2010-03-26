@@ -21,6 +21,7 @@
 			OutputDirectory="$(SolutionDir)\$(SolutionName)\$(ConfigurationName)"
 			IntermediateDirectory="$(SolutionDir)\$(SolutionName)\$(ConfigurationName)\obj"
 			ConfigurationType="1"
+			UseOfMFC="0"
 			CharacterSet="1"
 			>
 			<Tool
@@ -42,10 +43,10 @@
 				Name="VCCLCompilerTool"
 				ExecutionBucket="7"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\MzCommon\include"
+				AdditionalIncludeDirectories="..\cMzCommon\include"
 				PreprocessorDefinitions="_DEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;DEBUG;_WINDOWS;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE"
 				MinimalRebuild="true"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				ObjectFile="$(IntDir)\"
 				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
@@ -67,10 +68,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /subsystem:windowsce,6.00"
-				AdditionalDependencies="mzfc.lib PlatformApi.lib MzCommond.lib"
+				AdditionalDependencies="mzfc.lib PlatformApi.lib cMzCommon.lib"
 				OutputFile="$(OutDir)/M8Cash.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\MzCommon\libs"
+				AdditionalLibraryDirectories="..\cMzCommon\libs"
 				DelayLoadDLLs="$(NOINHERIT)"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/M8Cash.pdb"
@@ -134,7 +135,7 @@
 				ExecutionBucket="7"
 				Optimization="3"
 				FavorSizeOrSpeed="0"
-				AdditionalIncludeDirectories="..\MzCommon\include"
+				AdditionalIncludeDirectories="..\cMzCommon\include"
 				PreprocessorDefinitions="NDEBUG;_WIN32_WCE=$(CEVER);UNDER_CE;WINCE;_WINDOWS;$(ARCHFAM);$(_ARCHFAM_);_UNICODE;UNICODE"
 				StringPooling="false"
 				MinimalRebuild="false"
@@ -158,10 +159,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /subsystem:windowsce,6.00"
-				AdditionalDependencies="mzfc.lib PlatformApi.lib MzCommons.lib"
+				AdditionalDependencies="mzfc.lib PlatformApi.lib cMzCommon.lib"
 				OutputFile="$(OutDir)/M8Cash.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\MzCommon\libs"
+				AdditionalLibraryDirectories="..\cMzCommon\libs"
 				DelayLoadDLLs="$(NOINHERIT)"
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile="$(OutDir)/M8Cash.pdb"
@@ -218,15 +219,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cashdb.cpp"
+				RelativePath=".\database.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\m8cash.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\pinyin_sort.cpp"
 				>
 			</File>
 			<File
@@ -333,6 +330,14 @@
 				RelativePath=".\UiFileDialogWnd.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\UiImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UiSwitchOption.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
@@ -348,7 +353,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cashdb.h"
+				RelativePath=".\database.h"
 				>
 			</File>
 			<File
@@ -356,15 +361,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\pinyin_sort.h"
-				>
-			</File>
-			<File
 				RelativePath=".\resource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ui_about.h"
 				>
 			</File>
 			<File
@@ -464,6 +461,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ui_transaction.h"
+				>
+			</File>
+			<File
 				RelativePath=".\UiEditKeySwitcher.h"
 				>
 			</File>
@@ -471,14 +472,14 @@
 				RelativePath=".\UiFileDialogWnd.h"
 				>
 			</File>
-			<Filter
-				Name="sqlite3"
+			<File
+				RelativePath=".\UiImage.h"
 				>
-				<File
-					RelativePath=".\sqlite3\sqlite3.h"
-					>
-				</File>
-			</Filter>
+			</File>
+			<File
+				RelativePath=".\UiSwitchOption.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -586,11 +587,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\image\Modify.png"
+				RelativePath=".\image\logo.png"
 				>
 			</File>
 			<File
-				RelativePath="..\MzCommon\MzCommonRes.rc"
+				RelativePath=".\image\Modify.png"
 				>
 			</File>
 			<File

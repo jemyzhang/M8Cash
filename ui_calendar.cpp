@@ -1,6 +1,6 @@
 #include "ui_calendar.h"
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 
 #include "m8cash.h"
 

@@ -3,30 +3,7 @@
 
 // include the MZFC library header file
 #include <mzfc_inc.h>
-#include "cashdb.h"
-
-// Popup window derived from CMzWndEx
-
-class UiNaviButton :
-    public UiButton
-{
-public:
-	UiNaviButton(){
-		SetButtonMode(MZC_BUTTON_MODE_HOLD);
-#ifdef USE_903SDK
-		SetButtonType(MZC_BUTTON_LINE_NONE);
-#endif
-#ifdef USE_926SDK
-		SetButtonType(MZC_BUTTON_LINE_RIGHT);
-#endif
-	}
-public:
-    virtual int OnLButtonUp(UINT fwKeys, int xPos, int yPos){
-        SetState(MZCS_BUTTON_PRESSED);
-        Invalidate();
-        return UiButton::OnLButtonUp(fwKeys,xPos,yPos);
-    }
-};
+#include "database.h"
 
 class PersonList : public UiList {
 public:
@@ -39,6 +16,7 @@ private:
 	int* idlist;
 };
 
+// Popup window derived from CMzWndEx
 class Ui_PersonsWnd : public CMzWndEx {
     MZ_DECLARE_DYNAMIC(Ui_PersonsWnd);
 public:
@@ -60,11 +38,8 @@ public:
 	void setMode(int m) { _mode = m; }
 protected:
     UiToolbar_Text m_Toolbar;
-    UiCaption m_Caption1;
-	UiNaviButton m_BtnAll;
-	UiNaviButton m_BtnFamily;
-	UiNaviButton m_BtnContact;
-	UiNaviButton m_BtnInstitution;
+    UiHeadingBar m_Caption;
+	UiButtonBar m_PersonTypeBar;
     PersonList m_List;
 
     // Initialization of the window (dialog)
@@ -76,7 +51,8 @@ protected:
     virtual LRESULT MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//update display list
 	void updateList();
-	void setButtonStatus(CASH_PERSON_TYPE_t t);
+
+    void SetupPersonTypeBar();
 
 private:
 	int _mode;

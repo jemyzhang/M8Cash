@@ -1,10 +1,10 @@
-#include "cashdb.h"
+#include "database.h"
 #include "ui_main.h"
 #include "ui_reminder.h"
 #include "resource.h"
 #include "appconfigini.h"
 
-#define VER_STRING L"2.40"COMPILEL
+#define VER_STRING L"2.50"COMPILEL
 #ifdef _DEBUG
 #define COMPILEM	L"D"
 #else
@@ -17,7 +17,7 @@
 #define COMPILEL	L"d"
 #endif
 
-#define BUILD_STRING	L"20091107" COMPILEM
+#define BUILD_STRING	L"20100325" COMPILEM
 
 // Application class derived from CMzApp
 extern CashConfig appconfig;

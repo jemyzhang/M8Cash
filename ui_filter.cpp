@@ -2,8 +2,8 @@
 #include "m8cash.h"
 #include "ui_calendar.h" //Ñ¡ÔñÈÕÆÚ
 
-#include <MzCommon.h>
-using namespace MzCommon;
+#include <cMzCommon.h>
+using namespace cMzCommon;
 #include "ui_accounts.h"
 #include "ui_categories.h"
 #include "ui_person.h"
