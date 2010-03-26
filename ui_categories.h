@@ -77,7 +77,7 @@ public:
 protected:
     UiScrollWin m_ScrollWin;
     UiToolbar_Text m_Toolbar;
-    UiCaption m_Caption1;
+    UiHeadingBar m_Caption1;
 	UiButton m_BtnSelect;
 
 

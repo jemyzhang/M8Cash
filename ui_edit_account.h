@@ -25,13 +25,13 @@ public:
     }
 public:
 	UiScrollWin m_ScrollWin;
-	UiCaption m_CaptionAccTitle;
+	UiHeadingBar m_CaptionAccTitle;
     UiSingleLineEdit m_EdtAccName;
-	UiCaption m_CaptionAccInit;
+	UiHeadingBar m_CaptionAccInit;
     UiEditMoney m_EdtAccInitAmount;
 	UiEditKeySwitcher m_EdtAmountMask;
 	UiEditKeySwitchButton m_BtnKeyBoard;
-	UiCaption m_CaptionAccNote;
+	UiHeadingBar m_CaptionAccNote;
 #ifdef USE_903SDK
     UiMultiLineEdit m_EdtAccNote;
 #else

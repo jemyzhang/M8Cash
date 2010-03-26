@@ -90,7 +90,7 @@ public:
 	bool setupData(bool);
 	void setMode(CASH_TRANSACT_TYPE_t m) { _mode = m; setupData(_viewAccount);}
 public:
-	UiCaption m_CaptionTitle;
+	UiHeadingBar m_CaptionTitle;
     UiScrollWin m_ScrollWin;
 	UiToolbar_Text m_DateBar;
     UiToolbar_Text m_Toolbar;
@@ -123,7 +123,7 @@ public:
 	//return false if there is no record
 	bool setupDate(int year = -1);
 public:
-	UiCaption m_CaptionTitle;
+	UiHeadingBar m_CaptionTitle;
     UiScrollWin m_ScrollWin;
 	UiToolbar_Text m_DateBar;
     UiToolbar_Text m_Toolbar;
@@ -157,7 +157,7 @@ public:
 	void setupAccountID(int id);
 	bool rotateScreen(DWORD dwRotaion);
 public:
-	UiCaption m_CaptionTitle;
+	UiHeadingBar m_CaptionTitle;
     UiToolbar_Text m_Toolbar;
 	UiLineGraph m_linegraph;
 	/// called when received WM_PAINT

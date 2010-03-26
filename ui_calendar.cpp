@@ -396,11 +396,11 @@ BOOL Ui_CalendarWnd::OnInitDialog() {
     // Then init the controls & other things in the window
     int y = 0;
 #if !CALENDAR_USE_GRID
-    m_CaptionTitle.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+    m_CaptionTitle.SetPos(0, y, GetWidth(), MZM_HEIGHT_HEADINGBAR);
     m_CaptionTitle.SetText(L"Ñ¡ÔñÈÕÆÚ");
     AddUiWin(&m_CaptionTitle);
 
-	y+=MZM_HEIGHT_CAPTION;
+	y+=MZM_HEIGHT_HEADINGBAR;
     m_EdtCalendarYear.SetPos(0, y, GetWidth()/3, MZM_HEIGHT_SINGLELINE_EDIT);
     m_EdtCalendarYear.SetMaxChars(4);
     m_EdtCalendarYear.SetSipMode(IM_SIP_MODE_DIGIT, MZM_HEIGHT_TEXT_TOOLBAR);
@@ -428,10 +428,10 @@ BOOL Ui_CalendarWnd::OnInitDialog() {
 	m_EdtCalendarDay.EnableNotifyMessage(true);
     AddUiWin(&m_EdtCalendarDay);
 #else
-	m_CaptionHeader.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION * 2);
+	m_CaptionHeader.SetPos(0,y,GetWidth(),USER_DEF_HEIGHT * 2);
 	AddUiWin(&m_CaptionHeader);
 
-	m_YearMonth.SetPos(60,10,GetWidth()*3/4,MZM_HEIGHT_CAPTION);
+	m_YearMonth.SetPos(60,10,GetWidth()*3/4,USER_DEF_HEIGHT);
 	m_YearMonth.SetTextSize(30);
 	m_CaptionHeader.AddChild(&m_YearMonth);
 
@@ -453,12 +453,12 @@ BOOL Ui_CalendarWnd::OnInitDialog() {
 	m_BtnPre.SetID(MZ_IDC_CALENDAR_PRE);
 	m_CaptionHeader.AddChild(&m_BtnPre);
 
-	m_WeekBar.SetPos(0,MZM_HEIGHT_CAPTION*3/2,GetWidth(),MZM_HEIGHT_CAPTION/2);
+	m_WeekBar.SetPos(0,USER_DEF_HEIGHT*3/2,GetWidth(),USER_DEF_HEIGHT/2);
 	m_WeekBar.SetTextSize(17);
 	m_WeekBar.SetTextColor(RGB(128,128,128));
 	m_CaptionHeader.AddChild(&m_WeekBar);
 
-	y+=MZM_HEIGHT_CAPTION * 2;
+	y+=USER_DEF_HEIGHT * 2;
     m_Calendar.SetPos(2, y, GetWidth()-2, 69*6);
 	m_Calendar.SetID(MZ_IDC_CALENDAR_GRID);
 	m_Calendar.EnableNotifyMessage(true);

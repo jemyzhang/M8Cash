@@ -21,10 +21,10 @@ BOOL UiFileDialogWnd::OnInitDialog(){
         return FALSE;
     }
     int y = 0;
-    m_DialogTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION);
+    m_DialogTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
     AddUiWin(&m_DialogTitle);
 
-	y += MZM_HEIGHT_CAPTION;
+	y += MZM_HEIGHT_HEADINGBAR;
 	m_FileName.SetPos(0,y,GetWidth(),MZM_HEIGHT_SINGLELINE_EDIT);
 	m_FileName.SetTextSize(20);
 	m_FileName.SetTip(L"请输入文件名");

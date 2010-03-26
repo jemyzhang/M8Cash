@@ -23,9 +23,9 @@ public:
 	void setDetailIndex(int i);
 public:
     UiToolbar_Text m_Toolbar;
-    UiCaption m_CaptionDate;	//日期
-    UiCaption m_CaptionList;	//列表
-    UiCaption m_CaptionDetail;	//详情
+    UiHeadingBar m_CaptionDate;	//日期
+    UiHeadingBar m_CaptionList;	//列表
+    UiHeadingBar m_CaptionDetail;	//详情
 
 	UiScrollWin m_ScrollWinStatics;	// 统计滚动窗
 #ifdef USE_903SDK

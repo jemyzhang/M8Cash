@@ -52,10 +52,10 @@ BOOL Ui_PasswordWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
     int y = 0;
-    m_CaptionTitle.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+    m_CaptionTitle.SetPos(0, y, GetWidth(), MZM_HEIGHT_HEADINGBAR);
     AddUiWin(&m_CaptionTitle);
 
-	y+=MZM_HEIGHT_CAPTION*2;
+	y+=MZM_HEIGHT_HEADINGBAR*2;
 	m_BtnKeyBoard.SetPos(5, y + 10, 40, 40);
 	m_BtnKeyBoard.SetSlotWin(&m_EdtPassword);
 	m_BtnKeyBoard.SetButtonImage(pimg[IDB_PNG_LOGIN - IDB_PNG_BEGIN]);

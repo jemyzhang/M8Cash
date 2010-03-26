@@ -162,7 +162,7 @@ public:
 	void updateButtonRange();
 protected:
     UiToolbar_Text m_Toolbar;
-    UiCaption m_CaptionTitle;
+    UiHeadingBar m_CaptionTitle;
 
     UiButtonEx m_BtnImExAccounts;
     UiButtonEx m_BtnImExCategories;

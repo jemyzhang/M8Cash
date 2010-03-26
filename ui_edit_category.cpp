@@ -20,7 +20,7 @@ BOOL Ui_EditCateGoryWndEx::OnInitDialog() {
     // Then init the controls & other things in the window
     int y = 0;
 
-	m_CaptionTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION);
+	m_CaptionTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	if(_mode == 0){
 		m_CaptionTitle.SetText(LOADSTRING(IDS_STR_NEW_CATEGORY).C_Str());
 	}else{
@@ -28,7 +28,7 @@ BOOL Ui_EditCateGoryWndEx::OnInitDialog() {
 	}
 	AddUiWin(&m_CaptionTitle);
 
-	y += MZM_HEIGHT_CAPTION;
+	y += MZM_HEIGHT_HEADINGBAR;
     m_EdtCategoryName.SetPos(0, y, GetWidth(), MZM_HEIGHT_SINGLELINE_EDIT);
     m_EdtCategoryName.SetMaxChars(10);
     m_EdtCategoryName.SetSipMode(IM_SIP_MODE_GEL_PY, MZM_HEIGHT_TEXT_TOOLBAR);

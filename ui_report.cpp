@@ -24,7 +24,7 @@ BOOL Ui_MonthReportWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
     int y = 0;
-	m_CaptionTitle.SetPos(0, y, GetWidth(),MZM_HEIGHT_CAPTION);
+	m_CaptionTitle.SetPos(0, y, GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	AddUiWin(&m_CaptionTitle);
 
 	y+=MZM_HEIGHT_TEXT_TOOLBAR;
@@ -340,10 +340,10 @@ BOOL Ui_YearlyReportWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
     int y = 0;
-	m_CaptionTitle.SetPos(0, y, GetWidth(),MZM_HEIGHT_CAPTION);
+	m_CaptionTitle.SetPos(0, y, GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	AddUiWin(&m_CaptionTitle);
 
-	y+=MZM_HEIGHT_CAPTION;
+	y+=MZM_HEIGHT_HEADINGBAR;
     m_DateBar.SetPos(0, y, GetWidth(), MZM_HEIGHT_TEXT_TOOLBAR);
     m_DateBar.SetButton(0, true, true, LOADSTRING(IDS_STR_PREV_YEAR).C_Str());
     m_DateBar.SetButton(1, true, true, LOADSTRING(IDS_STR_THIS_YEAR).C_Str());
@@ -459,10 +459,10 @@ BOOL Ui_AccountReportWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
     int y = 0;
-	m_CaptionTitle.SetPos(0, y, GetWidth(),MZM_HEIGHT_CAPTION);
+	m_CaptionTitle.SetPos(0, y, GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	AddUiWin(&m_CaptionTitle);
 
-	y+=MZM_HEIGHT_CAPTION;
+	y+=MZM_HEIGHT_HEADINGBAR;
 	m_linegraph.SetPos(0,y,GetWidth(),GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR_w720 - y);
 	AddUiWin(&m_linegraph);
 

@@ -10,7 +10,7 @@ public:
     Ui_BackupWnd() {   }
 protected:
     UiToolbar_Text m_Toolbar;
-    UiCaption m_Caption1;
+    UiHeadingBar m_Caption1;
     UiList m_List;
 
     // Initialization of the window (dialog)

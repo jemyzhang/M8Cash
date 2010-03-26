@@ -13,8 +13,8 @@ public:
 protected:
     UiScrollWin m_ScrollWin;
     UiToolbar_Text m_Toolbar;
-    UiCaption m_Caption1;
-    UiCaption m_Caption2;
+    UiHeadingBar m_Caption1;
+    UiHeadingBar m_Caption2;
 
 	UiButtonEx m_BtnImport;
 	UiButtonEx m_BtnExport;

@@ -116,7 +116,7 @@ BOOL Ui_DailyReportWnd::OnInitDialog() {
     // Then init the controls & other things in the window
     int y = 0;
 	//ÈÕÆÚ
-    m_CaptionDate.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION + 20);
+    m_CaptionDate.SetPos(0, y, GetWidth(), USER_DEF_HEIGHT + 20);
 	m_CaptionDate.SetID(MZ_IDC_CAPTION_DATE);
 	m_CaptionDate.EnableNotifyMessage(true);
 	AddUiWin(&m_CaptionDate);
@@ -135,31 +135,31 @@ BOOL Ui_DailyReportWnd::OnInitDialog() {
 	m_BtnRight.SetID(MZ_IDC_BUTTON_NEXT_DATE);
 	m_CaptionDate.AddChild(&m_BtnRight);
 
-	y += MZM_HEIGHT_CAPTION + 20;
+	y += USER_DEF_HEIGHT + 20;
 	//ÄÚÈÝ
-    m_TextStatics.SetPos(0, y, GetWidth(), MZM_HEIGHT_SINGLELINE_EDIT*2/3);
+    m_TextStatics.SetPos(0, y, GetWidth(), MZM_HEIGHT_SINGLELINE_EDIT);
 	m_TextStatics.SetTextSize(20);
 	m_TextStatics.SetEnable(false);
     AddUiWin(&m_TextStatics);
 
 	y += MZM_HEIGHT_SINGLELINE_EDIT;
-    m_CaptionList.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+    m_CaptionList.SetPos(0, y, GetWidth(), MZM_HEIGHT_HEADINGBAR);
 	m_CaptionList.SetText(LOADSTRING(IDS_STR_TRANS_LIST).C_Str());
     AddUiWin(&m_CaptionList);
 
-	y += MZM_HEIGHT_CAPTION;
-    m_ListDetail.SetPos(0, y, GetWidth(), GetHeight() - y - MZM_HEIGHT_CAPTION/2 - MZM_HEIGHT_SINGLELINE_EDIT*3 - MZM_HEIGHT_TEXT_TOOLBAR);
+	y += MZM_HEIGHT_HEADINGBAR;
+    m_ListDetail.SetPos(0, y, GetWidth(), GetHeight() - y - USER_DEF_HEIGHT/2 - MZM_HEIGHT_SINGLELINE_EDIT*3 - MZM_HEIGHT_TEXT_TOOLBAR);
 	m_ListDetail.SetItemHeight(60);
 	m_ListDetail.SetID(MZ_IDC_LIST);
 	m_ListDetail.EnableNotifyMessage(true);
     AddUiWin(&m_ListDetail);
 
 	y += m_ListDetail.GetHeight();
-    m_CaptionDetail.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+    m_CaptionDetail.SetPos(0, y, GetWidth(), MZM_HEIGHT_HEADINGBAR);
 	m_CaptionDetail.SetText(LOADSTRING(IDS_STR_TRANS_DETAIL).C_Str());
     AddUiWin(&m_CaptionDetail);
 
-	y += MZM_HEIGHT_CAPTION;
+	y += MZM_HEIGHT_HEADINGBAR;
     m_TextDetail.SetPos(0, y, GetWidth(), MZM_HEIGHT_SINGLELINE_EDIT*3);
 	m_TextDetail.SetEnable(false);
     AddUiWin(&m_TextDetail);

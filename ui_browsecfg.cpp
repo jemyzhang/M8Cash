@@ -43,11 +43,11 @@ BOOL Ui_BrowsecfgWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
     int y = 0;
-	m_lblTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION);
+	m_lblTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	m_lblTitle.SetText(LOADSTRING(IDS_STR_MORE).C_Str());
     AddUiWin(&m_lblTitle);
 
-	y += MZM_HEIGHT_CAPTION;
+	y += MZM_HEIGHT_HEADINGBAR;
     m_BtnReportOut.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONEX);
     m_BtnReportOut.SetText(LOADSTRING(IDS_STR_MONTHLY_EXREPORT).C_Str());
     m_BtnReportOut.SetButtonType(MZC_BUTTON_LINE_BOTTOM);

@@ -50,15 +50,15 @@ BOOL Ui_MainWnd::OnInitDialog() {
     int y = 0;
 	wchar_t name[128];
 	wsprintf(name,L"%s v%s",LOADSTRING(IDS_STR_APPNAME).C_Str(),VER_STRING);
-	m_lblTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION/2);
+	m_lblTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	m_lblTitle.SetText(name);
-	m_lblTitle.SetTextSize(m_lblTitle.GetTextSize()/2);
+	m_lblTitle.SetTextSize(m_lblTitle.GetTextSize());
 	m_lblTitle.SetTextWeight(FW_BOLD);
 	m_lblTitle.SetID(MZ_IDC_CAPTION_TITLE);
 	m_lblTitle.EnableNotifyMessage(true);
     AddUiWin(&m_lblTitle);
 
-	y+=MZM_HEIGHT_CAPTION/2;
+	y+=MZM_HEIGHT_HEADINGBAR;
 
 	m_BtnKeyBoard.SetPos(8, y + 10, 40, 40);
 	m_BtnKeyBoard.SetSlotWin(&m_EdtAmountYuan);
@@ -96,11 +96,11 @@ BOOL Ui_MainWnd::OnInitDialog() {
     AddUiWin(&m_ScrollWin);
 
 	y = 0;
-    m_lblDetail.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+    m_lblDetail.SetPos(0, y, GetWidth(), MZM_HEIGHT_HEADINGBAR);
 	m_lblDetail.SetText(LOADSTRING(IDS_STR_DETAIL_INFO).C_Str());
     m_ScrollWin.AddChild(&m_lblDetail);
 
-    y += MZM_HEIGHT_CAPTION;
+    y += MZM_HEIGHT_HEADINGBAR;
     m_BtnDate.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONEX);
     m_BtnDate.SetText(LOADSTRING(IDS_STR_DATE).C_Str());
 	m_BtnDate.SetText2(DateTime::Date());
@@ -197,12 +197,12 @@ BOOL Ui_MainWnd::OnInitDialog() {
 	m_BtnPerson.SetImageWidth1(pimg[IDB_PNG_PERSON - IDB_PNG_BEGIN]->GetImageWidth());
 
     y += MZM_HEIGHT_BUTTONEX;
-    m_lblNote.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+    m_lblNote.SetPos(0, y, GetWidth(), MZM_HEIGHT_HEADINGBAR);
     m_lblNote.SetText(LOADSTRING(IDS_STR_NOTE).C_Str());
     m_ScrollWin.AddChild(&m_lblNote);
 
-    y += MZM_HEIGHT_CAPTION;
-    m_EdtNote.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_CAPTION - MZM_HEIGHT_TEXT_TOOLBAR);
+    y += MZM_HEIGHT_HEADINGBAR;
+    m_EdtNote.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_HEADINGBAR - MZM_HEIGHT_TEXT_TOOLBAR);
     m_EdtNote.EnableScrollBarV(true);
 #ifdef USE_903SDK
 	m_EdtNote.SetMaxChars(50);
@@ -327,7 +327,7 @@ void Ui_MainWnd::initEditText(){
 			0, 0, SP_NOSIZE);
 		m_lblNote.SetPos(0, m_BtnPerson.GetPosY() + MZM_HEIGHT_BUTTONEX, 
 			0, 0, SP_NOSIZE);
-		m_EdtNote.SetPos(0, m_lblNote.GetPosY() + MZM_HEIGHT_CAPTION, 
+		m_EdtNote.SetPos(0, m_lblNote.GetPosY() + MZM_HEIGHT_HEADINGBAR, 
 			0, 0, SP_NOSIZE);
 	}else{
 		m_BtnToAccounts.SetVisible(false);
@@ -337,7 +337,7 @@ void Ui_MainWnd::initEditText(){
 			0, 0, SP_NOSIZE);
 		m_lblNote.SetPos(0,m_BtnPerson.GetPosY() + MZM_HEIGHT_BUTTONEX,
 			0, 0, SP_NOSIZE);
-		m_EdtNote.SetPos(0, m_lblNote.GetPosY() + MZM_HEIGHT_CAPTION, 
+		m_EdtNote.SetPos(0, m_lblNote.GetPosY() + MZM_HEIGHT_HEADINGBAR, 
 			0, 0, SP_NOSIZE);
 	}	
 	m_BtnReminder.Invalidate();
@@ -403,7 +403,7 @@ void Ui_MainWnd::updateText(){
 			0, 0, SP_NOSIZE);
 		m_lblNote.SetPos(0, m_BtnPerson.GetPosY() + MZM_HEIGHT_BUTTONEX, 
 			0, 0, SP_NOSIZE);
-		m_EdtNote.SetPos(0, m_lblNote.GetPosY() + MZM_HEIGHT_CAPTION, 
+		m_EdtNote.SetPos(0, m_lblNote.GetPosY() + MZM_HEIGHT_HEADINGBAR, 
 			0, 0, SP_NOSIZE);
 	}else{
 		m_BtnToAccounts.SetVisible(false);
@@ -413,7 +413,7 @@ void Ui_MainWnd::updateText(){
 			0, 0, SP_NOSIZE);
 		m_lblNote.SetPos(0,m_BtnPerson.GetPosY() + MZM_HEIGHT_BUTTONEX,
 			0, 0, SP_NOSIZE);
-		m_EdtNote.SetPos(0, m_lblNote.GetPosY() + MZM_HEIGHT_CAPTION, 
+		m_EdtNote.SetPos(0, m_lblNote.GetPosY() + MZM_HEIGHT_HEADINGBAR, 
 			0, 0, SP_NOSIZE);
 	}	
 	m_BtnReminder.Invalidate();

@@ -32,7 +32,7 @@ public:
 protected:
     UiToolbar_Text m_Toolbar;
     RecordList m_RecordList;
-	UiCaption m_FilterBar;
+	UiHeadingBar m_FilterBar;
 	UiButton m_btnFilter;
 #ifdef USE_903SDK
     UiMultiLineEdit m_StaticBar;
@@ -40,7 +40,7 @@ protected:
     UiEdit m_StaticBar;
 #endif
 
-	UiCaption m_summary;
+	UiHeadingBar m_summary;
 
     // Initialization of the window (dialog)
     virtual BOOL OnInitDialog();

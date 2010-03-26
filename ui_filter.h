@@ -26,7 +26,7 @@ private:
 	}
 public:
     UiToolbar_Text m_Toolbar;	//确定
-	UiCaption  m_Caption;
+	UiHeadingBar  m_Caption;
 	UiSwitchOption m_BtnStartDate;	//起始过滤时间按钮 ON/OFF
 	UiSwitchOption m_BtnEndDate;		//结束过滤时间按钮 ON/OFF
 	UiSwitchOption m_BtnCategory;		//过滤分类按钮 ON/OFF

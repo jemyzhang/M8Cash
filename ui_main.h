@@ -25,7 +25,7 @@ public:
     UiScrollWin m_ScrollWin;
     UiToolbar_Text m_Toolbar;
 //    UiButton m_BtnAdd;
-	UiCaption m_lblTitle;
+	UiHeadingBar m_lblTitle;
 
 	UiButton_Image m_BtnAdd;
 	UiButton_Image m_BtnCalc;
@@ -39,8 +39,8 @@ public:
     UiButtonEx m_BtnCategory;
     UiEditMoney m_EdtAmountYuan;
 	UiEditKeySwitcher m_EdtAmountMask;
-    UiCaption m_lblDetail;
-    UiCaption m_lblNote;
+    UiHeadingBar m_lblDetail;
+    UiHeadingBar m_lblNote;
 #ifdef USE_903SDK
     UiMultiLineEdit m_EdtNote;
 #else

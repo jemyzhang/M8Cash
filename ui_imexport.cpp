@@ -174,7 +174,7 @@ BOOL Ui_ImExportWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
     int y = 0;
-    m_CaptionTitle.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+    m_CaptionTitle.SetPos(0, y, GetWidth(), MZM_HEIGHT_HEADINGBAR);
 	if(_isImport){
 		m_CaptionTitle.SetText(LOADSTRING(IDS_STR_IMPORT).C_Str());
 	}else{
@@ -182,7 +182,7 @@ BOOL Ui_ImExportWnd::OnInitDialog() {
 	}
     AddUiWin(&m_CaptionTitle);
 
-    y += MZM_HEIGHT_CAPTION;
+    y += MZM_HEIGHT_HEADINGBAR;
     m_BtnImExAccounts.SetPos(0, y, GetWidth(), MZM_HEIGHT_BUTTONEX);
     m_BtnImExAccounts.SetText(LOADSTRING(IDS_STR_ACCOUNT).C_Str());
     m_BtnImExAccounts.SetButtonType(MZC_BUTTON_LINE_BOTTOM);

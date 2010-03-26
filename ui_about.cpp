@@ -19,27 +19,27 @@ BOOL UI_AboutWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
     int y = 0;
-    m_CaptionTitle.SetPos(0, 0, GetWidth(), MZM_HEIGHT_CAPTION);
+    m_CaptionTitle.SetPos(0, 0, GetWidth(), MZM_HEIGHT_HEADINGBAR);
 	m_CaptionTitle.SetText(LOADSTRING(IDS_STR_ABOUT).C_Str());
     AddUiWin(&m_CaptionTitle);
 
-	y += MZM_HEIGHT_CAPTION*2;
-    m_TextName.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+	y += USER_DEF_HEIGHT*2;
+    m_TextName.SetPos(0, y, GetWidth(), USER_DEF_HEIGHT);
 	m_TextName.SetTextSize(m_TextName.GetTextSize()*2);
 	m_TextName.SetText(LOADSTRING( IDS_STR_APPNAME).C_Str());
     AddUiWin(&m_TextName);
 
-	y += MZM_HEIGHT_CAPTION*2;
-	m_TextAuthor.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+	y += USER_DEF_HEIGHT*2;
+	m_TextAuthor.SetPos(0, y, GetWidth(), USER_DEF_HEIGHT);
 	wchar_t author[128];
 	wsprintf(author,LOADSTRING( IDS_STR_APPAUTHOR).C_Str(),L"JEMYZHANG");
 	m_TextAuthor.SetText(author);
     AddUiWin(&m_TextAuthor);
 
-	y += MZM_HEIGHT_CAPTION + 10;
+	y += USER_DEF_HEIGHT + 10;
 	wchar_t version[128];
 	wsprintf(version,LOADSTRING( IDS_STR_APPVERSION).C_Str(),VER_STRING,BUILD_STRING);
-	m_TextVersion.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION);
+	m_TextVersion.SetPos(0, y, GetWidth(), MZM_HEIGHT_HEADINGBAR);
 	m_TextVersion.SetText(version);
     AddUiWin(&m_TextVersion);
 

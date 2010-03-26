@@ -49,7 +49,7 @@ public:
 public:
     UiToolbar_Text m_Toolbar;
     UiEditPassword m_EdtPassword;
-	UiCaption m_CaptionTitle;
+	UiHeadingBar m_CaptionTitle;
 	UiEditKeySwitcher m_EdtAmountMask;
 	UiEditKeySwitchButton m_BtnKeyBoard;
 public:

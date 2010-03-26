@@ -37,7 +37,7 @@ public:
 	void setMode(int m) { _mode = m; }
 protected:
     UiToolbar_Text m_Toolbar;
-    UiCaption m_Caption1;
+    UiHeadingBar m_Caption1;
     AccountList m_List;
 
     // Initialization of the window (dialog)

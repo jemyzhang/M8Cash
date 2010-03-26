@@ -222,22 +222,22 @@ BOOL Ui_BrowseWnd::OnInitDialog() {
 
         // Then init the controls & other things in the window
 		int y = 0;
-		m_FilterBar.SetPos(0, y, GetWidth(), MZM_HEIGHT_CAPTION*2);
+		m_FilterBar.SetPos(0, y, GetWidth(), USER_DEF_HEIGHT*2);
 		AddUiWin(&m_FilterBar);
 
 		int w = 100;
-		m_btnFilter.SetPos(0,y,w,MZM_HEIGHT_CAPTION*2);
+		m_btnFilter.SetPos(0,y,w,USER_DEF_HEIGHT*2);
 		m_btnFilter.SetText(LOADSTRING(IDS_STR_FILTER).C_Str());
 		m_btnFilter.SetID(MZ_IDC_BUTTON_FILTER);
 		m_FilterBar.AddChild(&m_btnFilter);
 
-		m_StaticBar.SetPos(w,y,GetWidth() - w,MZM_HEIGHT_CAPTION*2);
+		m_StaticBar.SetPos(w,y,GetWidth() - w,USER_DEF_HEIGHT*2);
 		m_StaticBar.SetEnable(false);
 		m_StaticBar.SetTextSize(20);
 		m_FilterBar.AddChild(&m_StaticBar);
 
-		y+=MZM_HEIGHT_CAPTION*2;
-        m_RecordList.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - MZM_HEIGHT_CAPTION*3);
+		y+=USER_DEF_HEIGHT*2;
+        m_RecordList.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - MZM_HEIGHT_HEADINGBAR*3);
         m_RecordList.SetID(MZ_IDC_LIST);
 		m_RecordList.SetTextSize(m_RecordList.GetTextSize()*2/3);
 		m_RecordList.SetItemHeight(40);
@@ -245,7 +245,7 @@ BOOL Ui_BrowseWnd::OnInitDialog() {
         m_RecordList.EnableNotifyMessage(true);
         AddUiWin(&m_RecordList);
 
-		m_summary.SetPos(0, GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - MZM_HEIGHT_CAPTION, GetWidth(), MZM_HEIGHT_CAPTION);
+		m_summary.SetPos(0, GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - MZM_HEIGHT_HEADINGBAR, GetWidth(), MZM_HEIGHT_HEADINGBAR);
         m_summary.SetID(MZ_IDC_SUMMARYMODE);
 		m_summary.EnableNotifyMessage(true);
 		AddUiWin(&m_summary);

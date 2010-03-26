@@ -83,12 +83,12 @@ BOOL Ui_AccountsWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
 	int y = 0;
-	m_Caption1.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION);
+	m_Caption1.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	m_Caption1.SetText(LOADSTRING(IDS_STR_ACCOUNT_LIST).C_Str());
 	AddUiWin(&m_Caption1);
 
-	y+=MZM_HEIGHT_CAPTION;
-    m_List.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - MZM_HEIGHT_CAPTION);
+	y+=MZM_HEIGHT_HEADINGBAR;
+    m_List.SetPos(0, y, GetWidth(), GetHeight() - MZM_HEIGHT_TEXT_TOOLBAR - MZM_HEIGHT_HEADINGBAR);
     m_List.SetID(MZ_IDC_ACCOUNT_LIST);
     m_List.EnableScrollBarV(true);
     m_List.EnableNotifyMessage(true);

@@ -19,6 +19,8 @@
 
 #define BUILD_STRING	L"20100325" COMPILEM
 
+#define USER_DEF_HEIGHT 42
+
 // Application class derived from CMzApp
 extern CashConfig appconfig;
 extern wchar_t db_path[256];

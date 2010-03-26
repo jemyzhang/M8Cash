@@ -42,11 +42,11 @@ BOOL Ui_FilterWnd::OnInitDialog() {
 
     // Then init the controls & other things in the window
     int y = 0;
-	m_Caption.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION);
+	m_Caption.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	m_Caption.SetText(LOADSTRING(IDS_STR_CONFIG_FILTER).C_Str());;
 	AddUiWin(&m_Caption);
 
-	y+=MZM_HEIGHT_CAPTION;
+	y+=MZM_HEIGHT_HEADINGBAR;
 	m_BtnStartDate.SetPos(0,y, GetWidth(), MZM_HEIGHT_BUTTONEX);
 	m_BtnStartDate.SetText(LOADSTRING(IDS_STR_START_DATE).C_Str());
 	m_BtnStartDate.SetID(MZ_IDC_BTN_START_DATE);

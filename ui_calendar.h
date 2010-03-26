@@ -94,9 +94,9 @@ public:
     UiSingleLineEdit m_EdtCalendarYear;
     UiSingleLineEdit m_EdtCalendarMonth;
     UiSingleLineEdit m_EdtCalendarDay;
-	UiCaption m_CaptionTitle;
+	UiHeadingBar m_CaptionTitle;
 #else
-	UiCaption m_CaptionHeader;
+	UiHeadingBar m_CaptionHeader;
 	UiButton_Image m_BtnNext;
 	UiButton_Image m_BtnPre;
 	UiStatic m_YearMonth;

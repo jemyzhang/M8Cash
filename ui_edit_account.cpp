@@ -26,7 +26,7 @@ BOOL Ui_EditAccountWndEx::OnInitDialog() {
     m_ScrollWin.EnableScrollBarV(true);
     AddUiWin(&m_ScrollWin);
 
-	m_CaptionAccTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION);
+	m_CaptionAccTitle.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	if(_mode == 0){
 		m_CaptionAccTitle.SetText(LOADSTRING(IDS_STR_NEW_ACCOUNT).C_Str());
 	}else{
@@ -34,7 +34,7 @@ BOOL Ui_EditAccountWndEx::OnInitDialog() {
 	}
 	m_ScrollWin.AddChild(&m_CaptionAccTitle);
 
-	y += MZM_HEIGHT_CAPTION;
+	y += MZM_HEIGHT_HEADINGBAR;
     m_EdtAccName.SetPos(0, y, GetWidth(), MZM_HEIGHT_SINGLELINE_EDIT);
     m_EdtAccName.SetMaxChars(10);
     m_EdtAccName.SetSipMode(IM_SIP_MODE_GEL_PY, MZM_HEIGHT_TEXT_TOOLBAR);
@@ -45,12 +45,12 @@ BOOL Ui_EditAccountWndEx::OnInitDialog() {
 
     y += MZM_HEIGHT_SINGLELINE_EDIT;
 
-	y+=MZM_HEIGHT_CAPTION/2;
-	m_CaptionAccInit.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION);
+	y+=MZM_HEIGHT_HEADINGBAR/2;
+	m_CaptionAccInit.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	m_CaptionAccInit.SetText(LOADSTRING(IDS_STR_INIT_AMOUNT).C_Str());
 	m_ScrollWin.AddChild(&m_CaptionAccInit);
 
-	y += MZM_HEIGHT_CAPTION;
+	y += MZM_HEIGHT_HEADINGBAR;
 	m_BtnKeyBoard.SetPos(5, y + 10, 40, 40);
 	m_BtnKeyBoard.SetSlotWin(&m_EdtAccInitAmount);
 	m_BtnKeyBoard.SetButtonImage(pimg[IDB_PNG_COINS - IDB_PNG_BEGIN]);
@@ -77,11 +77,11 @@ BOOL Ui_EditAccountWndEx::OnInitDialog() {
 	m_ScrollWin.AddChild(&m_BtnKeyBoard);
 
     y += MZM_HEIGHT_SINGLELINE_EDIT;
-	m_CaptionAccNote.SetPos(0,y,GetWidth(),MZM_HEIGHT_CAPTION);
+	m_CaptionAccNote.SetPos(0,y,GetWidth(),MZM_HEIGHT_HEADINGBAR);
 	m_CaptionAccNote.SetText(LOADSTRING(IDS_STR_NOTE).C_Str());
 	m_ScrollWin.AddChild(&m_CaptionAccNote);
 
-	y += MZM_HEIGHT_CAPTION;
+	y += MZM_HEIGHT_HEADINGBAR;
     m_EdtAccNote.SetPos(0, y, GetWidth(), GetHeight() - y / 2);
     m_EdtAccNote.EnableScrollBarV(true);
     m_EdtAccNote.SetSipMode(IM_SIP_MODE_GEL_PY);

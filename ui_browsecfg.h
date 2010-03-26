@@ -26,7 +26,7 @@ public:
 public:
     UiScrollWin m_ScrollWin;
     UiToolbar_Text m_Toolbar;
-	UiCaption m_lblTitle;
+	UiHeadingBar m_lblTitle;
     UiButtonEx m_BtnReportOut;	//月支出报表
     UiButtonEx m_BtnReportIn;	//月收入报表
     UiButtonEx m_BtnReportYInOut;	//年度收入支出对比图

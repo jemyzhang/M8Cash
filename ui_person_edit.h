@@ -30,7 +30,7 @@ public:
     UiToolbar_Text m_Toolbar;
     UiButtonEx m_BtnPersonType;
     UiSingleLineEdit m_EdtPersonName;
-	UiCaption m_CaptionTitle;
+	UiHeadingBar m_CaptionTitle;
 	UiList m_TypeList;
 protected:
     // Initialization of the window (dialog)

@@ -30,7 +30,7 @@ public:
     UiToolbar_Text m_Toolbar;
     UiButtonEx m_BtnParentCategory;
     UiSingleLineEdit m_EdtCategoryName;
-	UiCaption m_CaptionTitle;
+	UiHeadingBar m_CaptionTitle;
 protected:
     // Initialization of the window (dialog)
     virtual BOOL OnInitDialog();

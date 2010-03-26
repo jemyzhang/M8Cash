@@ -18,7 +18,7 @@ public:
 		if(_folder) delete [] _folder;
 	}
 public:
-	UiCaption m_DialogTitle;
+	UiHeadingBar m_DialogTitle;
 	UiSingleLineEdit m_FileName;
 	UiButtonEx m_FolderPath;
 	UiToolbar_Text m_Toolbar;
