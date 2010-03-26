@@ -936,6 +936,7 @@ bool clsCASHDB::getCategoryByLevel(int level){
 			L"select * from '"
 			TABLE_CATEGORY
 			L"' where LEVEL=? order by NAME collate pinyin;");
+        cmd.bind(1,level);
 		bRet = searchCategories(cmd);
 	}CATCH(exception &ex){
 		db_out(ex.what());
@@ -1280,7 +1281,7 @@ int clsCASHDB::AccountInById(int id,RECORDATE_ptr date, RECORDATE_ptr datend){
 				TABLE_TRANSACTION
 				L"' where catgoryid in (select id from '"
 				TABLE_CATEGORY
-				L"' where type=0 and DATE between ? and ?;");
+				L"' where type=0) and DATE between ? and ?;");
 			cmd.bind(1,date1,lstrlen(date1)*2);	//date 1
 			cmd.bind(2,date2,lstrlen(date2)*2);	//date 2
 
@@ -1325,7 +1326,7 @@ int clsCASHDB::AccountOutById(int id,RECORDATE_ptr date, RECORDATE_ptr datend){
 				TABLE_TRANSACTION
 				L"' where catgoryid in (select id from '"
 				TABLE_CATEGORY
-				L"' where type=1 and DATE between ? and ?;");
+				L"' where type=1) and DATE between ? and ?;");
 			cmd.bind(1,date1,lstrlen(date1)*2);	//date 1
 			cmd.bind(2,date2,lstrlen(date2)*2);	//date 2
 
@@ -1691,7 +1692,7 @@ CASH_PERSON_ptr clsCASHDB::personById(int id){
 			TABLE_PERSON
 			L"' where ID=?");
 		cmd.bind(1,id);
-		if(!searchPerson(cmd)){
+		if(searchPerson(cmd)){
 			pPerson = list_search_person.front();
 		}
 	}CATCH(exception ex){
