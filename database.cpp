@@ -170,6 +170,7 @@ void clsCASHDB::clean(){
 
 //载入帐号和分类
 bool clsCASHDB::load(){
+	return true;
 	if(!loadAccounts() ||
 		!loadCategories()){ 
 		return false;
@@ -250,12 +251,12 @@ bool clsCASHDB::createDefaultAccounts(){
 bool clsCASHDB::appendAccount(CASH_ACCOUNT_ptr acc) {
     bool bRet = true;
 	TRY{
+		acc->id = getMaxAccountID() + 1;
 		sqlite3_command cmd(this->sqlconn,
 		L"insert into '"
 		TABLE_ACCOUNT
 		L"' (ID,NAME,INITIALVALUE,NOTE,ISFIX)"
 		L" values(?,?,?,?,?);");
-
 		cmd.bind(1,static_cast<int>(acc->id));
 		cmd.bind(2,acc->name, lstrlen(acc->name)*2);
 		cmd.bind(3,static_cast<int>(acc->initval));
@@ -268,15 +269,9 @@ bool clsCASHDB::appendAccount(CASH_ACCOUNT_ptr acc) {
 		bRet = false;
 	}
 	
-	//数据库写入成功后，同时增加到帐号列表，减少数据库读操作
 	if(bRet){
-		CASH_ACCOUNT_ptr newAcc = new CASH_ACCOUNT_t;
-		newAcc->id = acc->id;
-		C::newstrcpy(&newAcc->name,acc->name);
-		C::newstrcpy(&newAcc->note,acc->note);
-		newAcc->initval = acc->initval;
-		newAcc->isfix = acc->isfix;
-        list_account.push_back(newAcc);
+		//重新载入
+		this->loadAccounts();
 	}
     return bRet;
 }
@@ -303,10 +298,6 @@ int clsCASHDB::deleteAccountById(int id){
 		db_out(ex.what());
 	}
 	if(bUsed) return -1;	//正在被使用，无法删除
-
-	//从账户列表中删除账户
-	list_account.remove(beremoved);
-	delete beremoved;
 
 	//从数据库中删除分类
 	TRY{
@@ -414,13 +405,17 @@ void clsCASHDB::cleanAccountList(){
 
 //根据id获得帐号
 CASH_ACCOUNT_ptr clsCASHDB::accountById(int id) {
-    list<CASH_ACCOUNT_ptr>::iterator i = list_account.begin();
-	CASH_ACCOUNT_ptr a;
-	for (; i != list_account.end(); i++){
-		a = *i;
-		if(a->id == id){
-			return a;
+	TRY{
+		sqlite3_command cmd(sqlconn,
+			L"select * from '"
+			TABLE_ACCOUNT
+			L"' where ID=?;");
+		cmd.bind(1,id);
+		if(searchAccounts(cmd)){
+			return list_search_account.front();
 		}
+	}CATCH(exception &ex){
+		db_out(ex.what());
 	}
 	return NULL;
 }
@@ -482,7 +477,7 @@ int clsCASHDB::checkDupAccount(CASH_ACCOUNT_ptr pa, bool *bconflict){
 			TABLE_ACCOUNT
 			L"' where NAME=? COLLATE NOCASE;");
 		cmd.bind(1,pa->name,lstrlen(pa->name)*2);
-		if(!searchAccounts(cmd)){
+		if(searchAccounts(cmd)){
 			CASH_ACCOUNT_ptr r = list_search_account.front();
 			retid = r->id;	//返回存在的记录id号
 
@@ -612,6 +607,7 @@ bool clsCASHDB::restoreDefaultCategory() {
 bool clsCASHDB::appendCategory(CASH_CATEGORY_ptr cat) {
     bool bRet = true;
 	TRY{
+		cat->id = getMaxCategoryID() + 1;
 		sqlite3_command cmd(this->sqlconn,
 		L"insert into '"
 		TABLE_CATEGORY
@@ -632,13 +628,8 @@ bool clsCASHDB::appendCategory(CASH_CATEGORY_ptr cat) {
 	
 	//数据库写入成功后，同时增加到分类列表，减少数据库读操作
 	if(bRet){
-		CASH_CATEGORY_ptr newCat = new CASH_CATEGORY_t;
-		newCat->id = cat->id;
-		newCat->level = cat->level;
-		C::newstrcpy(&newCat->name,cat->name);
-		newCat->parentid = cat->parentid;
-		newCat->type = cat->type;
-        list_category.push_back(newCat);
+		//重新载入
+		this->loadCategories();
 	}
     return bRet;
 }
@@ -666,7 +657,7 @@ int clsCASHDB::deleteCategoryById(int id){
 		sqlite3_command cmd(sqlconn,
 			L"select count(*) from '"
 			TABLE_TRANSACTION
-			L"' where CATEGORYID=?");
+			L"' where CATGORYID=?");
 		cmd.bind(1,id);
 		if(cmd.executeint() == 0){
 			bUsed = false;
@@ -676,10 +667,6 @@ int clsCASHDB::deleteCategoryById(int id){
 	}
 
 	if(bUsed) return -1;	//正在被使用，无法删除
-
-	//从分类列表中删除分类
-	list_category.remove(beremoved);
-	delete beremoved;
 
 	//从数据库中删除分类
 	TRY{
@@ -753,7 +740,7 @@ bool clsCASHDB::loadCategories() {
 		sqlite3_command cmd(this->sqlconn,
 			L"select * from '"
 			TABLE_CATEGORY
-			L"' order by NAME collate pinyin;");
+			L"' order by NAME,LEVEL collate pinyin;");
 		
 		sqlite3_reader reader = cmd.executereader();
 		while(reader.read()){
@@ -787,13 +774,18 @@ void clsCASHDB::cleanCategoryList(){
 
 //根据ID获得分类
 CASH_CATEGORY_ptr clsCASHDB::categoryById(int id) {
-    list<CASH_CATEGORY_ptr>::iterator i = list_category.begin();
-	CASH_CATEGORY_ptr a;
-	for (; i != list_category.end(); i++){
-		a = *i;
-		if(a->id == id){
-			return a;
+	TRY{
+		sqlite3_command cmd(sqlconn,
+			L"select * from '"
+			TABLE_CATEGORY
+			L"' where ID=?;");
+		cmd.bind(1,id);
+		if(searchCategories(cmd)){
+			wprintf(L"%s\n",list_search_category.front()->name);
+			return list_search_category.front();
 		}
+	}CATCH(exception &ex){
+		db_out(ex.what());
 	}
 	return NULL;
 }
@@ -905,16 +897,16 @@ int clsCASHDB::checkDupCategory(CASH_CATEGORY_ptr pc, bool *bconflict){
 
 	TRY{
 		sqlite3_command cmd(sqlconn,
-			L"select count(*),ID,TYPE from '"
+			L"select ID,TYPE from '"
 			TABLE_CATEGORY
 			L"' where NAME=? and LEVEL=? and PARENTID=?;");
 		cmd.bind(1,pc->name,lstrlen(pc->name)*2);
 		cmd.bind(2,static_cast<int>(pc->level));
 		cmd.bind(3,static_cast<int>(pc->parentid));
 		sqlite3_reader reader = cmd.executereader();
-		if(reader.getint(0) != 0){
-			retid = reader.getint(1);
-			if(reader.getint(2) != pc->type){
+		while(reader.read()){
+			retid = reader.getint(0);
+			if(reader.getint(1) != pc->type){
 				if(bconflict) *bconflict = true;
 			}
 		}
@@ -1369,11 +1361,11 @@ void clsCASHDB::formatDate(RECORDATE_ptr date, RECORDATE_ptr datend,
 	}
 
 	if(datend){
-		d2.Year = datend->Year > 0 ? datend->Year : 0xfff;
+		d2.Year = datend->Year > 0 ? datend->Year : 3000;
 		d2.Month = datend->Month > 0 ? datend->Month : 12;
 		d2.Day = datend->Day > 0 ? datend->Day : 31;
 	}else{
-		d2.Year = 0xfff; d2.Month = 12; d2.Day = 31;
+		d2.Year = 3000; d2.Month = 12; d2.Day = 31;
 	}
 }
 
@@ -1532,10 +1524,10 @@ int clsCASHDB::checkDupTransaction(CASH_TRANSACT_ptr pr){
 
 	TRY{
 		sqlite3_command cmd(sqlconn,
-			L"select count(*),TRANSACTID from '"
+			L"select TRANSACTID from '"
 			TABLE_TRANSACTION
 			L"' where DATE like ? and AMOUNT=? "
-			L"and CATEGORYID=? and ACCOUNTID=? and TOACCOUNTID=? "
+			L"and CATGORYID=? and ACCOUNTID=? and TOACCOUNTID=? "
 			L"and ISTRANSFER=?;");
 
 		wchar_t sqldate[24];
@@ -1549,8 +1541,8 @@ int clsCASHDB::checkDupTransaction(CASH_TRANSACT_ptr pr){
 		cmd.bind(6,static_cast<int>(pr->isTransfer));
 		
 		sqlite3_reader reader = cmd.executereader();
-		if(reader.getint(0) > 0){
-			retid = reader.getint(1);
+		while(reader.read()){
+			retid = reader.getint(0);
 		}
 	}CATCH(exception &ex){
 		db_out(ex.what());
@@ -1606,7 +1598,7 @@ bool clsCASHDB::appendPerson(CASH_PERSON_ptr p){
 		//check if is being used
 		sqlite3_command cmd(sqlconn,
 			L"insert into '"
-			TABLE_TRANSACTION
+			TABLE_PERSON
 			L"' (ID, NAME, TYPE) values(?,?,?);");
 		cmd.bind(1,static_cast<int>(p->id));
 		cmd.bind(2,p->name,lstrlen(p->name)*2);
@@ -1667,7 +1659,7 @@ bool clsCASHDB::updatePerson(CASH_PERSON_ptr p){
 		//check if is being used
 		sqlite3_command cmd(sqlconn,
 			L"update '"
-			TABLE_TRANSACTION
+			TABLE_PERSON
 			L"' set NAME=?, TYPE=?, ID=?;");
 		cmd.bind(1,p->name,lstrlen(p->name)*2);
 		cmd.bind(2,static_cast<int>(p->type));
@@ -1818,15 +1810,13 @@ int	clsCASHDB::checkDupPerson(CASH_PERSON_ptr pP){
 	int nRet = -1;
 	TRY{
 		sqlite3_command cmd(sqlconn,
-			L"select count(*),ID from '"
+			L"select ID from '"
 			TABLE_PERSON
 			L"' where NAME=? collate nocase;");
 		cmd.bind(1,pP->name);
 		sqlite3_reader reader = cmd.executereader();
 		while(reader.read()){
-			if(reader.getint(0)){
-				nRet = reader.getint(1);
-			}
+			nRet = reader.getint(0);
 		}
 	}CATCH(exception &ex){
 		db_out(ex.what());

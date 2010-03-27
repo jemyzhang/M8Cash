@@ -161,6 +161,7 @@ private:
 
 
 public: //分类相关
+    bool loadCategories();
     bool appendCategory(CASH_CATEGORY_ptr);
 	bool updateCategory(CASH_CATEGORY_ptr);
     int deleteCategoryByIndex(int);
@@ -176,7 +177,6 @@ public: //分类相关
 	int checkDupCategory(CASH_CATEGORY_ptr,bool *bconflict = 0);
 private:
 	bool updateCategoryList(int,CASH_CATEGORY_ptr);
-    bool loadCategories();
 	void clearCategorySearchResults();
 	bool createDefaultCategories();
 	//恢复默认分类名称

@@ -70,6 +70,8 @@ private:
 	//处理导入时字符串中的双引号
 	wchar_t* processToken(wchar_t* &token);
     LPWSTR qif_date(LPCTSTR recdt);
+	int qif_exp_account(FILE *fp,int bv,int tv);
+	int qif_exp_category(FILE *fp,int bv,int tv);
 private:
 	bool _isImport;
 	int _filetype;

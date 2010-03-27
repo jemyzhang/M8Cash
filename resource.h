@@ -77,9 +77,9 @@
 #define IDB_PNG_BAL_HEAD_IN             137
 #define IDS_STR_DISABLED                137
 #define IDB_PNG_BAL_HEAD_OUT            138
-#define IDB_PNG_PERSON					139
-#define IDB_PNG_END                     139
 #define IDS_STR_ENABLED                 138
+#define IDB_PNG_PERSON                  139
+#define IDB_PNG_END                     139
 #define IDS_STR_CYCLE                   139
 #define IDS_STR_YYYYMMDD                140
 #define IDS_STR_EVERY_DAY               141
@@ -241,6 +241,7 @@
 #define IDS_STR_ERR_PERSON_ADD          297
 #define IDS_STR_INFO_PERSON_ADDS        298
 #define IDS_STR_PERSON_ALL              299
+#define IDS_STR_INFO_DELETES            300
 
 // Next default values for new objects
 // 

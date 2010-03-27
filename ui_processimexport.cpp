@@ -898,67 +898,46 @@ LPWSTR Ui_ProcessImExport::qif_date(LPCTSTR recdt){
 	return retval;
 }
 
-bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
-	FILE* fp;
-	fp = _wfopen(file,L"wt");
-	if(fp == NULL){
-		wsprintf(_lastErrMsg,L"文件打开失败。");
-		return false;
-	}
-	m_Progressdlg.SetRange(0,100);
-	
-	switch(_process){
-		case PROCESS_ACCOUNT:
-		{
-			int cnt = 0;
-			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
-			//写入头部
-			fwprintf(fp,L"!Account\n");
-			list<CASH_ACCOUNT_ptr>::iterator i = cash_db.list_account.begin();
-			int size = cash_db.list_account.size();
-			for(; i != cash_db.list_account.end();i++){
-				CASH_ACCOUNT_ptr c = *i;
-				fwprintf(fp,L"N%s\n",c->name);	//名称
-				if(lstrlen(c->note)){
-					wchar_t snote[1024];
-					fwprintf(fp,L"M%s\n",C::removeWrap(snote,c->note));		//描述
-				}
-				//类型
-				if(lstrcmp(c->name,LOADSTRING(IDS_STR_CASH).C_Str()) == 0){
-					fwprintf(fp,L"TCash\n");
-				}else{
-					fwprintf(fp,L"TBank\n");
-				}
-				//写入结束符
-				fwprintf(fp,L"^\n");
-				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
-				m_Progressdlg.UpdateProgress();
-			}
-			fclose(fp);
-			wsprintf(_lastErrMsg,
-				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
-				size,
-				LOADSTRING(IDS_STR_ACCOUNT).C_Str());
-			m_Progressdlg.KillProgress();
+int Ui_ProcessImExport::qif_exp_account(FILE *fp,int bv,int tv){
+	int cnt = 0;
+	//写入头部
+	fwprintf(fp,L"!Account\n");
+	list<CASH_ACCOUNT_ptr>::iterator i = cash_db.list_account.begin();
+	int size = cash_db.list_account.size();
+	for(; i != cash_db.list_account.end();i++){
+		CASH_ACCOUNT_ptr c = *i;
+		fwprintf(fp,L"N%s\n",c->name);	//名称
+		if(lstrlen(c->note)){
+			wchar_t snote[1024];
+			fwprintf(fp,L"M%s\n",C::removeWrap(snote,c->note));		//描述
 		}
-			break;
-		case PROCESS_CATEGORY:
-		{
-			int cnt = 0;
-			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
-			//写入头部
-			fwprintf(fp,L"!Type:Cat\n");
-			list<CASH_CATEGORY_ptr>::iterator i = cash_db.list_category.begin();
-			int size = cash_db.list_category.size();
-			for(; i != cash_db.list_category.end();i++){
-				CASH_CATEGORY_ptr c = *i;
-				if(lstrcmp(c->name,LOADSTRING(IDS_STR_TRANSFER).C_Str()) == 0){
-					continue;	//忽略转帐
-				}
-				int level = c->level;
-				switch(level){
+		//类型
+		if(lstrcmp(c->name,LOADSTRING(IDS_STR_CASH).C_Str()) == 0){
+			fwprintf(fp,L"TCash\n");
+		}else{
+			fwprintf(fp,L"TBank\n");
+		}
+		//写入结束符
+		fwprintf(fp,L"^\n");
+		m_Progressdlg.SetCurrentValue(bv + (cnt++)*tv/size);
+		m_Progressdlg.UpdateProgress();
+	}
+	return size;
+}
+
+int Ui_ProcessImExport::qif_exp_category(FILE *fp,int bv,int tv){
+	int cnt = 0;
+	//写入头部
+	fwprintf(fp,L"!Type:Cat\n");
+	list<CASH_CATEGORY_ptr>::iterator i = cash_db.list_category.begin();
+	int size = cash_db.list_category.size();
+	for(; i != cash_db.list_category.end();i++){
+		CASH_CATEGORY_ptr c = *i;
+		if(lstrcmp(c->name,LOADSTRING(IDS_STR_TRANSFER).C_Str()) == 0){
+			continue;	//忽略转帐
+		}
+		int level = c->level;
+		switch(level){
 				case 0:
 					fwprintf(fp,L"N%s\n",c->name);
 					break;
@@ -973,20 +952,52 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 					break;
 				default:
 					break;
-				}
-				//写入类型
-				wchar_t* stype;
-				if(c->type == CT_INCOME){
-					stype = L"I";
-				}else{
-					stype = L"E";
-				}
-				fwprintf(fp,L"%s\n",stype);
-				//写入结束符
-				fwprintf(fp,L"^\n");
-				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
-				m_Progressdlg.UpdateProgress();
-			}
+		}
+		//写入类型
+		wchar_t* stype;
+		if(c->type == CT_INCOME){
+			stype = L"I";
+		}else{
+			stype = L"E";
+		}
+		fwprintf(fp,L"%s\n",stype);
+		//写入结束符
+		fwprintf(fp,L"^\n");
+		m_Progressdlg.SetCurrentValue((cnt++)*100/size);
+		m_Progressdlg.UpdateProgress();
+	}
+	return size;
+}
+
+bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
+	FILE* fp;
+	fp = _wfopen(file,L"wt");
+	if(fp == NULL){
+		wsprintf(_lastErrMsg,L"文件打开失败。");
+		return false;
+	}
+	m_Progressdlg.SetRange(0,100);
+	
+	switch(_process){
+		case PROCESS_ACCOUNT:
+		{
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
+			int size = qif_exp_account(fp,0,100);
+			fclose(fp);
+			wsprintf(_lastErrMsg,
+				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
+				size,
+				LOADSTRING(IDS_STR_ACCOUNT).C_Str());
+			m_Progressdlg.KillProgress();
+		}
+			break;
+		case PROCESS_CATEGORY:
+		{
+			int cnt = 0;
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
+			int size = qif_exp_category(fp,0,100);
 			fclose(fp);
 			wsprintf(_lastErrMsg,
 				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
@@ -997,6 +1008,14 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 			break;
 		case PROCESS_RECORD:
 		{
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
+			int cnt = 0,size = 0;
+			qif_exp_account(fp,0,20);
+			qif_exp_category(fp,20,40);
+
+			//导出记录
+			printf("exporting transactions\n");
 			RECORDATE_t rd1,rd2;
 			if(!_dateAll){
 				ExportDate_t d1, d2;
@@ -1005,17 +1024,15 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 				rd1.Year = d1.Date.Year; rd1.Month = d1.Date.Month; rd1.Day = d1.Date.Day;
 				rd2.Year = d2.Date.Year; rd2.Month = d2.Date.Month; rd2.Day = d2.Date.Day;
 			}
-
-			int cnt = 0;
-			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
+			cnt = 0;
 			int nsuccess = 0;
 
-			int size = cash_db.list_account.size();
+			size = cash_db.list_account.size();
 
-			list<CASH_ACCOUNT_ptr>::iterator i = cash_db.list_account.begin();
-			for(;i != cash_db.list_account.end(); i++){
-				CASH_ACCOUNT_ptr account = *i;
+			list<CASH_ACCOUNT_ptr>::iterator ia = cash_db.list_account.begin();
+			printf("exporting transactions:begin\n");
+			for(;ia != cash_db.list_account.end(); ia++){
+				CASH_ACCOUNT_ptr account = *ia;
 				bool baccount = false;
 				bool ret;
 				if(_dateAll){
@@ -1034,7 +1051,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 							fwprintf(fp,L"TBank\n^\n!Type:Bank\n");
 						}
 						if(account->initval != 0){
-							fwprintf(fp,L"D1/ 1/ 9\n");
+							fwprintf(fp,L"D1/ 1' 9\n");
 							fwprintf(fp,L"U%.2f\n",(double)account->initval/100);
 							fwprintf(fp,L"T%.2f\n",(double)account->initval/100);
                 			fwprintf(fp,L"CX\n");
@@ -1074,7 +1091,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 							fwprintf(fp,L"TBank\n^\n!Type:Bank\n");
 						}
 						if(account->initval != 0){
-							fwprintf(fp,L"D1/ 1/ 9\n");
+							fwprintf(fp,L"D1/ 1' 9\n");
 							fwprintf(fp,L"U%.2f\n",(double)account->initval/100);
 							fwprintf(fp,L"T%.2f\n",(double)account->initval/100);
 							fwprintf(fp,L"CX\n");
@@ -1125,7 +1142,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 						nsuccess++;
 					}
 				}
-				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
+				m_Progressdlg.SetCurrentValue(40 + (cnt++)*60/size);
 				m_Progressdlg.UpdateProgress();
 			}
 			fclose(fp);

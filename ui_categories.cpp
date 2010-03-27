@@ -427,6 +427,7 @@ void Ui_CategoriesWnd::updateList(bool updateBtn){
 //		delete idarray;
 //		idarray = nid;
 	}else{
+		cash_db.loadCategories();
 		int tz = cash_db.list_category.size();
 		if(idarray) delete[] idarray;
 

@@ -217,6 +217,7 @@ void Ui_AccountsWnd::updateList(){
     ListItem li;
     CMzString str;
 
+	cash_db.loadAccounts();
 	int tz = cash_db.list_account.size();
 	if(idarray) delete[] idarray;
 
