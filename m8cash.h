@@ -17,7 +17,7 @@
 #define COMPILEL	L"d"
 #endif
 
-#define BUILD_STRING	L"20100325" COMPILEM
+#define BUILD_STRING	L"20100327" COMPILEM
 
 #define USER_DEF_HEIGHT 42
 
@@ -39,7 +39,7 @@ class M8CashApp : public CMzApp {
 public:
     // The main window of the app.
     //Ui_MainWnd m_MainWnd;
-    Ui_MainWnd *m_pMainWnd;
+    Ui_MainWnd m_MainWnd;
 
     //check pwd
     bool checkpwd();
@@ -50,7 +50,6 @@ public:
 		FreeMzResModule();
 		if(isExternLangres) FreeLibrary(LangresHandle);
 		return CMzApp::Done();
-		if(m_pMainWnd) delete m_pMainWnd;
 	}
 private:
 	bool isExternLangres;

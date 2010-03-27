@@ -111,7 +111,7 @@ void Ui_BackupWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					if(nIndex == -1) return;
 					BOOL nRet = bdelete(m_List.GetItem(nIndex)->Text);
 					if(nRet){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_DELETE_S).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_DELETE_S).C_Str());
 						updateList();
 					}
 				}else{
@@ -121,7 +121,7 @@ void Ui_BackupWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
             if (nIndex == 2) { //±¸·Ý
 				BOOL nRet = bbackup();
 				if (nRet) {
-					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_BACKUP_S).C_Str());
+					MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_BACKUP_S).C_Str());
 					updateList();
 				}
                 return;

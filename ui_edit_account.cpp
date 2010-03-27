@@ -131,7 +131,7 @@ void Ui_EditAccountWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					CASH_ACCOUNT_t newAcc;
 
 					if(m_EdtAccName.GetText().IsEmpty()){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_WARN_ACCOUNT_NAME).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_WARN_ACCOUNT_NAME).C_Str());
 						m_EdtAccName.SetFocus(true);
 						return;
 					}
@@ -145,13 +145,13 @@ void Ui_EditAccountWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					newAcc.isfix = 0;
 
 					if(cash_db.checkDupAccount(&newAcc) != -1){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_ACCOUNT_ADDDUP).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_ACCOUNT_ADDDUP).C_Str());
 						m_EdtAccName.SetText(L"\0");
 						m_EdtAccName.Invalidate();
 					}else{
 						//insert account record
 						cash_db.appendAccount(&newAcc);
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_INFO_ACCOUNT_ADDS).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_INFO_ACCOUNT_ADDS).C_Str());
 						EndModal(ID_OK);
 					}
                     return;
@@ -163,7 +163,7 @@ void Ui_EditAccountWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					CASH_ACCOUNT_ptr pacc = cash_db.accountById(_editIndex);
 
 					if(m_EdtAccName.GetText().IsEmpty()){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_WARN_ACCOUNT_NAME).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_WARN_ACCOUNT_NAME).C_Str());
 						m_EdtAccName.SetFocus(true);
 						return;
 					}
@@ -183,7 +183,7 @@ void Ui_EditAccountWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					//if name is changed, check duplication
 					if(lstrcmp(updatedAcc.name,pacc->name) != 0){
 						if(cash_db.checkDupAccount(&updatedAcc) != -1){
-							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_ACCOUNT_UPDATEDUP).C_Str());
+							MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_ACCOUNT_UPDATEDUP).C_Str());
 							m_EdtAccName.SetText(L"\0");
 							m_EdtAccName.Invalidate();
 							return;
@@ -191,7 +191,7 @@ void Ui_EditAccountWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					}
 
 					cash_db.updateAccount(&updatedAcc);
-					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_INFO_ACCOUNT_UPDATES).C_Str());
+					MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_INFO_ACCOUNT_UPDATES).C_Str());
                     EndModal(ID_OK);
                     return;
                 }
@@ -200,7 +200,7 @@ void Ui_EditAccountWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						LOADSTRING(IDS_STR_WARN_ACCOUNT_DELETE).C_Str(),
 						LOADSTRING(IDS_STR_OK).C_Str(),MZ_YESNO,false) == 1){
 						if(cash_db.deleteAccountById(_editIndex)){
-							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_ACCOUNT_INUSE).C_Str());
+							MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_ACCOUNT_INUSE).C_Str());
 						}
 						EndModal(ID_OK);
 					}

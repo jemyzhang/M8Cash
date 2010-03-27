@@ -75,7 +75,7 @@ void Ui_MonthReportWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 
 bool Ui_MonthReportWnd::setupData(bool _view){
 	_viewAccount = _view;
-	MzBeginWaitDlg(m_hWnd);
+	MzBeginWaitDlg(m_hWnd,NULL,TRUE);
 	if(_view){
 		setupAccountData();
 	}else{
@@ -430,7 +430,7 @@ void Ui_YearlyReportWnd::setupBarData(){
 }
 
 void Ui_YearlyReportWnd::updateUi(){
-	MzBeginWaitDlg(m_hWnd);
+	MzBeginWaitDlg(m_hWnd,NULL,TRUE);
 	wchar_t date[32];
 	wsprintf(date,LOADSTRING(IDS_STR_YEARLY_TITLE).C_Str(),_year);
 	m_CaptionTitle.SetText(date);

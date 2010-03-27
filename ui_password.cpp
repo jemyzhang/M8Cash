@@ -115,11 +115,11 @@ void Ui_PasswordWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					if(s.IsEmpty()){
 						g_bencypt = false;
 						cash_db.encrypt(NULL,0);
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_PWD_CLEAR_S).C_Str(),2000);
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_PWD_CLEAR_S).C_Str());
 					}else{
 						g_bencypt = true;
 						cash_db.encrypt(s.C_Str(),s.Length());
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_PWD_SET_S).C_Str(),2000);
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_PWD_SET_S).C_Str());
 					}
 				}else{
                     bool ret = false;
@@ -132,7 +132,7 @@ void Ui_PasswordWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						//popup error message
 						//L"密码错误，或者数据库已损坏"
 						cash_db.disconnect();
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_PWD_INCORRECT).C_Str(),2000);
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_PWD_INCORRECT).C_Str());
 						m_EdtPassword.SetFocus(true);
 						return;
 					}

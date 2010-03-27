@@ -805,10 +805,8 @@ wchar_t* clsCASHDB::getCategoryNameById(int id) {
 }
 
 //根据ID获取分类全名（包括父类）
-//TODO: 返回值必须在使用完毕后销毁
 wchar_t* clsCASHDB::getCategoryFullNameById(int id) {
-    wchar_t* fullname;
-    wchar_t* nodename[3]; //child max depth = 3
+	wchar_t* nodename[3] = {0,0,0}; //child max depth = 3
     int depth = 0;
 	int szfullname = 0;
 
@@ -817,7 +815,7 @@ wchar_t* clsCASHDB::getCategoryFullNameById(int id) {
     do {
         c = categoryById(nodeidx);
 		if(c != NULL){
-			nodename[depth++] = c->name;
+			C::newstrcpy(&nodename[depth++], c->name);
 			nodeidx = c->parentid;
 			szfullname += lstrlen(c->name);
 		}else{
@@ -826,15 +824,15 @@ wchar_t* clsCASHDB::getCategoryFullNameById(int id) {
     } while (nodeidx != -1);
 	
 	//分配字符串空间
-	fullname = new wchar_t[szfullname + 1];
-
+	memset(catfullname,0,128);
     for (int i = depth-1; i >= 0; i--) {
-        lstrcat(fullname, nodename[i]);
+        lstrcat(catfullname, nodename[i]);
+		delete nodename[i];
         if (i != 0) {
-            lstrcat(fullname, L" - ");
+            lstrcat(catfullname, L" - ");
         }
     }
-    return fullname;
+    return catfullname;
 }
 
 //清除搜索结果：分类

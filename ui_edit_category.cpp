@@ -118,7 +118,7 @@ void Ui_EditCateGoryWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					CASH_CATEGORY_ptr parentCat;
 
 					if(m_EdtCategoryName.GetText().IsEmpty()){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_WARN_CATEGORY_SETNAME).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_WARN_CATEGORY_SETNAME).C_Str());
 						m_EdtCategoryName.SetFocus(true);
 						return;
 					}
@@ -131,12 +131,12 @@ void Ui_EditCateGoryWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					//insert category record
 					bool isconf = true;
 					if(cash_db.checkDupCategory(&newCat,&isconf) != -1 && (isconf == false)){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_CATEGORY_ADD).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_CATEGORY_ADD).C_Str());
 						m_EdtCategoryName.SetText(L"\0");
 						m_EdtCategoryName.Invalidate();
 					}else{
 						cash_db.appendCategory(&newCat);
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_INFO_CATEGORY_ADDS).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_INFO_CATEGORY_ADDS).C_Str());
 						EndModal(ID_OK);
 					}
                     return;
@@ -153,7 +153,7 @@ void Ui_EditCateGoryWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					updatedCat.parentid = pcat->parentid;
 
 					if(m_EdtCategoryName.GetText().IsEmpty()){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_WARN_CATEGORY_SETNAME).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_WARN_CATEGORY_SETNAME).C_Str());
 						m_EdtCategoryName.SetFocus(true);
 						return;
 					}
@@ -168,21 +168,21 @@ void Ui_EditCateGoryWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					//if name / level was changed, check the duplication
 					if(lstrcmp(updatedCat.name,pcat->name) != 0 || updatedCat.level != pcat->level){
 						if(cash_db.checkDupCategory(&updatedCat) != -1){
-							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_CATEGORY_UPDATE).C_Str());
+							MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_CATEGORY_UPDATE).C_Str());
 							m_EdtCategoryName.SetText(L"\0");
 							m_EdtCategoryName.Invalidate();
 							return;
 						}
 					}
 					cash_db.updateCategory(&updatedCat);
-					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_INFO_CATEGORY_UPDATES).C_Str());
+					MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_INFO_CATEGORY_UPDATES).C_Str());
                     EndModal(ID_OK);
                     return;
                 }
                 if (nIndex == 1) { //É¾³ý
 					if(MzMessageBoxEx(m_hWnd,LOADSTRING(IDS_STR_WARN_CATEGORY_DELETE).C_Str(),LOADSTRING(IDS_STR_OK).C_Str(),MZ_YESNO,false) == 1){
 						if(cash_db.deleteCategoryById(_editIndex)){
-							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_CATEGORY_INUSE).C_Str());
+							MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_CATEGORY_INUSE).C_Str());
 						}
 						EndModal(ID_OK);
 					}

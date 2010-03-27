@@ -182,6 +182,7 @@ private:
 	//恢复默认分类名称
 	bool restoreDefaultCategory();
 	void cleanCategoryList();	//载入类别前清除垃圾,防止重复载入
+	wchar_t catfullname[128];
 public:
     list<CASH_CATEGORY_ptr> list_category;
     list<CASH_CATEGORY_ptr> list_search_category;
@@ -290,8 +291,8 @@ public:
 	void versionUpdate(HWND hWnd){
 		//检查记录版本
 		if(checkDatabaseVersion_v1()){
-			MzAutoMsgBoxEx(hWnd,L"数据库升级中，请稍后",1000);
-			MzBeginWaitDlg(hWnd);
+			MzMessageAutoBoxV2(hWnd,L"数据库升级中，请稍后");
+			MzBeginWaitDlg(hWnd,NULL,TRUE);
 			updateDatabaseVersion_v1();
 			reorgDatebase();
 			MzEndWaitDlg();

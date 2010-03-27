@@ -618,7 +618,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 		{
 			if (_isEditMode) { //更新
 				if(m_EdtAmountYuan.isEmpty()){
-					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_AMOUNT).C_Str());
+					MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_AMOUNT).C_Str());
 					return;
 				}
 				CASH_TRANSACT_t c;
@@ -626,7 +626,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 
 				c.amount = m_EdtAmountYuan.getInputAmount();
 				if(c.amount < 0){
-					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_MINUS).C_Str());
+					MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_MINUS).C_Str());
 					return;
 				}
 				c.accountid = cash_db.accountById(_selectedAccountIndex)->id;
@@ -638,7 +638,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				}
 				if(cash_db.categoryById(_selectedCategoryIndex)->type == CT_TRANSFER){
 					if(_selectedAccountIndex == _selectedToAccountIndex){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANSFER_ACCOUNT).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANSFER_ACCOUNT).C_Str());
 						m_BtnAccounts.SetFocus(true);
 						return;
 					}
@@ -692,7 +692,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 						cash_reminder.saveReminderList();
 					}
 				}
-				MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_TRANS_UPDATE).C_Str(),1000);
+				MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_TRANS_UPDATE).C_Str(),MZV2_MB_NONE,1000);
 				m_EdtAmountYuan.SetText(L"\0");
 				m_EdtAmountYuan.SetEnable(false);
 				m_EdtNote.Clear();
@@ -702,13 +702,13 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				return;
 			}else{ //保存
 				if(m_EdtAmountYuan.isEmpty()){
-					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_AMOUNT).C_Str());
+					MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_AMOUNT).C_Str());
 					return;
 				}
 				CASH_TRANSACT_t c;
 				c.amount = m_EdtAmountYuan.getInputAmount();
 				if(c.amount < 0){
-					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_MINUS).C_Str());
+					MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANS_MINUS).C_Str());
 					return;
 				}
 				c.accountid = cash_db.accountById(_selectedAccountIndex)->id;
@@ -720,7 +720,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				}
 				if(cash_db.categoryById(_selectedCategoryIndex)->type == CT_TRANSFER){
 					if(_selectedAccountIndex == _selectedToAccountIndex){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANSFER_ACCOUNT).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_TRANSFER_ACCOUNT).C_Str());
 						m_BtnAccounts.SetFocus(true);
 						return;
 					}
@@ -770,7 +770,7 @@ void Ui_MainWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					m_BtnReminder.Invalidate();
 				}
 				//保存完毕后清理
-				MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_TRANS_ADD).C_Str(),1000);
+				MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_TRANS_ADD).C_Str(),MZV2_MB_NONE,1000);
 				m_EdtAmountYuan.SetText(L"\0");
 				m_EdtAmountYuan.SetEnable(false);
 				m_EdtNote.Clear();

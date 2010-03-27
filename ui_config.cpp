@@ -291,15 +291,15 @@ void Ui_ConfigWnd::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 				cash_reminder.loadReminderList();
 				cash_reminder.recoverReminder();
 				cash_reminder.saveReminderList();
-				MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ALARM_RESTORE_S).C_Str());
+				MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ALARM_RESTORE_S).C_Str());
 			}
 			break;
 		}
 		case MZ_IDC_BUTTON_CFG_OPTIMIZE:
 		{
-			MzBeginWaitDlg(m_hWnd);
+			MzBeginWaitDlg(m_hWnd,NULL,TRUE);
 			cash_db.reorgDatebase();
-			MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_DB_OPT_S).C_Str());
+			MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_DB_OPT_S).C_Str());
 			MzEndWaitDlg();
 			break;
 		}

@@ -19,14 +19,13 @@ MZ_IMPLEMENT_DYNAMIC(Ui_ProcessImExport)
 Ui_ProcessImExport::Ui_ProcessImExport(void)
 {
 	wsprintf(_lastErrMsg,L"Not Started Yet~");
-	m_Progressdlg.SetRoundRect(true);
-//	m_Progressdlg.SetShowInfo(true);
-	m_Progressdlg.SetShowTitle(true);
 	_filenotsel = false;
+	pqifdt = 0;
 }
 
 Ui_ProcessImExport::~Ui_ProcessImExport(void)
 {
+	if(pqifdt) delete pqifdt;
 }
 
 bool Ui_ProcessImExport::excute(int t){
@@ -246,12 +245,12 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 			wsprintf(_lastErrMsg,LOADSTRING(IDS_STR_ERR_IMPORT_UNK_FORMAT).C_Str());
 			return false;
 	}
-	m_Progressdlg.SetShowTitle(true);
-	m_Progressdlg.SetShowInfo(true);
+	
+	
 	m_Progressdlg.SetRange(0,100);
-	m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_IMPORT_WAIT).C_Str());
-	m_Progressdlg.SetInfo(LOADSTRING(IDS_STR_IMPORT_ANALYSIS).C_Str());
-	m_Progressdlg.BeginProgress(m_hWnd);
+	m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_IMPORT_WAIT).C_Str());
+	m_Progressdlg.SetNoteText(LOADSTRING(IDS_STR_IMPORT_ANALYSIS).C_Str());
+	m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
 	list<CMzString> lines = loadText(file,enc);
 	wchar_t* seps;
 	if(_filetype == PROCESS_FILE_CSV_S){
@@ -282,7 +281,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 				if(!(linestr == LOADSTRING(IDS_STR_ACCOUNT_TITLE_FORMAT_EXCEL_C))){
 					wsprintf(_lastErrMsg,LOADSTRING(IDS_STR_ERR_IMPORT_FORMAT).C_Str(),
 						LOADSTRING(IDS_STR_ACCOUNT).C_Str());
-					m_Progressdlg.EndProgress();
+					m_Progressdlg.KillProgress();
 					return false;
 				}
 			}
@@ -290,8 +289,8 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 			for(; i != lines.end(); i++){
 				wsprintf(infotxt,LOADSTRING(IDS_STR_IMPORT_RECORD).C_Str(),cnt,size);
 				cnt++;
-				m_Progressdlg.SetInfo(infotxt);
-				m_Progressdlg.SetCurValue(cnt*100/size);
+				m_Progressdlg.SetNoteText(infotxt);
+				m_Progressdlg.SetCurrentValue(cnt*100/size);
 				m_Progressdlg.UpdateProgress();
 				linestr = *i;
 				CASH_ACCOUNT_t account;
@@ -359,7 +358,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 				LOADSTRING(IDS_STR_IMPORT_RESULT).C_Str(),
 				nSuccess,
 				LOADSTRING(IDS_STR_ACCOUNT).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 			return true;
 			break;
 		}
@@ -377,7 +376,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 				if(!(linestr == LOADSTRING(IDS_STR_CATEGORY_TITLE_FORMAT_EXCEL_C))){
 					wsprintf(_lastErrMsg,LOADSTRING(IDS_STR_ERR_IMPORT_FORMAT).C_Str(),
 						LOADSTRING(IDS_STR_CATEGORY).C_Str());
-					m_Progressdlg.EndProgress();
+					m_Progressdlg.KillProgress();
 					return false;
 				}
 			}
@@ -385,8 +384,8 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 			for(; i != lines.end(); i++){
 				wsprintf(infotxt,LOADSTRING(IDS_STR_IMPORT_RECORD).C_Str(),cnt,size);
 				cnt++;
-				m_Progressdlg.SetInfo(infotxt);
-				m_Progressdlg.SetCurValue(cnt*100/size);
+				m_Progressdlg.SetNoteText(infotxt);
+				m_Progressdlg.SetCurrentValue(cnt*100/size);
 				m_Progressdlg.UpdateProgress();
 				linestr = *i;
 				CASH_CATEGORY_t category0;
@@ -466,7 +465,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 				LOADSTRING(IDS_STR_IMPORT_RESULT).C_Str(),
 				nSuccess,
 				LOADSTRING(IDS_STR_CATEGORY).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 			return true;
 			break;
 		}
@@ -485,7 +484,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 				if(!(linestr == LOADSTRING(IDS_STR_RECORD_TITLE_FORMAT_EXCEL_C))){
 					wsprintf(_lastErrMsg,LOADSTRING(IDS_STR_ERR_IMPORT_FORMAT).C_Str(),
 						LOADSTRING(IDS_STR_RECORDS).C_Str());
-					m_Progressdlg.EndProgress();
+					m_Progressdlg.KillProgress();
 					return false;
 				}else{
 					bexcel = true;
@@ -495,8 +494,8 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 			for(; i != lines.end(); i++){
 				wsprintf(infotxt,LOADSTRING(IDS_STR_IMPORT_RECORD).C_Str(),cnt,size);
 				cnt++;
-				m_Progressdlg.SetInfo(infotxt);
-				m_Progressdlg.SetCurValue(cnt*100/size);
+				m_Progressdlg.SetNoteText(infotxt);
+				m_Progressdlg.SetCurrentValue(cnt*100/size);
 				m_Progressdlg.UpdateProgress();
 				linestr = *i;
 				CASH_TRANSACT_t record;
@@ -691,7 +690,7 @@ bool Ui_ProcessImExport::process_csv_import(wchar_t* file,int &succed, int &omit
 				LOADSTRING(IDS_STR_IMPORT_RESULT).C_Str(),
 				nSuccess,
 				LOADSTRING(IDS_STR_RECORDS).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 			return true;
 			break;
 		}
@@ -726,8 +725,8 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 			fwprintf(fp,L"\n");
 			int cnt = 0;
 			wchar_t note[512];
-			m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.BeginProgress(m_hWnd);
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
 			list<CASH_ACCOUNT_ptr>::iterator i = cash_db.list_account.begin();
 			int size = cash_db.list_account.size();
 			wchar_t *exformat;
@@ -746,7 +745,7 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 					C::removeWrap(note,c->note),
 					c->isfix);
 				fwprintf(fp,L"\n");
-				m_Progressdlg.SetCurValue((cnt++)*100/size);
+				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
 				m_Progressdlg.UpdateProgress();
 			}
 			fclose(fp);
@@ -754,7 +753,7 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
 				size,
 				LOADSTRING(IDS_STR_ACCOUNT).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 		}
 			break;
 		case PROCESS_CATEGORY:
@@ -768,8 +767,8 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 			fwprintf(fp,LOADSTRING(firstlineID).C_Str());	//write title
 			fwprintf(fp,L"\n");
 			int cnt = 0;
-			m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.BeginProgress(m_hWnd);
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
 			list<CASH_CATEGORY_ptr>::iterator i = cash_db.list_category.begin();
 			int size = cash_db.list_category.size();
 			wchar_t *exformat;
@@ -801,7 +800,7 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 					break;
 				}
 				fwprintf(fp,L"\n");
-				m_Progressdlg.SetCurValue((cnt++)*100/size);
+				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
 				m_Progressdlg.UpdateProgress();
 			}
 			fclose(fp);
@@ -809,7 +808,7 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
 				size,
 				LOADSTRING(IDS_STR_CATEGORY).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 		}
 			break;
 		case PROCESS_RECORD:
@@ -824,8 +823,8 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 			fwprintf(fp,L"\n");
 			int cnt = 0;
 			wchar_t note[512];
-			m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.BeginProgress(m_hWnd);
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
 			if(_dateAll){
 				cash_db.loadTransactions();
 			}else{
@@ -856,7 +855,7 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 					cash_db.getCategoryFullNameById(c->categoryid),cash_db.getPersonNameById(c->personid),
 					C::removeWrap(note,c->note));
 				fwprintf(fp,L"\n");
-				m_Progressdlg.SetCurValue((cnt++)*100/size);
+				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
 				m_Progressdlg.UpdateProgress();
 			}
 			fclose(fp);
@@ -864,7 +863,7 @@ bool Ui_ProcessImExport::process_csv_export(wchar_t* file,int &n){
 				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
 				size,
 				LOADSTRING(IDS_STR_RECORDS).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 		}
 			break;
 		default:
@@ -884,13 +883,18 @@ LPWSTR Ui_ProcessImExport::qif_date(LPCTSTR recdt){
 
 	DWORD y,m,d;
 	swscanf(recdt,L"%04d-%02d-%02d",&y,&m,&d);
-	y %= 100;	//取后两位
-	wchar_t qifdt[9];
-	swprintf(qifdt,L"%02d/%02d/%02d",m,d,y);
-	retval = qifdt;
-	if(qifdt[0] == '0') retval ++;
-	if(qifdt[3] == '0') qifdt[3] = ' ';
-	if(qifdt[6] == '0') qifdt[6] = ' ';
+	if(pqifdt == 0) pqifdt = new wchar_t[9];
+	if(y >= 2000){
+		y %= 100;	//取后两位
+		swprintf(pqifdt,L"%02d/%02d'%02d",m,d,y);
+	}else{
+		y %= 100;	//取后两位
+		swprintf(pqifdt,L"%02d/%02d/%02d",m,d,y);
+	}
+	retval = pqifdt;
+	if(pqifdt[0] == '0') retval ++;
+	if(pqifdt[3] == '0') pqifdt[3] = ' ';
+	if(pqifdt[6] == '0') pqifdt[6] = ' ';
 	return retval;
 }
 
@@ -907,8 +911,8 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 		case PROCESS_ACCOUNT:
 		{
 			int cnt = 0;
-			m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.BeginProgress(m_hWnd);
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
 			//写入头部
 			fwprintf(fp,L"!Account\n");
 			list<CASH_ACCOUNT_ptr>::iterator i = cash_db.list_account.begin();
@@ -928,7 +932,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 				}
 				//写入结束符
 				fwprintf(fp,L"^\n");
-				m_Progressdlg.SetCurValue((cnt++)*100/size);
+				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
 				m_Progressdlg.UpdateProgress();
 			}
 			fclose(fp);
@@ -936,14 +940,14 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
 				size,
 				LOADSTRING(IDS_STR_ACCOUNT).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 		}
 			break;
 		case PROCESS_CATEGORY:
 		{
 			int cnt = 0;
-			m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.BeginProgress(m_hWnd);
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
 			//写入头部
 			fwprintf(fp,L"!Type:Cat\n");
 			list<CASH_CATEGORY_ptr>::iterator i = cash_db.list_category.begin();
@@ -980,7 +984,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 				fwprintf(fp,L"%s\n",stype);
 				//写入结束符
 				fwprintf(fp,L"^\n");
-				m_Progressdlg.SetCurValue((cnt++)*100/size);
+				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
 				m_Progressdlg.UpdateProgress();
 			}
 			fclose(fp);
@@ -988,7 +992,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
 				size,
 				LOADSTRING(IDS_STR_CATEGORY).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 		}
 			break;
 		case PROCESS_RECORD:
@@ -1003,8 +1007,8 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 			}
 
 			int cnt = 0;
-			m_Progressdlg.SetTitle(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
-			m_Progressdlg.BeginProgress(m_hWnd);
+			m_Progressdlg.SetTitleText(LOADSTRING(IDS_STR_EXPORT_WAIT).C_Str());
+			m_Progressdlg.StartProgress(m_hWnd,FALSE,FALSE,TRUE);
 			int nsuccess = 0;
 
 			int size = cash_db.list_account.size();
@@ -1031,19 +1035,19 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 						}
 						if(account->initval != 0){
 							fwprintf(fp,L"D1/ 1/ 9\n");
+							fwprintf(fp,L"U%.2f\n",(double)account->initval/100);
 							fwprintf(fp,L"T%.2f\n",(double)account->initval/100);
                 			fwprintf(fp,L"CX\n");
-							fwprintf(fp,L"M账户初始金额\n");
+							fwprintf(fp,L"P账户初始金额\n");
 							fwprintf(fp,L"L[%s]\n^\n",account->name);
 						}
 					}
 					list<CASH_TRANSACT_ptr>::iterator j = cash_db.list_search_record.begin();
 					for(; j != cash_db.list_search_record.end(); j++){
 						CASH_TRANSACT_ptr record = *j;
-						CMzString datestr = record->date;
-						fwprintf(fp,L"D%s\n",qif_date(datestr.SubStr(0,10).C_Str()));
-						fwprintf(fp,L"T%.2f\n",(double)record->amount/100);
+						fwprintf(fp,L"D%s\n",qif_date(record->date));
 						fwprintf(fp,L"U%.2f\n",(double)record->amount/100);
+						fwprintf(fp,L"T%.2f\n",(double)record->amount/100);
 						if(lstrlen(record->note)){
 							wchar_t snote[1024];
 							fwprintf(fp,L"M%s\n",C::removeWrap(snote,record->note));		//描述
@@ -1071,21 +1075,23 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 						}
 						if(account->initval != 0){
 							fwprintf(fp,L"D1/ 1/ 9\n");
+							fwprintf(fp,L"U%.2f\n",(double)account->initval/100);
 							fwprintf(fp,L"T%.2f\n",(double)account->initval/100);
 							fwprintf(fp,L"CX\n");
-							fwprintf(fp,L"M账户初始金额\n");
+							fwprintf(fp,L"P账户初始金额\n");
 							fwprintf(fp,L"L[%s]\n^\n",account->name);
 						}
 					}
 					list<CASH_TRANSACT_ptr>::iterator j = cash_db.list_search_record.begin();
 					for(; j != cash_db.list_search_record.end(); j++){
 						CASH_TRANSACT_ptr record = *j;
-						CMzString datestr = record->date;
-						fwprintf(fp,L"D%s\n",qif_date(datestr.SubStr(0,10).C_Str()));
+						fwprintf(fp,L"D%s\n",qif_date(record->date));
 						CASH_CATEGORY_ptr category = cash_db.categoryById(record->categoryid);
 						if(category->type == CT_INCOME){	//收入
+							fwprintf(fp,L"U%.2f\n",(double)record->amount/100);
 							fwprintf(fp,L"T%.2f\n",(double)record->amount/100);
 						}else{	//支出
+							fwprintf(fp,L"U-%.2f\n",(double)record->amount/100);
 							fwprintf(fp,L"T-%.2f\n",(double)record->amount/100);
 						}
 						if(lstrlen(record->note)){
@@ -1119,7 +1125,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 						nsuccess++;
 					}
 				}
-				m_Progressdlg.SetCurValue((cnt++)*100/size);
+				m_Progressdlg.SetCurrentValue((cnt++)*100/size);
 				m_Progressdlg.UpdateProgress();
 			}
 			fclose(fp);
@@ -1127,7 +1133,7 @@ bool Ui_ProcessImExport::process_qif_export(wchar_t* file,int &n){
 				LOADSTRING(IDS_STR_EXPORT_RESULT).C_Str(),
 				nsuccess,
 				LOADSTRING(IDS_STR_RECORDS).C_Str());
-			m_Progressdlg.EndProgress();
+			m_Progressdlg.KillProgress();
 		}
 			break;
 		default:

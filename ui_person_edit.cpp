@@ -108,7 +108,7 @@ void Ui_PersonEditWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					CASH_PERSON_t newPerson;
 
 					if(m_EdtPersonName.GetText().IsEmpty()){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_WARN_PERSON_SETNAME).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_WARN_PERSON_SETNAME).C_Str());
 						m_EdtPersonName.SetFocus(true);
 						return;
 					}
@@ -118,12 +118,12 @@ void Ui_PersonEditWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					//insert category record
 					bool isconf = true;
 					if(cash_db.checkDupPerson(&newPerson) != -1){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_PERSON_ADD).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_PERSON_ADD).C_Str());
 						m_EdtPersonName.SetText(L"\0");
 						m_EdtPersonName.Invalidate();
 					}else{
 						cash_db.appendPerson(&newPerson);
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_INFO_PERSON_ADDS).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_INFO_PERSON_ADDS).C_Str());
 						EndModal(ID_OK);
 					}
                     return;
@@ -139,7 +139,7 @@ void Ui_PersonEditWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					updatedPerson.id = pPerson->id;
 
 					if(m_EdtPersonName.GetText().IsEmpty()){
-						MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_WARN_PERSON_SETNAME).C_Str());
+						MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_WARN_PERSON_SETNAME).C_Str());
 						m_EdtPersonName.SetFocus(true);
 						return;
 					}
@@ -148,21 +148,21 @@ void Ui_PersonEditWndEx::OnMzCommand(WPARAM wParam, LPARAM lParam) {
 					//update person record
 					if(lstrcmp(updatedPerson.name,pPerson->name) != 0){
 						if(cash_db.checkDupPerson(&updatedPerson) != -1){
-							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_PERSON_UPDATE).C_Str());
+							MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_PERSON_UPDATE).C_Str());
 							m_EdtPersonName.SetText(L"\0");
 							m_EdtPersonName.Invalidate();
 							return;
 						}
 					}
 					cash_db.updatePerson(&updatedPerson);
-					MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_INFO_PERSON_UPDATES).C_Str());
+					MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_INFO_PERSON_UPDATES).C_Str());
                     EndModal(ID_OK);
                     return;
                 }
                 if (nIndex == 1) { //É¾³ý
 					if(MzMessageBoxEx(m_hWnd,LOADSTRING(IDS_STR_WARN_PERSON_DELETE).C_Str(),LOADSTRING(IDS_STR_OK).C_Str(),MZ_YESNO,false) == 1){
 						if(!cash_db.deletePersonById(_editIndex)){
-							MzAutoMsgBoxEx(m_hWnd,LOADSTRING(IDS_STR_ERR_PERSON_INUSE).C_Str());
+							MzMessageAutoBoxV2(m_hWnd,LOADSTRING(IDS_STR_ERR_PERSON_INUSE).C_Str());
 						}
 						EndModal(ID_OK);
 					}

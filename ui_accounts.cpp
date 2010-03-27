@@ -171,7 +171,7 @@ LRESULT Ui_AccountsWnd::MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam)
 						m_List.Invalidate();
 						//œ‘ æ’€œﬂÕº
 						Ui_AccountReportWnd dlg;
-						MzBeginWaitDlg(m_hWnd);
+						MzBeginWaitDlg(m_hWnd,NULL,TRUE);
 						UpdateWindow();
 						dlg.setupAccountID(idarray[nIndex]);
 						MzEndWaitDlg();

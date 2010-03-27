@@ -497,7 +497,7 @@ void Ui_BrowseWnd::updateUi(){
 		refreshUi();
 		return;
 	}
-	::MzBeginWaitDlg(m_hWnd);
+	MzBeginWaitDlg(m_hWnd,NULL,TRUE);
 
 	idarray = new int[tz];
 	int *p = idarray;

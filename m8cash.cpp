@@ -44,7 +44,7 @@ bool M8CashApp::checkpwd(){
 			RECT rcWork = MzGetWorkArea();
 			dlg.setMode(0);
 			dlg.Create(rcWork.left, rcWork.top, RECT_WIDTH(rcWork), RECT_HEIGHT(rcWork),
-				m_pMainWnd->m_hWnd, 0, WS_POPUP);
+				m_MainWnd.m_hWnd, 0, WS_POPUP);
 			// set the animation of the window
 			int nRet = dlg.DoModal();
 			if (nRet == ID_OK) {
@@ -53,13 +53,13 @@ bool M8CashApp::checkpwd(){
         }
         if(ret){
 		    //检查记录版本
-		    cash_db.versionUpdate(m_pMainWnd->m_hWnd);
+		    cash_db.versionUpdate(m_MainWnd.m_hWnd);
 		    cash_db.recover();
             cash_db.load();
         }
 	}else{
 		//检查记录版本
-		cash_db.versionUpdate(m_pMainWnd->m_hWnd);
+		cash_db.versionUpdate(m_MainWnd.m_hWnd);
 		cash_db.recover();
 		cash_db.load();
 	}
@@ -69,7 +69,6 @@ bool M8CashApp::checkpwd(){
 BOOL M8CashApp::Init() {
     // Init the COM relative library.
     CoInitializeEx(0, COINIT_MULTITHREADED);
-	m_pMainWnd = NULL;
 	//载入资源
 	LangresHandle = LoadLibrary(L"language.dll");
 	if(LangresHandle){
@@ -111,11 +110,10 @@ BOOL M8CashApp::Init() {
 	}
 	//正常启动程序
 	//检测程序是否已经运行
-	m_pMainWnd = new Ui_MainWnd;
 	HANDLE m_hCHDle = CreateMutex(NULL,true,L"M8Cash");
 	if(GetLastError() == ERROR_ALREADY_EXISTS)
 	{
-		HWND pWnd=FindWindow(m_pMainWnd->GetMzClassName(),NULL);
+		HWND pWnd=FindWindow(m_MainWnd.GetMzClassName(),NULL);
 		//HWND pWnd=FindWindow(NULL,L"M8Cash");
 		if(pWnd)
 		{
@@ -127,15 +125,15 @@ BOOL M8CashApp::Init() {
 	}
 	//载入图片
 	loadImageRes();
-	//SetForegroundWindow(m_pMainWnd->m_hWnd);
+	//SetForegroundWindow(m_MainWnd.m_hWnd);
 	//检测密码
 		// Create the main window
 		RECT rcWork = MzGetWorkArea();
-		m_pMainWnd->Create(rcWork.left, rcWork.top, RECT_WIDTH(rcWork), RECT_HEIGHT(rcWork), 0, 0, 0);
+		m_MainWnd.Create(rcWork.left, rcWork.top, RECT_WIDTH(rcWork), RECT_HEIGHT(rcWork), 0, 0, 0);
 	if(checkpwd()){
-		m_pMainWnd->Show();
-		m_pMainWnd->updateText();
-		SetForegroundWindow(m_pMainWnd->m_hWnd);
+		m_MainWnd.Show();
+		m_MainWnd.updateText();
+		SetForegroundWindow(m_MainWnd.m_hWnd);
 	}
 
     // return TRUE means init success.

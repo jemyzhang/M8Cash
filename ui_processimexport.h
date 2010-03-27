@@ -80,7 +80,8 @@ private:
 	DWORD _sdate;
 	DWORD _edate;
 private:
-	MzProgressDialog m_Progressdlg;
+	MzPopupProgress m_Progressdlg;
 	wchar_t _lastErrMsg[256];
 	wchar_t _exportfilename[128];
+	wchar_t *pqifdt;
 };
